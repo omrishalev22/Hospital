@@ -9,19 +9,20 @@ private:
 
     char * name;
     int id;
-    Article articles[20]; // TODO dynamic
+    Article ** articles;
+    int indexArticles;
+    int sizeArticles;
 
 public:
-    Researcher();
     Researcher(char * name, int id);
 
     // Getters
     char* getName();
     int getId();
-    Article * getArticles();
+    Article ** getArticles();
 
     // Setters
-    bool addArticle(Article article);
+    bool addArticle(Article* article);
 };
 
 #endif // __RESEARCHER_H
