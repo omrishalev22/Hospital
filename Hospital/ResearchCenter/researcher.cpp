@@ -18,7 +18,7 @@ Article ** Researcher::getArticles() {
     return this->articles;
 }
 
-bool Researcher::addArticle(Article *article) {
+bool Researcher::addNewArticle(Article *article) {
     if (this->indexArticles >= this->sizeArticles)
     {
         Article** tempArr = new Article*[this->sizeArticles * 2];

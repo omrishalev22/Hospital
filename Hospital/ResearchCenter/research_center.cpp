@@ -6,7 +6,7 @@ Researcher** ResearchCenter::getResearchers() {
     return this->researchers;
 }
 
-bool ResearchCenter::addResearcher(Researcher* newResearcher) {
+bool ResearchCenter::addNewResearcher(Researcher* newResearcher) {
     if (this->indexResearchers >= this->sizeResearchers)
     {
         Researcher** tempArr = new Researcher*[this->sizeResearchers * 2];

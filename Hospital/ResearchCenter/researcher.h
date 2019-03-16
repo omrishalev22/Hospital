@@ -20,9 +20,10 @@ public:
     char* getName();
     int getId();
     Article ** getArticles();
+    Article* getNewArticle();
 
     // Setters
-    bool addArticle(Article* article);
+    bool addNewArticle(Article* article);
 };
 
 #endif // __RESEARCHER_H

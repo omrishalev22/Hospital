@@ -17,9 +17,10 @@ public:
 
     // Getters
     Researcher** getResearchers();
+    Researcher* getNewResearcher();
 
     // Setters
-    bool addResearcher(Researcher* r);
+    bool addNewResearcher(Researcher* r);
 };
 
 #endif // __RESEARCH_H
