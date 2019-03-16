@@ -14,7 +14,7 @@ private:
     int sizeDepartments;
 
     ResearchCenter researchCenter;
-    Patient patients[20];
+    Patient ** patients;
 
 public:
 
