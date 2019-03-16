@@ -15,7 +15,7 @@ public:
 
     Department(char * name);
     // GETTERS
-    char * getDepartmentName();
+    char * getName();
     // SETTERS
     void setName(char * name); // in case in future someone want to change the name
     void addNewDoctor(Doctor * doctor);

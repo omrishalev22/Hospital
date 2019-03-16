@@ -29,7 +29,7 @@ void Department::addNewNurse(Nurse *nurse)
     staff->addNewNurse(nurse);
 }
 
-char *Department::getDepartmentName()
+char *Department::getName()
 {
     return name;
 }

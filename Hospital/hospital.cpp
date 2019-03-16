@@ -6,9 +6,11 @@
 #define SIZE 150
 using namespace std;
 
-Hospital::Hospital() {
+Hospital::Hospital()
+{
 
 }
+
 /**
  * Add new department to the hospital
  */
@@ -83,10 +85,65 @@ Department *Hospital::getDepartmentByName(char *name)
 {
     if (this->sizeDepartments > 0) {
         for (int i = 0; i < sizeDepartments; i++) {
-            if (strcmp(departments[i]->getDepartmentName(), name) > 0) {
+            if (strcmp(departments[i]->getName(), name) > 0) {
                 return departments[i];
             }
         }
     }
     cout << " couldn't find the department you are searching for\n";
 }
+
+bool Hospital::addNewPatientVisit()
+{
+    bool isFirstVisit;
+    Patient *patient;
+    int id;
+    char * visitPurpose;
+    Date *today = new Date();
+
+    cout << "Is this your first time here? 1 = yes , 0 = no";
+    cin >> isFirstVisit;
+
+    if (isFirstVisit) {
+        char *name = nullptr;
+        int yearOfBirth;
+        int gender;
+        cout << "What is your name?";
+        cin >> name;
+
+        cout << "What is your id?";
+        cin >> id;
+
+        cout << "What is your year of birth?";
+        cin >> yearOfBirth;
+
+        cout << "What is your gender? 1 = female, 0 = male";
+        cin >> gender;
+
+        patient = new Patient(name, id, yearOfBirth, (gender ? eSex::FEMALE : eSex::MALE), *today);
+    }
+
+    cout << "What is your id number?";
+    cin >> id;
+    cout << "Getting your documents from last visit...";
+    patient = this->getPatientById(id);
+    cout << "Thank you " << patient->getName();
+
+    cout << "Whats the purpose of the visit?";
+    cin >> visitPurpose;
+    patient->setVisitPurpose(visitPurpose);
+    // TODO add to patient the staff member incarge of him
+}
+
+Patient *Hospital::getPatientById(int id)
+{
+    if (this->sizePatients > 0) {
+        for (int i = 0; i < sizePatients; i++) {
+            if (patients[i]->getId() == id) {
+                return patients[i];
+            }
+        }
+    }
+}
+
+

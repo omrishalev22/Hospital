@@ -45,7 +45,7 @@ void Dispatcher(int command) {
             hospital->addNewDoctorToDepartment();
             break;
         case 4:
-            // hospital->addNewPatientVisit();
+            hospital->addNewPatientVisit();
             break;
         case 5:
             break;

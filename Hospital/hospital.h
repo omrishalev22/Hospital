@@ -15,6 +15,8 @@ private:
 
     ResearchCenter researchCenter;
     Patient ** patients;
+    int indexPatients;
+    int sizePatients;
 
 public:
 
@@ -23,12 +25,14 @@ public:
     // Getters
     Department * getDepartmentByName(char* name);
     bool isPatientExists(int id);
+    Patient * getPatientById(int id);
 
     // Setters
     bool addNewDepartment();
     bool addNewNurseToDepartment();
     bool addNewDoctorToDepartment();
-    bool addPatient();
+    bool addNewPatientVisit();
+    bool addNewPatient();
     bool addVisit();
 
 };
