@@ -7,18 +7,19 @@ class ResearchCenter
 {
 private:
 
-    Researcher researchers[20]; // TODO dynamic
+    Researcher** researchers;
+    int indexResearchers = 0;
+    int sizeResearchers = 0;
 
 public:
 
     ResearchCenter();
 
     // Getters
-    Researcher getResearchers();
-    Researcher getResearcherByName(char * name);
+    Researcher** getResearchers();
 
     // Setters
-    bool addResearcher(Researcher r);
+    bool addResearcher(Researcher* r);
 };
 
 #endif // __RESEARCH_H
