@@ -20,6 +20,7 @@ const char * Department::getName() {
 }
 
 void Department::addNewDoctor(Doctor doctor) {
+    staff->addNewDoctor(doctor);
 
 }
 

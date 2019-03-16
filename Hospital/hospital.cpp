@@ -21,14 +21,14 @@ bool Hospital::addNewDepartment(){
 }
 
 /**
- * Add new Nurse to specific department
+ * Add new Nurse to a specific department
  */
 bool Hospital::addNewNurseToDepartment(){
-    int ID,yearsOfExperience;
+    int id,yearsOfExperience;
     char name[SIZE], departmentName[SIZE];
 
     cout << "Please type the nurse's ID:\n";
-    cin >> ID;
+    cin >> id;
 
     cout << "Please type the nurse's name:\n";
     cin >> name;
@@ -39,6 +39,29 @@ bool Hospital::addNewNurseToDepartment(){
     cout << "Please type the department name you want to attach nurse to:\n";
     cin >> departmentName;
 
-    Nurse * nurse = new Nurse(name,ID,yearsOfExperience);
+    Nurse * nurse = new Nurse(name,id,yearsOfExperience);
     departments[0].addNewNurse(*nurse); // TODO get department by NAME
+}
+
+/**
+ * Add new Doctor to a specific department
+ */
+bool Hospital::addNewDoctorToDepartment(){
+    int id = 0;
+    char name[SIZE], departmentName[SIZE], interField[SIZE];
+
+    cout << "Please type the doctor's ID:\n";
+    cin >> id;
+
+    cout << "Please type the doctor's name:\n";
+    cin >> name;
+
+    cout << "Please type the doctor's internship field:\n";
+    cin >> interField;
+
+    cout << "Please type the department name you want to attach doctor to:\n";
+    cin >> departmentName;
+
+    Doctor * doctor = new Doctor(id,name,interField);
+    departments[0].addNewDoctor(*doctor); // TODO get department by NAME
 }

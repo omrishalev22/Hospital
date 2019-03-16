@@ -9,9 +9,16 @@ class Staff {
 private :
     Doctor * doctors;
     Nurse * nurses;
-    int size;
+    int numOfDoctors;
+    int numOfNurses;
 public:
-    Staff(int size = 0){}
+    Staff(){
+        numOfDoctors = 0;
+        numOfNurses = 0;
+        // TODO wait for keren answer on vector - bad practice
+        nurses = new Nurse[20];
+        doctors = new Doctor[20];
+    }
     ~Staff();
     bool addNewNurse(Nurse nurse);
     bool addNewDoctor(Doctor doctor);

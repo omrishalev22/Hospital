@@ -11,6 +11,7 @@ private:
     int id;
     char * interField;
 public:
+    Doctor(){}; // TODO wait for keren answer on vector
     Doctor(int id, char * name, char * interField);
 
     const char * getName();
