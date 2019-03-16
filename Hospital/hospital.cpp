@@ -6,10 +6,7 @@
 #define SIZE 150
 using namespace std;
 
-Hospital::Hospital()
-{
-
-}
+Hospital::Hospital() = default;
 
 /**
  * Add new department to the hospital
@@ -91,6 +88,7 @@ Department *Hospital::getDepartmentByName(char *name)
         }
     }
     cout << " couldn't find the department you are searching for\n";
+    return nullptr;
 }
 
 bool Hospital::addNewPatientVisit()
@@ -135,7 +133,13 @@ bool Hospital::addNewPatientVisit()
     // TODO add to patient the staff member incarge of him
 }
 
-Patient *Hospital::getPatientById(int id)
+/**
+ * Get a patient object by it's ID.
+ * Will return nullptr if not found.
+ * @param id
+ * @return
+ */
+Patient * Hospital::getPatientById(int id)
 {
     if (this->sizePatients > 0) {
         for (int i = 0; i < sizePatients; i++) {
@@ -144,6 +148,169 @@ Patient *Hospital::getPatientById(int id)
             }
         }
     }
+
+    return nullptr;
 }
 
 
+/**
+ * Gets all researchers in the hospital.
+ * @return
+ */
+Researcher** Hospital::getResearchers()
+{
+    return this->researchers;
+}
+
+/**
+ * This method get a new researcher from the user's input.
+ * Will return a pointer of the created object.
+ * @return
+ */
+Researcher* Hospital::getNewResearcher()
+{
+    int id;
+    char* name;
+
+    cout << "Enter the name of the researcher: ";
+    cin.getline(name, 200);
+
+    cout << "Enter the ID of the researcher: ";
+    cin >> id;
+
+    return new Researcher(name, id);
+}
+
+/**
+ * This method get a created researcher and add him to the internal researchers list.
+ * Will extend the list space if needed.
+ * @param newResearcher
+ * @return
+ */
+bool Hospital::addNewResearcher(Researcher* newResearcher)
+{
+    if (this->indexResearchers >= this->sizeResearchers)
+    {
+        Researcher ** tempArr = new Researcher*[this->sizeResearchers * 2];
+        for (int i = 0; i < this->indexResearchers; i++)
+            tempArr[i] = this->researchers[i];
+
+        delete [] this->researchers;
+        this->researchers = tempArr;
+        this->sizeResearchers *= 2;
+    }
+    this->researchers[this->indexResearchers++] = newResearcher;
+    return true;
+}
+
+/**
+ * Get a Date object from the user.
+ * @return
+ */
+Date Hospital::getDateFromUser()
+{
+    char inputDay, inputMonth, inputYear;
+    int day, month, year;
+
+    cout << "Day: ";
+    cin >> inputDay;
+    cout << "Month: ";
+    cin >> inputMonth;
+    cout << "Year: ";
+    cin >> inputYear;
+
+    // Convert to int
+    day = atoi(inputDay);
+    month = atoi(inputMonth);
+    year = atoi(inputYear);
+
+    return Date(year, month, day);
+}
+
+/**
+ * This method get a new article from the user.
+ * Will return a pointer to a created article.
+ * @return
+ */
+Article* Hospital::getNewArticle()
+{
+    char* name;
+    char* magazine;
+    Date releaseDate;
+
+    cout << "Enter the name of the article: ";
+    cin.getline(name, 200);
+
+    cout << "Enter the name of the article: ";
+    cin.getline(magazine, 200);
+
+    cout << "Enter the release date of the article: ";
+    releaseDate = getDateFromUser();
+
+    return new Article(name, magazine, releaseDate);
+}
+
+/**
+ * Add a new patient to the list of the patients in the hospital.
+ * @param newPatient
+ * @return
+ */
+bool Hospital::addNewPatient(Patient *newPatient)
+{
+    if (this->indexPatients >= this->sizePatients)
+    {
+        Patient ** tempArr = new Patient*[this->sizePatients * 2];
+        for (int i = 0; i < this->indexPatients; i++)
+            tempArr[i] = this->patients[i];
+
+        delete [] this->patients;
+        this->patients = tempArr;
+        this->sizePatients *= 2;
+    }
+    this->patients[this->indexPatients++] = newPatient;
+    return true;
+}
+
+/**
+ * The main loop method of the hospital application
+ */
+void Hospital::runLoop()
+{
+    int userInput;
+
+    do {
+        cout << MENU_TEXT;
+        cin >> userInput;
+        switch(userInput) {
+            case -1:
+                break;
+            case 1:
+                addNewDepartment();
+                break;
+            case 2:
+                addNewNurseToDepartment();
+                break;
+            case 3:
+                addNewDoctorToDepartment();
+                break;
+            case 4:
+                addNewPatientVisit();
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            default:
+                cout << "Command could not be found, Please try something else\n";
+                break;
+        }
+    } while (userInput != -1);
+}

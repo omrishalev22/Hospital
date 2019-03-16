@@ -1,22 +1,23 @@
 #ifndef __ARTICLE_H
 #define __ARTICLE_H
 
+#include "../date.h"
+
 class Article
 {
 private:
 
     char * name;
     char * magazine;
-    int releaseYear, releaseMonth, releaseDay;
+    Date releaseDate;
 
 public:
-    Article();
-    Article(char * name, char * magazine, int releaseYear, int releaseMonth, int releaseDay);
+    Article(char * name, char * magazine, Date releaseDate);
 
     // Getters
     char * getName();
     char * getMagazineName();
-    char * getReleaseDate();
+    Date getReleaseDate();
 };
 
 #endif // __ARTICLE_H
