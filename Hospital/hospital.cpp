@@ -1,30 +1,42 @@
 #include <string>
 #include <iostream>
+#include <cstring>
 #include "hospital.h"
+
 #define SIZE 150
 using namespace std;
-
 
 Hospital::Hospital() {
 
 }
-
 /**
  * Add new department to the hospital
  */
-bool Hospital::addNewDepartment(){
+bool Hospital::addNewDepartment()
+{
     char name[SIZE];
     cout << "Please type the department name:\n";
     cin >> name;
-    Department * department = new Department(name);
-    departments[0] = *department;
+
+    Department *department = new Department(name);
+    if (this->indexDepartments >= this->sizeDepartments) {
+        Department **tempArr = new Department *[this->sizeDepartments * 2];
+        for (int i = 0; i < this->indexDepartments; i++)
+            tempArr[i] = this->departments[i];
+
+        delete[] this->departments;
+        this->departments = tempArr;
+        this->sizeDepartments *= 2;
+    }
+    this->departments[this->indexDepartments++] = department;
 }
 
 /**
  * Add new Nurse to a specific department
  */
-bool Hospital::addNewNurseToDepartment(){
-    int id,yearsOfExperience;
+bool Hospital::addNewNurseToDepartment()
+{
+    int id, yearsOfExperience;
     char name[SIZE], departmentName[SIZE];
 
     cout << "Please type the nurse's ID:\n";
@@ -39,14 +51,15 @@ bool Hospital::addNewNurseToDepartment(){
     cout << "Please type the department name you want to attach nurse to:\n";
     cin >> departmentName;
 
-    Nurse * nurse = new Nurse(name,id,yearsOfExperience);
-    departments[0].addNewNurse(*nurse); // TODO get department by NAME
+    Nurse *nurse = new Nurse(name, id, yearsOfExperience);
+    getDepartmentByName(departmentName)->addNewNurse(nurse);
 }
 
 /**
  * Add new Doctor to a specific department
  */
-bool Hospital::addNewDoctorToDepartment(){
+bool Hospital::addNewDoctorToDepartment()
+{
     int id = 0;
     char name[SIZE], departmentName[SIZE], interField[SIZE];
 
@@ -62,6 +75,18 @@ bool Hospital::addNewDoctorToDepartment(){
     cout << "Please type the department name you want to attach doctor to:\n";
     cin >> departmentName;
 
-    Doctor * doctor = new Doctor(id,name,interField);
-    departments[0].addNewDoctor(*doctor); // TODO get department by NAME
+    Doctor *doctor = new Doctor(id, name, interField);
+    getDepartmentByName(departmentName)->addNewDoctor(doctor);
+}
+
+Department *Hospital::getDepartmentByName(char *name)
+{
+    if (this->sizeDepartments > 0) {
+        for (int i = 0; i < sizeDepartments; i++) {
+            if (strcmp(departments[i]->getDepartmentName(), name) > 0) {
+                return departments[i];
+            }
+        }
+    }
+    cout << " couldn't find the department you are searching for\n";
 }

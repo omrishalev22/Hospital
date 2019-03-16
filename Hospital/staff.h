@@ -7,22 +7,17 @@
 
 class Staff {
 private :
-    Doctor * doctors;
-    Nurse * nurses;
-    int numOfDoctors;
-    int numOfNurses;
-public:
-    Staff(){
-        numOfDoctors = 0;
-        numOfNurses = 0;
-        // TODO wait for keren answer on vector - bad practice
-        nurses = new Nurse[20];
-        doctors = new Doctor[20];
-    }
-    ~Staff();
-    bool addNewNurse(Nurse nurse);
-    bool addNewDoctor(Doctor doctor);
+    Nurse ** nurses;
+    Doctor ** doctors;
 
+    int indexDoctors,sizeDoctors;
+    int indexNurses,sizeNurses;
+
+public:
+    // Setters
+    bool addNewNurse(Nurse * nurse);
+    bool addNewDoctor(Doctor * doctor);
+    ~Staff();
 };
 
 #endif //__STAFF_H

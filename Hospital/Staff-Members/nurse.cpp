@@ -3,8 +3,9 @@
 #include <iostream>
 #include <cstring>
 
-Nurse::Nurse(char *nurseName, int id, int yearsOfExperience) : id(id), yearsOfExperience(yearsOfExperience) {
-    delete[]name;
-    name = new char[strlen(nurseName)+1];
-    strcpy(name, nurseName);
+Nurse::Nurse(char *name, int id, int yearsOfExperience) {
+    this -> name =  name;
+    this -> id =  id;
+    this -> yearsOfExperience =  yearsOfExperience;
 }
+

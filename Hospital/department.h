@@ -13,14 +13,13 @@ private:
 
 public:
 
-    Department(){};
     Department(char * name);
-
-    const char * getName();
+    // GETTERS
+    char * getDepartmentName();
+    // SETTERS
     void setName(char * name); // in case in future someone want to change the name
-
-    void addNewDoctor(Doctor doctor);
-    void addNewNurse(Nurse nurse);
+    void addNewDoctor(Doctor * doctor);
+    void addNewNurse(Nurse * nurse);
 };
 
 #endif // __DEPARTMENT_H

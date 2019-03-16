@@ -1,3 +1,4 @@
+#include <cstring>
 #include "patient.h"
 
 Patient::Patient(char *name, int id, int yearOfBirth, Patient::eSex sex, char *purpose, Date arrivalDate) {

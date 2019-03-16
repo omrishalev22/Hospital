@@ -1,3 +1,4 @@
+#include <cstring>
 #include "researcher.h"
 
 Researcher::Researcher(char *name, int id) {

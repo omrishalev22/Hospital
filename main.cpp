@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Hospital/department.h"
 #include "Hospital/hospital.h"
 
 #define SIZE 150
@@ -43,6 +42,7 @@ void Dispatcher(int command) {
             hospital->addNewNurseToDepartment();
             break;
         case 3:
+            hospital->addNewDoctorToDepartment();
             break;
         case 4:
             break;

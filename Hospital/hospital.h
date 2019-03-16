@@ -9,7 +9,10 @@ class Hospital
 {
 private:
 
-    Department departments[20]; // TODO dynamic
+    Department ** departments;
+    int indexDepartments;
+    int sizeDepartments;
+
     ResearchCenter researchCenter;
     Patient patients[20];
 
@@ -18,7 +21,7 @@ public:
     Hospital();
 
     // Getters
-    Department getDepartmentByName(char* name);
+    Department * getDepartmentByName(char* name);
     bool isPatientExists(int id);
 
     // Setters
