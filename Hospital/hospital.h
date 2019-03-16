@@ -2,7 +2,7 @@
 #define __HOSPITAL_H
 
 #include "department.h"
-#include "research_center.h"
+#include "ResearchCenter/research_center.h"
 #include "patient.h"
 
 class Hospital
