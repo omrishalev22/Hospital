@@ -12,7 +12,7 @@ private:
     Article articles[20]; // TODO dynamic
 
 public:
-
+    Researcher();
     Researcher(char * name, int id);
 
     // Getters

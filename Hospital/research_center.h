@@ -11,7 +11,7 @@ private:
 
 public:
 
-    ResearchCenter(){};
+    ResearchCenter();
 
     // Getters
     Researcher getResearchers();

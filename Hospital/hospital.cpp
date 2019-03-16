@@ -5,6 +5,10 @@
 using namespace std;
 
 
+Hospital::Hospital() {
+
+}
+
 /**
  * Add new department to the hospital
  */

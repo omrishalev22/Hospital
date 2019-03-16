@@ -10,7 +10,7 @@ private:
     int releaseYear, releaseMonth, releaseDay;
 
 public:
-
+    Article();
     Article(char * name, char * magazine, int releaseYear, int releaseMonth, int releaseDay);
 
     // Getters

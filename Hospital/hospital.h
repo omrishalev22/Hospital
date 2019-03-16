@@ -12,11 +12,10 @@ private:
     Department departments[20]; // TODO dynamic
     ResearchCenter researchCenter;
     Patient patients[20];
-    str visits[20];
 
 public:
 
-    Hospital(){};
+    Hospital();
 
     // Getters
     Department getDepartmentByName(char* name);
