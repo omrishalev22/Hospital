@@ -24,7 +24,7 @@ public:
     // Setters
     bool addNewDepartment();
     bool addNewNurseToDepartment();
-    bool addDoctor();
+    bool addNewDoctorToDepartment();
     bool addPatient();
     bool addVisit();
 

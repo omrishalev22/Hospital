@@ -6,12 +6,9 @@
 using namespace std;
 
 void Dispatcher(int command);
-void addNewDepartment();
-void addNewNurseToDepartment();
+
 
 Hospital * hospital = new Hospital();
-
-int departmentsSize = 0;
 
 int main() {
     int userInput;
@@ -32,6 +29,7 @@ int main() {
         cin >> userInput;
         if(userInput != -1) Dispatcher(userInput);
     } while (userInput != -1);
+
     return 0;
 }
 
@@ -59,6 +57,9 @@ void Dispatcher(int command) {
         case 9:
             break;
         case 10:
+            break;
+        default:
+            cout << "Command could not be found, Please try something else\n";
             break;
     }
 }
