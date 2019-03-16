@@ -1,9 +1,17 @@
 #include <iostream>
+#include "Hospital/Department.h"
+
+#define SIZE 150
+
 using namespace std;
 void Dispatcher(int command);
+void addNewDepartment();
+Department departments[10]; // TODO should be dynamic
+int departmentsSize = 0;
 
 int main() {
     int userInput;
+
     do {
         cout << "Welcome to our Hospital, please choose what you wish to do:\n";
         cout << "(1) Add a new department\n";
@@ -27,6 +35,7 @@ int main() {
 void Dispatcher(int command) {
     switch(command) {
         case 1:
+            addNewDepartment();
             break;
         case 2:
             break;
@@ -47,4 +56,16 @@ void Dispatcher(int command) {
         case 10:
             break;
     }
+}
+
+
+// functions
+
+void addNewDepartment(){
+    char name[SIZE];
+    cout << "Please type the department name:\n";
+    cin >> name;
+    Department * department = new Department(name);
+    departments[departmentsSize] = *department;
+    departmentsSize++;
 }
