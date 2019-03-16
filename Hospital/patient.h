@@ -1,4 +1,4 @@
-
+#include "date.h"
 
 #ifndef __PATIENT_H
 #define __PATIENT_H
@@ -11,9 +11,10 @@ private:
     int id;
     int yearOfBirth;
     eSex sex;
+    char * purpose;
+    Date arrivalDate;
 
 public:
-    Patient(){};
-    Patient(char * name,int id, int yearOfBirth, eSex sex);
+    Patient(char * name,int id, int yearOfBirth, eSex sex, char* purpose, Date arrivalDate);
 };
 #endif //__PATIENT_H
