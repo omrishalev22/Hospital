@@ -23,3 +23,7 @@ void Department::addNewDoctor(Doctor doctor) {
 
 }
 
+void Department::addNewNurse(Nurse nurse) {
+    staff->addNewNurse(nurse);
+}
+

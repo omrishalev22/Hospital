@@ -9,7 +9,12 @@ class Staff {
 private :
     Doctor * doctors;
     Nurse * nurses;
+    int size;
 public:
+    Staff(int size = 0){}
+    ~Staff();
+    bool addNewNurse(Nurse nurse);
+    bool addNewDoctor(Doctor doctor);
 
 };
 

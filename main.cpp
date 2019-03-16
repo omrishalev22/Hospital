@@ -1,11 +1,13 @@
 #include <iostream>
 #include "Hospital/department.h"
-
 #define SIZE 150
-
 using namespace std;
+
 void Dispatcher(int command);
 void addNewDepartment();
+void addNewNurseToDepartment();
+
+
 Department departments[10]; // TODO should be dynamic
 int departmentsSize = 0;
 
@@ -38,6 +40,7 @@ void Dispatcher(int command) {
             addNewDepartment();
             break;
         case 2:
+            addNewNurseToDepartment();
             break;
         case 3:
             break;
@@ -59,8 +62,9 @@ void Dispatcher(int command) {
 }
 
 
-// functions
-
+/**
+ * Add new department to the hospital
+ */
 void addNewDepartment(){
     char name[SIZE];
     cout << "Please type the department name:\n";
@@ -68,4 +72,27 @@ void addNewDepartment(){
     Department * department = new Department(name);
     departments[departmentsSize] = *department;
     departmentsSize++;
+}
+
+/**
+ * Add new Nurse to specific department
+ */
+void addNewNurseToDepartment(){
+    int ID,yearsOfExperience;
+    char name[SIZE], departmentName[SIZE];
+
+    cout << "Please type the nurse's ID:\n";
+    cin >> ID;
+
+    cout << "Please type the nurse's name:\n";
+    cin >> name;
+
+    cout << "Please type the nurse's years of experience:\n";
+    cin >> yearsOfExperience;
+
+    cout << "Please type the department name you want to attach nurse to:\n";
+    cin >> departmentName;
+
+    Nurse * nurse = new Nurse(name,ID,yearsOfExperience);
+    departments[0].addNewNurse(*nurse); // TODO get department by NAME
 }
