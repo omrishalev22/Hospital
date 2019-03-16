@@ -23,8 +23,8 @@ public:
     bool isPatientExists(int id);
 
     // Setters
-    bool addDepartment(Department d);
-    bool addNurse();
+    bool addNewDepartment();
+    bool addNewNurseToDepartment();
     bool addDoctor();
     bool addPatient();
     bool addVisit();

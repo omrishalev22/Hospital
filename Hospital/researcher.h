@@ -18,7 +18,7 @@ public:
     // Getters
     char* getName();
     int getId();
-    Article[] getArticles();
+    Article * getArticles();
 
     // Setters
     bool addArticle(Article article);
