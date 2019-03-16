@@ -23,6 +23,7 @@ public:
     // GETTERS
     int getId();
     char *getName();
+    void show();
 
     // SETTERS
     bool setVisitPurpose(char * purpose);

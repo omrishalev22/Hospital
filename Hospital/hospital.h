@@ -45,12 +45,11 @@ public:
     Researcher ** getResearchers();
     Department * getDepartmentByName(char* name);
     Patient * getPatientById(int id);
-
-
     Department * getNewDepartment();
     Researcher * getNewResearcher();
     Article * getNewArticle();
     Date getDateFromUser();
+    void showAllResearchers();
 
     // Setters
     bool addNewDepartment();

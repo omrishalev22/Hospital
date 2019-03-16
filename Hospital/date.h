@@ -8,6 +8,7 @@ public:
     Date();
     Date(Date& d);
     Date(int year, int month, int day);
+    void show();
 };
 #define _DATE_H
 

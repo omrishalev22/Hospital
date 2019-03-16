@@ -21,6 +21,7 @@ public:
     int getId();
     Article ** getArticles();
     Article* getNewArticle();
+    void show();
 
     // Setters
     bool addNewArticle(Article* article);

@@ -18,3 +18,8 @@ Date::Date(int year, int month, int day)
     this->month = month;
     this->day = day;
 }
+
+void Date::show()
+{
+    cout << this->year << "-" << this->month << "-" << this->day;
+}

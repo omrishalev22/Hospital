@@ -272,6 +272,17 @@ bool Hospital::addNewPatient(Patient *newPatient)
 }
 
 /**
+ * Show / Print all researchers to the output.
+ */
+void Hospital::showAllResearchers()
+{
+    cout << "Showing all researchers in the hospital: " << endl;
+    for(int i = 0; i < indexResearchers; i++) {
+        researchers[i]->show();
+    }
+}
+
+/**
  * The main loop method of the hospital application
  */
 void Hospital::runLoop()
@@ -297,14 +308,17 @@ void Hospital::runLoop()
                 addNewPatientVisit();
                 break;
             case 5:
+                addNewResearcher(getNewResearcher());
                 break;
             case 6:
+
                 break;
             case 7:
                 break;
             case 8:
                 break;
             case 9:
+                showAllResearchers();
                 break;
             case 10:
                 break;
