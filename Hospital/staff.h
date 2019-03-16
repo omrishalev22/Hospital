@@ -2,8 +2,8 @@
 #ifndef __STAFF_H
 #define __STAFF_H
 
-#include "Staff-Members/Doctor.h"
-#include "Staff-Members/Nurse.h"
+#include "Staff-Members/doctor.h"
+#include "Staff-Members/nurse.h"
 
 class Staff {
 private :

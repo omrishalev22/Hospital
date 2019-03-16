@@ -1,9 +1,9 @@
 #ifndef __DEPARTMENT_H
 #define __DEPARTMENT_H
 
-#include "Staff.h"
-#include "Staff-Members/Doctor.h"
-#include "Staff-Members/Nurse.h"
+#include "staff.h"
+#include "Staff-Members/doctor.h"
+#include "Staff-Members/nurse.h"
 
 class Department
 {

@@ -1,7 +1,7 @@
-#include "Department.h"
 #include <string>
 #include <iostream>
 #include <cstring>
+#include "department.h"
 
 using namespace std;
 

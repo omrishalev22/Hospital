@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Hospital/Department.h"
+#include "Hospital/department.h"
 
 #define SIZE 150
 
