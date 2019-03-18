@@ -25,6 +25,7 @@ public:
 
     // Setters
     bool addNewArticle(Article* article);
+    ~Researcher();
 };
 
 #endif // __RESEARCHER_H

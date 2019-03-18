@@ -35,6 +35,8 @@ public:
     bool setIndexPatients(int index);
     bool setSizePatients(int size);
 
+    ~Department();
+
 };
 
 #endif // __DEPARTMENT_H

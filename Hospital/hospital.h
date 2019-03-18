@@ -50,6 +50,7 @@ public:
     Article * getNewArticle();
     Doctor * getNewDoctor();
     Nurse * getNewNurse();
+    Patient * getNewPatient();
     Date getDateFromUser();
     void showAllResearchers();
     void showPatientByID();
@@ -61,6 +62,8 @@ public:
     bool addNewPatientVisit();
     bool addNewPatient(Patient * newPatient);
     bool addNewResearcher(Researcher * newResearcher);
+
+    ~Hospital();
 
     void runLoop();
 };

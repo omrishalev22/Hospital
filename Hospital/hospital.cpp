@@ -15,8 +15,7 @@ Hospital::Hospital() = default;
  * Get a new department from user input.
  * @return
  */
-Department* Hospital::getNewDepartment()
-{
+Department *Hospital::getNewDepartment() {
     char name[SIZE];
     cout << "Please type the department name:\n";
     cin >> name;
@@ -27,8 +26,7 @@ Department* Hospital::getNewDepartment()
 /**
  * Add new department to the hospital
  */
-bool Hospital::addNewDepartment(Department * newDepartment)
-{
+bool Hospital::addNewDepartment(Department *newDepartment) {
     if (this->indexDepartments >= this->sizeDepartments) {
         Department **tempArr = new Department *[this->sizeDepartments + 2];
         for (int i = 0; i < this->indexDepartments; i++)
@@ -45,8 +43,7 @@ bool Hospital::addNewDepartment(Department * newDepartment)
 /**
  * Get new Nurse from user input.
  */
- Nurse* Hospital::getNewNurse()
-{
+Nurse *Hospital::getNewNurse() {
     int id, yearsOfExperience;
     char name[SIZE];
 
@@ -65,8 +62,7 @@ bool Hospital::addNewDepartment(Department * newDepartment)
 /**
  * Add new Nurse to a specific department
  */
-bool Hospital::addNewNurseToDepartment()
-{
+bool Hospital::addNewNurseToDepartment() {
     char departmentName[SIZE];
 
     cout << "Please type the department name you want to attach nurse to:\n";
@@ -80,8 +76,7 @@ bool Hospital::addNewNurseToDepartment()
  * Get a new doctor by user input.
  * @return
  */
-Doctor* Hospital::getNewDoctor()
-{
+Doctor *Hospital::getNewDoctor() {
     int id = 0;
     char name[SIZE], departmentName[SIZE], interField[SIZE];
 
@@ -100,8 +95,7 @@ Doctor* Hospital::getNewDoctor()
 /**
  * Add new Doctor to a specific department
  */
-bool Hospital::addNewDoctorToDepartment()
-{
+bool Hospital::addNewDoctorToDepartment() {
     char departmentName[SIZE];
 
     cout << "Please type the department name you want to attach doctor to:\n";
@@ -112,8 +106,7 @@ bool Hospital::addNewDoctorToDepartment()
     return true;
 }
 
-Department *Hospital::getDepartmentByName(char *name)
-{
+Department *Hospital::getDepartmentByName(char *name) {
     if (this->indexDepartments > 0) {
         for (int i = 0; i < this->indexDepartments; i++) {
             if (strcmp(departments[i]->getName(), name) == 0) {
@@ -125,35 +118,38 @@ Department *Hospital::getDepartmentByName(char *name)
     return nullptr;
 }
 
-bool Hospital::addNewPatientVisit()
-{
+Patient *Hospital::getNewPatient() {
+    char name[SIZE];
+    int yearOfBirth;
+    int id, gender;
+    Date today = Date();
+
+    cout << "What is your name?";
+    cin >> name;
+
+    cout << "What is your id?";
+    cin >> id;
+
+    cout << "What is your year of birth?";
+    cin >> yearOfBirth;
+
+    cout << "What is your gender? 1 = female, 0 = male";
+    cin >> gender;
+
+    return new Patient(name, id, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE), today);
+}
+
+bool Hospital::addNewPatientVisit() {
     bool isFirstVisit;
     int id;
     Patient *patient = nullptr;
     char *requiredDepartment = nullptr;
 
-    Date *today = new Date();
-
     cout << "Is this your first time here? 1 = yes , 0 = no";
     cin >> isFirstVisit;
 
     if (isFirstVisit) {
-        char *name = nullptr;
-        int yearOfBirth;
-        int gender;
-        cout << "What is your name?";
-        cin >> name;
-
-        cout << "What is your id?";
-        cin >> id;
-
-        cout << "What is your year of birth?";
-        cin >> yearOfBirth;
-
-        cout << "What is your gender? 1 = female, 0 = male";
-        cin >> gender;
-
-        patient = new Patient(name, id, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE), *today);
+        patient = getNewPatient();
     } else {
         cout << "What is your id number?";
         cin >> id;
@@ -168,10 +164,14 @@ bool Hospital::addNewPatientVisit()
     // attaching department both to patient and to wanted department
     patient->setRequiredDepartment(requiredDepartment);
     Department *department = getDepartmentByName(requiredDepartment);
-    department->addNewPatient(*patient);
-
-    return true;
-
+    if (department == nullptr) {
+        cout << "Could not find the department: " << requiredDepartment << ".";
+        return false;
+    } else {
+        department->addNewPatient(*patient);
+        cout << "Patient visit has been added.";
+        return true;
+    }
 }
 
 /**
@@ -180,8 +180,7 @@ bool Hospital::addNewPatientVisit()
  * @param id
  * @return
  */
-Patient *Hospital::getPatientById(int id)
-{
+Patient *Hospital::getPatientById(int id) {
     if (this->sizePatients > 0) {
         for (int i = 0; i < sizePatients; i++) {
             if (patients[i]->getId() == id) {
@@ -198,8 +197,7 @@ Patient *Hospital::getPatientById(int id)
  * Gets all researchers in the hospital.
  * @return
  */
-Researcher **Hospital::getResearchers()
-{
+Researcher **Hospital::getResearchers() {
     return this->researchers;
 }
 
@@ -208,8 +206,7 @@ Researcher **Hospital::getResearchers()
  * Will return a pointer of the created object.
  * @return
  */
-Researcher *Hospital::getNewResearcher()
-{
+Researcher *Hospital::getNewResearcher() {
     int id;
     char name[SIZE];
 
@@ -228,8 +225,7 @@ Researcher *Hospital::getNewResearcher()
  * @param newResearcher
  * @return
  */
-bool Hospital::addNewResearcher(Researcher *newResearcher)
-{
+bool Hospital::addNewResearcher(Researcher *newResearcher) {
     if (this->indexResearchers >= this->sizeResearchers) {
         Researcher **tempArr = new Researcher *[this->sizeResearchers * 2];
         for (int i = 0; i < this->indexResearchers; i++)
@@ -247,8 +243,7 @@ bool Hospital::addNewResearcher(Researcher *newResearcher)
  * Get a Date object from the user.
  * @return
  */
-Date Hospital::getDateFromUser()
-{
+Date Hospital::getDateFromUser() {
     // Todo: add validation for input of the date numbers
     int day, month, year;
 
@@ -267,8 +262,7 @@ Date Hospital::getDateFromUser()
  * Will return a pointer to a created article.
  * @return
  */
-Article *Hospital::getNewArticle()
-{
+Article *Hospital::getNewArticle() {
     char name[SIZE], magazine[SIZE];
     Date releaseDate;
 
@@ -289,8 +283,7 @@ Article *Hospital::getNewArticle()
  * @param newPatient
  * @return
  */
-bool Hospital::addNewPatient(Patient *newPatient)
-{
+bool Hospital::addNewPatient(Patient *newPatient) {
     if (this->indexPatients >= this->sizePatients) {
         Patient **tempArr = new Patient *[this->sizePatients * 2];
         for (int i = 0; i < this->indexPatients; i++)
@@ -307,8 +300,7 @@ bool Hospital::addNewPatient(Patient *newPatient)
 /**
  * Show / Print all researchers to the output.
  */
-void Hospital::showAllResearchers()
-{
+void Hospital::showAllResearchers() {
     cout << "Showing all researchers in the hospital: " << endl;
     for (int i = 0; i < indexResearchers; i++) {
         researchers[i]->show();
@@ -318,10 +310,9 @@ void Hospital::showAllResearchers()
 /**
  * Get ID by user input and show the patient information, if exists.
  */
-void Hospital::showPatientByID()
-{
+void Hospital::showPatientByID() {
     int patientId;
-    Patient * foundPatient;
+    Patient *foundPatient;
     cout << "What is your id number?";
     // Todo: add validation for good ID
     cin >> patientId;
@@ -337,8 +328,7 @@ void Hospital::showPatientByID()
 /**
  * The main loop method of the hospital application
  */
-void Hospital::runLoop()
-{
+void Hospital::runLoop() {
     int userInput;
 
     do {
@@ -380,4 +370,25 @@ void Hospital::runLoop()
                 break;
         }
     } while (userInput != -1);
+}
+
+Hospital::~Hospital()
+{
+    if (this->researchers != nullptr) {
+        for (int i = 0; i < this->indexResearchers; i++)
+            delete this->researchers[i];
+        delete[] this->researchers;
+    }
+
+    if (this->patients != nullptr) {
+        for (int i = 0; i < this->indexPatients; i++)
+            delete this->patients[i];
+        delete[] this->patients;
+    }
+
+    if (this->departments != nullptr) {
+        for (int i = 0; i < this->indexDepartments; i++)
+            delete this->departments[i];
+        delete[] this->departments;
+    }
 }

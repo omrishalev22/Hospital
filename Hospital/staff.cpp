@@ -17,6 +17,7 @@ bool Staff::addNewNurse(Nurse *nurse)
         this->sizeNurses += 2;
     }
     this->nurses[this->indexNurses++] = nurse;
+    return true;
 }
 
 bool Staff::addNewDoctor(Doctor *doctor)
@@ -31,6 +32,7 @@ bool Staff::addNewDoctor(Doctor *doctor)
         this->sizeDoctors *= 2;
     }
     this->doctors[this->indexDoctors++] = doctor;
+    return true;
 }
 
 

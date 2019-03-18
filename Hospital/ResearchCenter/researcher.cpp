@@ -47,4 +47,14 @@ bool Researcher::addNewArticle(Article *article)
         this->sizeArticles *= 2;
     }
     this->articles[this->indexArticles++] = article;
+    return true;
+}
+
+Researcher::~Researcher()
+{
+    if (this->articles != nullptr) {
+        for (int i = 0; i < this->indexArticles; i++)
+            delete this->articles[i];
+        delete[] this->articles;
+    }
 }

@@ -16,26 +16,31 @@ Department::Department(char *name)
 
 bool Department::setIndexPatients(int index){
     this->indexPatients = index;
+    return true;
 }
 
 bool Department::setSizePatients(int index){
     this->sizePatients = index;
+    return true;
 }
 
 bool Department::setName(char *departmentName)
 {
     name = new char[strlen(departmentName) + 1];
     strcpy(name, departmentName);
+    return true;
 }
 
 bool Department::addNewDoctor(Doctor *doctor)
 {
     staff->addNewDoctor(doctor);
+    return true;
 }
 
 bool Department::addNewNurse(Nurse *nurse)
 {
     staff->addNewNurse(nurse);
+    return true;
 }
 
 char *Department::getName()
@@ -60,5 +65,11 @@ bool Department::addNewPatient(Patient newPatient)
         this->sizePatients *= 2;
     }
     this->patients[this->indexPatients++] = patient;
+    return true;
 }
 
+Department::~Department()
+{
+    // We don't delete the patients here because we will delete them in the Hospital class.
+    delete[] this->patients;
+}

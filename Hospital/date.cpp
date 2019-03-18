@@ -3,6 +3,7 @@
 using namespace std;
 
 Date::Date() {
+    // Todo: get the real today's date.
     this->year = 2019;
     this->month = 1;
     this-> day = 1;
