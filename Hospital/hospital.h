@@ -14,7 +14,7 @@
 "\n (3) Add a new doctor and attach her to a department\n"\
 "\n (4) Add a new patient visit\n"\
 "\n (5) Add a new researcher to the Research center\n"\
-"\n (6) Add a new article to an investigator\n"\
+"\n (6) Add a new article to an researcher\n"\
 "\n (7) Show all patients by department name\n"\
 "\n (8) Show all staff members in the system\n"\
 "\n (9) Show all researchers in the Researchers center\n"\
@@ -45,6 +45,8 @@ public:
     Researcher ** getResearchers();
     Department * getDepartmentByName(char* name);
     Patient * getPatientById(int id);
+    Researcher * getResearcherById(int id);
+
     Department * getNewDepartment();
     Researcher * getNewResearcher();
     Article * getNewArticle();
@@ -52,17 +54,20 @@ public:
     Nurse * getNewNurse();
     Patient * getNewPatient();
     Date getDateFromUser();
+
     void showAllResearchers();
     void showPatientByID();
     void showAllHospitalStaff();
+    void showPatientsByDepartment();
 
     // Setters
     bool addNewDepartment(Department * newDepartment);
+    bool addNewPatient(Patient * newPatient);
+    bool addNewResearcher(Researcher * newResearcher);
     bool addNewNurseToDepartment();
     bool addNewDoctorToDepartment();
     bool addNewPatientVisit();
-    bool addNewPatient(Patient * newPatient);
-    bool addNewResearcher(Researcher * newResearcher);
+    bool addNewArticleToResearcher();
 
     ~Hospital();
 

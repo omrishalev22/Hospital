@@ -22,9 +22,9 @@ public:
 
     // GETTERS
     char *getName();
-
     Staff * getStaffMembers();
-    Patient * getStaffPatients();
+
+    void showPatients();
 
 
     // SETTERS

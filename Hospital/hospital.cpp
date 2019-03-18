@@ -146,13 +146,12 @@ bool Hospital::addNewDoctorToDepartment() {
  * @return
  */
 Department *Hospital::getDepartmentByName(char *name) {
-    if (this->indexDepartments > 0) {
-        for (int i = 0; i < this->indexDepartments; i++) {
-            if (strcmp(departments[i]->getName(), name) == 0) {
-                return departments[i];
-            }
+    for (int i = 0; i < this->indexDepartments; i++) {
+        if (strcmp(departments[i]->getName(), name) == 0) {
+            return departments[i];
         }
     }
+
     return nullptr;
 }
 
@@ -225,11 +224,9 @@ bool Hospital::addNewPatientVisit() {
  * @return
  */
 Patient *Hospital::getPatientById(int id) {
-    if (this->sizePatients > 0) {
-        for (int i = 0; i < sizePatients; i++) {
-            if (patients[i]->getId() == id) {
-                return patients[i];
-            }
+    for (int i = 0; i < indexPatients; i++) {
+        if (patients[i]->getId() == id) {
+            return patients[i];
         }
     }
 
@@ -310,13 +307,13 @@ Article *Hospital::getNewArticle() {
     char name[SIZE], magazine[SIZE];
     Date releaseDate;
 
-    cout << "Enter the name of the article: ";
+    cout << "Enter the name of the article: " << endl;
     cin >> name;
 
-    cout << "Enter the name of the article: ";
+    cout << "Enter the name of the magazine the article is in: " << endl;
     cin >> magazine;
 
-    cout << "Enter the release date of the article: ";
+    cout << "Enter the release date of the article: " << endl;
     releaseDate = getDateFromUser();
 
     return new Article(name, magazine, releaseDate);
@@ -369,12 +366,72 @@ void Hospital::showPatientByID() {
     }
 }
 
-
+/**
+ * Shows to the user output all of the hospital staff.
+ */
 void Hospital::showAllHospitalStaff()
 {
     for (int i = 0; i < indexDepartments; i++) {
         cout << "About to show all staff members of department: " << departments[i]->getName() << endl;
         departments[i]->getStaffMembers()->show();
+    }
+}
+
+/**
+ * Get a researcher object by it's ID.
+ * @param id
+ * @return
+ */
+Researcher* Hospital::getResearcherById(int id)
+{
+    for (int i = 0; i < indexResearchers; i++) {
+        if (researchers[i]->getId() == id) {
+            return researchers[i];
+        }
+    }
+
+    return nullptr;
+}
+
+/**
+ * Adds a new article to a specific researcher.
+ * @return
+ */
+bool Hospital::addNewArticleToResearcher()
+{
+    int id;
+
+    // Todo: add validation to user input
+    cout << "Please enter researcher ID: " << endl;
+    cin >> id;
+
+    Researcher * foundResearcher = getResearcherById(id);
+    if (foundResearcher == nullptr) {
+        cout << "Could not find a researcher with ID: " << id << endl;
+        return false;
+    } else {
+        foundResearcher->addNewArticle(getNewArticle());
+        return true;
+    }
+}
+
+/**
+ * Shows to the user output the patients of a specific department.
+ */
+void Hospital::showPatientsByDepartment()
+{
+    char departmentName[SIZE];
+    cout << "What is the department name?";
+    // Todo: add validation for good name
+    cin >> departmentName;
+
+    Department *foundDepartment = this->getDepartmentByName(departmentName);
+
+    if (foundDepartment == nullptr) {
+        cout << "Could not find a department with name: " << departmentName << endl;
+    } else {
+        cout << "Showing patients for department " << foundDepartment->getName() << ":" << endl;
+        foundDepartment->showPatients();
     }
 }
 
@@ -406,9 +463,10 @@ void Hospital::runLoop() {
                 addNewResearcher(getNewResearcher());
                 break;
             case 6:
-
+                addNewArticleToResearcher();
                 break;
             case 7:
+                showPatientsByDepartment();
                 break;
             case 8:
                 showAllHospitalStaff();

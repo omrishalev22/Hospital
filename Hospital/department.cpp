@@ -58,6 +58,13 @@ Staff * Department::getStaffMembers() {
     return this->staff;
 }
 
+void Department::showPatients()
+{
+    for (int i=0; i < indexPatients; i++) {
+        patients[i]->show();
+    }
+}
+
 Department::~Department()
 {
     // We don't delete the patients here because we will delete them in the Hospital class.
