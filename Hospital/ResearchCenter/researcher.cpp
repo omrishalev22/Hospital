@@ -1,6 +1,7 @@
 #include <cstring>
 #include "researcher.h"
 #include <iostream>
+#include "../consts.h"
 
 using namespace std;
 
@@ -9,6 +10,9 @@ Researcher::Researcher(char *name, int id)
     this->name = new char[strlen(name) + 1];
     this->name = strcpy(this->name, name);
     this->id = id;
+    this->articles = new Article*[AMOUNT_OF_STARTED_ITEMS];
+    this->indexArticles = 0;
+    this->sizeArticles = AMOUNT_OF_STARTED_ITEMS;
 }
 
 char* Researcher::getName()

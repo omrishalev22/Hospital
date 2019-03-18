@@ -7,13 +7,13 @@
 
 class Doctor {
 private:
-    char * name;
+    char *name;
     int id;
-    char * interField;
+    char *interField;
 public:
-    Doctor(int id, char * name, char * interField);
-
-    const char * getName();
-    bool * setName();
+    Doctor(int id, char *name, char *interField);
+    int getID();
+    void show();
 };
+
 #endif //__DOCTOR_H

@@ -4,20 +4,35 @@
 #include "hospital.h"
 #include "patient.h"
 #include "date.h"
+#include "consts.h"
 
-#define SIZE 150
 using namespace std;
 
-Hospital::Hospital() = default;
+Hospital::Hospital()
+{
+    this->departments = new Department*[AMOUNT_OF_STARTED_ITEMS];
+    this->indexDepartments = 0;
+    this->sizeDepartments = AMOUNT_OF_STARTED_ITEMS;
 
+    this->patients = new Patient*[AMOUNT_OF_STARTED_ITEMS];
+    this->indexPatients = 0;
+    this->sizePatients = AMOUNT_OF_STARTED_ITEMS;
+
+    this->researchers = new Researcher*[AMOUNT_OF_STARTED_ITEMS];
+    this->indexResearchers = 0;
+    this->sizeResearchers = AMOUNT_OF_STARTED_ITEMS;
+};
+
+// Todo: not limit inputs to 150 chars
 
 /**
  * Get a new department from user input.
  * @return
  */
 Department *Hospital::getNewDepartment() {
+    // Todo: add validations to all fields
     char name[SIZE];
-    cout << "Please type the department name:\n";
+    cout << "Please type the department name:" << endl;
     cin >> name;
 
     return new Department(name);
@@ -28,13 +43,13 @@ Department *Hospital::getNewDepartment() {
  */
 bool Hospital::addNewDepartment(Department *newDepartment) {
     if (this->indexDepartments >= this->sizeDepartments) {
-        Department **tempArr = new Department *[this->sizeDepartments + 2];
+        Department **tempArr = new Department *[this->sizeDepartments * 2];
         for (int i = 0; i < this->indexDepartments; i++)
             tempArr[i] = this->departments[i];
 
-        delete[] this->departments;
+        delete [] this->departments;
         this->departments = tempArr;
-        this->sizeDepartments += 2;
+        this->sizeDepartments *= 2;
     }
     this->departments[this->indexDepartments++] = newDepartment;
     return true;
@@ -47,13 +62,15 @@ Nurse *Hospital::getNewNurse() {
     int id, yearsOfExperience;
     char name[SIZE];
 
-    cout << "Please type the nurse's ID:\n";
+    // Todo: add validations to all fields
+
+    cout << "Please type the nurse's ID:" << endl;
     cin >> id;
 
-    cout << "Please type the nurse's name:\n";
+    cout << "Please type the nurse's name:" << endl;
     cin >> name;
 
-    cout << "Please type the nurse's years of experience:\n";
+    cout << "Please type the nurse's years of experience:" << endl;
     cin >> yearsOfExperience;
 
     return new Nurse(name, id, yearsOfExperience);
@@ -65,16 +82,17 @@ Nurse *Hospital::getNewNurse() {
 bool Hospital::addNewNurseToDepartment() {
     char departmentName[SIZE];
 
-    cout << "Please type the department name you want to attach nurse to:\n";
+    cout << "Please type the department name you want to attach nurse to:" << endl;
     cin >> departmentName;
     Department * foundDepartment = getDepartmentByName(departmentName);
 
     if (foundDepartment == nullptr) {
-        cout << "Could not find department: " << departmentName;
+        cout << "Could not find department: " << departmentName << endl;
         return false;
     } else {
         Nurse *nurse = getNewNurse();
         foundDepartment->addNewNurse(nurse);
+        cout << "Successfully added new nurse (ID " << nurse->getID() << ") to department: " << departmentName << endl;
         return true;
     }
 }
@@ -87,13 +105,15 @@ Doctor *Hospital::getNewDoctor() {
     int id = 0;
     char name[SIZE], departmentName[SIZE], interField[SIZE];
 
-    cout << "Please type the doctor's ID:\n";
+    // Todo: add validations for all fields
+
+    cout << "Please type the doctor's ID:" << endl;
     cin >> id;
 
-    cout << "Please type the doctor's name:\n";
+    cout << "Please type the doctor's name:" << endl;
     cin >> name;
 
-    cout << "Please type the doctor's internship field:\n";
+    cout << "Please type the doctor's internship field:" << endl;
     cin >> interField;
 
     return new Doctor(id, name, interField);
@@ -105,20 +125,26 @@ Doctor *Hospital::getNewDoctor() {
 bool Hospital::addNewDoctorToDepartment() {
     char departmentName[SIZE];
 
-    cout << "Please type the department name you want to attach doctor to:\n";
+    cout << "Please type the department name you want to attach doctor to:" << endl;
     cin >> departmentName;
 
     Department * foundDepartment = getDepartmentByName(departmentName);
     if (foundDepartment == nullptr) {
-        cout << "Could not find department: " << departmentName;
+        cout << "Could not find department: " << departmentName << endl;
         return false;
     } else {
         Doctor *doctor = getNewDoctor();
         foundDepartment->addNewDoctor(doctor);
+        cout << "Successfully added new doctor (ID " << doctor->getID() << ") to department: " << departmentName << endl;
         return true;
     }
 }
 
+/**
+ * Get an existing department object by it's name.
+ * @param name
+ * @return
+ */
 Department *Hospital::getDepartmentByName(char *name) {
     if (this->indexDepartments > 0) {
         for (int i = 0; i < this->indexDepartments; i++) {
@@ -127,26 +153,31 @@ Department *Hospital::getDepartmentByName(char *name) {
             }
         }
     }
-    cout << " couldn't find the department you are searching for\n";
     return nullptr;
 }
 
+/**
+ * Get a patient object from user input.
+ * @return
+ */
 Patient *Hospital::getNewPatient() {
     char name[SIZE];
     int yearOfBirth;
     int id, gender;
     Date today = Date();
 
-    cout << "What is your name?";
+    // Todo: enter validations for all fields
+
+    cout << "What is your name?" << endl;
     cin >> name;
 
-    cout << "What is your id?";
+    cout << "What is your id?" << endl;
     cin >> id;
 
-    cout << "What is your year of birth?";
+    cout << "What is your year of birth?" << endl;
     cin >> yearOfBirth;
 
-    cout << "What is your gender? 1 = female, 0 = male";
+    cout << "What is your gender? 1 = female, 0 = male" << endl;
     cin >> gender;
 
     return new Patient(name, id, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE), today);
@@ -156,33 +187,33 @@ bool Hospital::addNewPatientVisit() {
     bool isFirstVisit;
     int id;
     Patient *patient = nullptr;
-    char *requiredDepartment = nullptr;
+    char requiredDepartment[SIZE];
 
-    cout << "Is this your first time here? 1 = yes , 0 = no";
+    cout << "Is this your first time here? 1 = yes , 0 = no" << endl;
     cin >> isFirstVisit;
 
     if (isFirstVisit) {
         patient = getNewPatient();
     } else {
-        cout << "What is your id number?";
+        cout << "What is your id number?" << endl;
         cin >> id;
-        cout << "Getting your documents from last visit...";
+        cout << "Getting your documents from last visit..." << endl;
         patient = this->getPatientById(id);
-        cout << "Thank you " << patient->getName();
+        cout << "Thank you " << patient->getName() << endl;
     }
 
-    cout << "Whats the purpose of the visit?";
+    cout << "What department are you looking for?" << endl;
     cin >> requiredDepartment;
 
     // attaching department both to patient and to wanted department
     patient->setRequiredDepartment(requiredDepartment);
     Department *department = getDepartmentByName(requiredDepartment);
     if (department == nullptr) {
-        cout << "Could not find the department: " << requiredDepartment << ".";
+        cout << "Could not find the department: " << requiredDepartment << endl;
         return false;
     } else {
         department->addNewPatient(*patient);
-        cout << "Patient visit has been added.";
+        cout << "Patient visit has been added." << endl;
         return true;
     }
 }
@@ -223,10 +254,10 @@ Researcher *Hospital::getNewResearcher() {
     int id;
     char name[SIZE];
 
-    cout << "Enter the name of the researcher: ";
+    cout << "Enter the name of the researcher: " << endl;
     cin >> name;
 
-    cout << "Enter the ID of the researcher: ";
+    cout << "Enter the ID of the researcher: " << endl;
     cin >> id;
 
     return new Researcher(name, id);
@@ -332,9 +363,18 @@ void Hospital::showPatientByID() {
     foundPatient = this->getPatientById(patientId);
 
     if (foundPatient == nullptr) {
-        cout << "Could not find a patient with ID " << patientId;
+        cout << "Could not find a patient with ID " << patientId << endl;
     } else {
         foundPatient->show();
+    }
+}
+
+
+void Hospital::showAllHospitalStaff()
+{
+    for (int i = 0; i < indexDepartments; i++) {
+        cout << "About to show all staff members of department: " << departments[i]->getName() << endl;
+        departments[i]->getStaffMembers()->show();
     }
 }
 
@@ -351,7 +391,7 @@ void Hospital::runLoop() {
             case -1:
                 break;
             case 1:
-                addNewDepartment();
+                addNewDepartment(getNewDepartment());
                 break;
             case 2:
                 addNewNurseToDepartment();
@@ -371,6 +411,7 @@ void Hospital::runLoop() {
             case 7:
                 break;
             case 8:
+                showAllHospitalStaff();
                 break;
             case 9:
                 showAllResearchers();
@@ -379,7 +420,7 @@ void Hospital::runLoop() {
                 showPatientByID();
                 break;
             default:
-                cout << "Command could not be found, Please try something else\n";
+                cout << "Command could not be found, Please try something else" << endl;
                 break;
         }
     } while (userInput != -1);

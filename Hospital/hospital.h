@@ -19,23 +19,23 @@
 "\n (8) Show all staff members in the system\n"\
 "\n (9) Show all researchers in the Researchers center\n"\
 "\n (10) Show patient details by ID\n"\
-"\n or enter -1 to exit")
+"\n or enter -1 to exit\n")
 
 class Hospital
 {
 private:
 
     Department ** departments;
-    int indexDepartments = 0;
-    int sizeDepartments = 0;
+    int indexDepartments;
+    int sizeDepartments;
 
     Patient ** patients;
-    int indexPatients = 0;
-    int sizePatients = 0;
+    int indexPatients;
+    int sizePatients;
 
     Researcher** researchers;
-    int indexResearchers = 0;
-    int sizeResearchers = 0;
+    int indexResearchers;
+    int sizeResearchers;
 
 public:
 
@@ -54,6 +54,7 @@ public:
     Date getDateFromUser();
     void showAllResearchers();
     void showPatientByID();
+    void showAllHospitalStaff();
 
     // Setters
     bool addNewDepartment(Department * newDepartment);

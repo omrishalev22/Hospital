@@ -18,22 +18,19 @@ private:
 
 public:
 
-    Department(char *name);
+    explicit Department(char *name);
 
     // GETTERS
     char *getName();
 
-    Staff *getStaffMembers();
-    Patient *getStaffPatients();
+    Staff * getStaffMembers();
+    Patient * getStaffPatients();
 
 
     // SETTERS
-    bool setName(char *name); // in case in future someone want to change the name
     bool addNewDoctor(Doctor *doctor);
     bool addNewNurse(Nurse *nurse);
     bool addNewPatient(Patient patient);
-    bool setIndexPatients(int index);
-    bool setSizePatients(int size);
 
     ~Department();
 

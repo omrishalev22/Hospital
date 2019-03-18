@@ -10,6 +10,8 @@ private:
     int yearsOfExperience;
 public :
     Nurse(char * name,int id, int yearsOfExperience);
+    int getID();
+    void show();
 
 };
 #endif //__NURSE_H

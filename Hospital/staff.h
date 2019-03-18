@@ -10,10 +10,14 @@ private :
     Nurse ** nurses;
     Doctor ** doctors;
 
-    int indexDoctors = 0,sizeDoctors = 0;
-    int indexNurses = 0,sizeNurses = 0;
+    int indexDoctors, sizeDoctors;
+    int indexNurses, sizeNurses;
 
 public:
+    // Getters
+    Staff();
+    void show();
+
     // Setters
     bool addNewNurse(Nurse * nurse);
     bool addNewDoctor(Doctor * doctor);

@@ -2,33 +2,19 @@
 #include <iostream>
 #include <cstring>
 #include "department.h"
+#include "consts.h"
 
 using namespace std;
 
 
 Department::Department(char *name)
 {
-    staff = new Staff();
-    setIndexPatients(0);
-    setSizePatients(0);
-    setName(name);
-}
-
-bool Department::setIndexPatients(int index){
-    this->indexPatients = index;
-    return true;
-}
-
-bool Department::setSizePatients(int index){
-    this->sizePatients = index;
-    return true;
-}
-
-bool Department::setName(char *departmentName)
-{
-    name = new char[strlen(departmentName) + 1];
-    strcpy(name, departmentName);
-    return true;
+    this->staff = new Staff();
+    this->patients = new Patient*[AMOUNT_OF_STARTED_ITEMS];
+    this->indexPatients = 0;
+    this->sizePatients = 0;
+    this->name = new char[strlen(name) + 1];
+    this->name = strcpy(this->name, name);
 }
 
 bool Department::addNewDoctor(Doctor *doctor)
@@ -66,6 +52,10 @@ bool Department::addNewPatient(Patient newPatient)
     }
     this->patients[this->indexPatients++] = patient;
     return true;
+}
+
+Staff * Department::getStaffMembers() {
+    return this->staff;
 }
 
 Department::~Department()

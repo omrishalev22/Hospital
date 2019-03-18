@@ -1,27 +1,48 @@
 #include <string>
 #include <iostream>
 #include "staff.h"
+#include "consts.h"
 
 using namespace std;
 
+Staff::Staff() {
+    this->doctors = new Doctor *[AMOUNT_OF_STARTED_ITEMS];
+    this->indexDoctors = 0;
+    this->sizeDoctors = AMOUNT_OF_STARTED_ITEMS;
 
-bool Staff::addNewNurse(Nurse *nurse)
-{
+    this->nurses = new Nurse *[AMOUNT_OF_STARTED_ITEMS];
+    this->indexNurses = 0;
+    this->sizeNurses = AMOUNT_OF_STARTED_ITEMS;
+}
+
+void Staff::show() {
+    int i;
+    cout << "Showing all doctors:" << endl;
+    for (i = 0; i < indexDoctors; i++) {
+        doctors[i]->show();
+    }
+
+    cout << "Showing all nurses:" << endl;
+    for (i = 0; i < indexNurses; i++) {
+        nurses[i]->show();
+    }
+}
+
+bool Staff::addNewNurse(Nurse *nurse) {
     if (this->indexNurses >= this->sizeNurses) {
-        Nurse **tempArr = new Nurse *[this->sizeNurses + 2];
+        Nurse **tempArr = new Nurse *[this->sizeNurses * 2];
         for (int i = 0; i < this->indexNurses; i++)
             tempArr[i] = this->nurses[i];
 
         delete[] this->nurses;
         this->nurses = tempArr;
-        this->sizeNurses += 2;
+        this->sizeNurses *= 2;
     }
     this->nurses[this->indexNurses++] = nurse;
     return true;
 }
 
-bool Staff::addNewDoctor(Doctor *doctor)
-{
+bool Staff::addNewDoctor(Doctor *doctor) {
     if (this->indexDoctors >= this->sizeDoctors) {
         Doctor **tempArr = new Doctor *[this->sizeDoctors * 2];
         for (int i = 0; i < this->indexDoctors; i++)
@@ -36,8 +57,7 @@ bool Staff::addNewDoctor(Doctor *doctor)
 }
 
 
-Staff::~Staff()
-{
+Staff::~Staff() {
     if (this->nurses != nullptr) {
         for (int i = 0; i < this->indexNurses; i++)
             delete this->nurses[i];
