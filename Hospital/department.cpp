@@ -12,25 +12,43 @@ Department::Department(char *name)
 }
 
 
-void Department::setName(char *departmentName)
+bool Department::setName(char *departmentName)
 {
     name = new char[strlen(departmentName) + 1];
     strcpy(name, departmentName);
 }
 
-void Department::addNewDoctor(Doctor *doctor)
+bool Department::addNewDoctor(Doctor *doctor)
 {
-    staff->addNewDoctor(doctor);
-
+    staff.addNewDoctor(doctor);
 }
 
-void Department::addNewNurse(Nurse *nurse)
+bool Department::addNewNurse(Nurse *nurse)
 {
-    staff->addNewNurse(nurse);
+    staff.addNewNurse(nurse);
 }
 
 char *Department::getName()
 {
     return name;
+}
+
+/**
+ * Add new department to the hospital
+ */
+bool Department::addNewPatient(Patient newPatient)
+{
+
+    Patient * patient = new Patient(newPatient);
+    if (this->indexPatients >= this->sizePatients) {
+        Patient **tempArr = new Patient *[this->sizePatients * 2];
+        for (int i = 0; i < this->indexPatients; i++)
+            tempArr[i] = this->patients[i];
+
+        delete[] this->patients;
+        this->patients = tempArr;
+        this->sizePatients *= 2;
+    }
+    this->patients[this->indexPatients++] = patient;
 }
 

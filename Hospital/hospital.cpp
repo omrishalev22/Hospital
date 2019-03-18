@@ -96,9 +96,10 @@ Department *Hospital::getDepartmentByName(char *name)
 bool Hospital::addNewPatientVisit()
 {
     bool isFirstVisit;
-    Patient *patient;
     int id;
-    char * visitPurpose;
+    Patient *patient = nullptr;
+    char *requiredDepartment = nullptr;
+
     Date *today = new Date();
 
     cout << "Is this your first time here? 1 = yes , 0 = no";
@@ -130,9 +131,13 @@ bool Hospital::addNewPatientVisit()
     cout << "Thank you " << patient->getName();
 
     cout << "Whats the purpose of the visit?";
-    cin >> visitPurpose;
-    patient->setVisitPurpose(visitPurpose);
-    // TODO add to patient the staff member incarge of him
+    cin >> requiredDepartment;
+
+    // attaching department both to patient and to wanted department
+    patient->setRequiredDepartment(requiredDepartment);
+    Department *department = getDepartmentByName(requiredDepartment);
+    department->addNewPatient(*patient);
+
 }
 
 /**
@@ -141,7 +146,7 @@ bool Hospital::addNewPatientVisit()
  * @param id
  * @return
  */
-Patient * Hospital::getPatientById(int id)
+Patient *Hospital::getPatientById(int id)
 {
     if (this->sizePatients > 0) {
         for (int i = 0; i < sizePatients; i++) {
@@ -159,7 +164,7 @@ Patient * Hospital::getPatientById(int id)
  * Gets all researchers in the hospital.
  * @return
  */
-Researcher** Hospital::getResearchers()
+Researcher **Hospital::getResearchers()
 {
     return this->researchers;
 }
@@ -169,10 +174,10 @@ Researcher** Hospital::getResearchers()
  * Will return a pointer of the created object.
  * @return
  */
-Researcher* Hospital::getNewResearcher()
+Researcher *Hospital::getNewResearcher()
 {
     int id;
-    char* name;
+    char *name;
 
     cout << "Enter the name of the researcher: ";
     cin.getline(name, 200);
@@ -189,15 +194,14 @@ Researcher* Hospital::getNewResearcher()
  * @param newResearcher
  * @return
  */
-bool Hospital::addNewResearcher(Researcher* newResearcher)
+bool Hospital::addNewResearcher(Researcher *newResearcher)
 {
-    if (this->indexResearchers >= this->sizeResearchers)
-    {
-        Researcher ** tempArr = new Researcher*[this->sizeResearchers * 2];
+    if (this->indexResearchers >= this->sizeResearchers) {
+        Researcher **tempArr = new Researcher *[this->sizeResearchers * 2];
         for (int i = 0; i < this->indexResearchers; i++)
             tempArr[i] = this->researchers[i];
 
-        delete [] this->researchers;
+        delete[] this->researchers;
         this->researchers = tempArr;
         this->sizeResearchers *= 2;
     }
@@ -211,7 +215,7 @@ bool Hospital::addNewResearcher(Researcher* newResearcher)
  */
 Date Hospital::getDateFromUser()
 {
-    char * inputDay,  * inputMonth, * inputYear;
+    char *inputDay, *inputMonth, *inputYear;
     int day, month, year;
 
     cout << "Day: ";
@@ -235,10 +239,10 @@ Date Hospital::getDateFromUser()
  * Will return a pointer to a created article.
  * @return
  */
-Article* Hospital::getNewArticle()
+Article *Hospital::getNewArticle()
 {
-    char* name;
-    char* magazine;
+    char *name;
+    char *magazine;
     Date releaseDate;
 
     cout << "Enter the name of the article: ";
@@ -260,13 +264,12 @@ Article* Hospital::getNewArticle()
  */
 bool Hospital::addNewPatient(Patient *newPatient)
 {
-    if (this->indexPatients >= this->sizePatients)
-    {
-        Patient ** tempArr = new Patient*[this->sizePatients * 2];
+    if (this->indexPatients >= this->sizePatients) {
+        Patient **tempArr = new Patient *[this->sizePatients * 2];
         for (int i = 0; i < this->indexPatients; i++)
             tempArr[i] = this->patients[i];
 
-        delete [] this->patients;
+        delete[] this->patients;
         this->patients = tempArr;
         this->sizePatients *= 2;
     }
@@ -280,7 +283,7 @@ bool Hospital::addNewPatient(Patient *newPatient)
 void Hospital::showAllResearchers()
 {
     cout << "Showing all researchers in the hospital: " << endl;
-    for(int i = 0; i < indexResearchers; i++) {
+    for (int i = 0; i < indexResearchers; i++) {
         researchers[i]->show();
     }
 }
@@ -295,7 +298,7 @@ void Hospital::runLoop()
     do {
         cout << MENU_TEXT;
         cin >> userInput;
-        switch(userInput) {
+        switch (userInput) {
             case -1:
                 break;
             case 1:

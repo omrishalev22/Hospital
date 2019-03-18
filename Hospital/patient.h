@@ -11,6 +11,14 @@ public:
         MALE, FEMALE
     };
 
+    Patient(const Patient& patient) {
+        this->name = patient.name;
+        this->id = patient.id;
+        this->yearOfBirth = patient.yearOfBirth;
+        this->sex = patient.sex;
+        this->arrivalDate = patient.arrivalDate;
+    }
+
     Patient(char *name, int id, int yearOfBirth, eSex sex, Date arrivalDate);
 
     // GETTERS
@@ -20,12 +28,12 @@ public:
     eSex getESex();
 
     // SETTERS
-    bool setVisitPurpose(char * purpose);
+    bool setRequiredDepartment(char * departmentName);
 private:
     char *name;
     int id;
     int yearOfBirth;
-    char *purpose;
+    char *departmentName;
     Date arrivalDate;
     eSex sex;
 

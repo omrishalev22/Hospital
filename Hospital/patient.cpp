@@ -1,7 +1,9 @@
 #include <cstring>
 #include <iostream>
 #include "patient.h"
+
 using namespace std;
+
 
 Patient::Patient(char *name, int id, int yearOfBirth, eSex sex, Date arrivalDate)
 {
@@ -25,9 +27,10 @@ char *Patient::getName()
     return name;
 }
 
-bool Patient::setVisitPurpose(char * purpose){
-    this->purpose = new char[strlen(purpose) + 1];
-    this->purpose = strcpy(this->purpose, purpose);
+bool Patient::setRequiredDepartment(char *departmentName)
+{
+    this->departmentName = new char[strlen(departmentName) + 1];
+    this->departmentName = strcpy(this->departmentName, departmentName);
     return true;
 }
 
@@ -37,7 +40,7 @@ void Patient::show()
     cout << "    Name: " << this->name << endl;
     cout << "    ID: " << this->id << endl;
     cout << "    Year of birth: " << this->yearOfBirth << endl;
-    cout << "    Purpose of arrival: " << this->purpose << endl;
+    cout << "    Purpose of arrival: " << this->departmentName << endl;
     // cout << "    Sex: " << sex == eSex::MALE? "Male" : "Female"; TODO enum equality doesnt work here
 
     cout << "    Date of arrival: ";
