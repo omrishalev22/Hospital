@@ -48,11 +48,14 @@ public:
     Department * getNewDepartment();
     Researcher * getNewResearcher();
     Article * getNewArticle();
+    Doctor * getNewDoctor();
+    Nurse * getNewNurse();
     Date getDateFromUser();
     void showAllResearchers();
+    void showPatientByID();
 
     // Setters
-    bool addNewDepartment();
+    bool addNewDepartment(Department * newDepartment);
     bool addNewNurseToDepartment();
     bool addNewDoctorToDepartment();
     bool addNewPatientVisit();
