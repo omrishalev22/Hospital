@@ -2,13 +2,25 @@
 
 #ifndef __PATIENT_H
 #define __PATIENT_H
-enum eSex
-{
-    MALE, FEMALE
-};
 
 class Patient
 {
+public:
+    enum eSex
+    {
+        MALE, FEMALE
+    };
+
+    Patient(char *name, int id, int yearOfBirth, eSex sex, Date arrivalDate);
+
+    // GETTERS
+    int getId();
+    char *getName();
+    void show();
+    eSex getESex();
+
+    // SETTERS
+    bool setVisitPurpose(char * purpose);
 private:
     char *name;
     int id;
@@ -17,16 +29,7 @@ private:
     Date arrivalDate;
     eSex sex;
 
-public:
-    Patient(char *name, int id, int yearOfBirth, eSex sex, Date arrivalDate);
 
-    // GETTERS
-    int getId();
-    char *getName();
-    void show();
-
-    // SETTERS
-    bool setVisitPurpose(char * purpose);
 };
 
 #endif //__PATIENT_H

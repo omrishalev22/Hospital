@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cstring>
 #include "hospital.h"
+#include "patient.h"
+#include "date.h"
 
 #define SIZE 150
 using namespace std;
@@ -118,7 +120,7 @@ bool Hospital::addNewPatientVisit()
         cout << "What is your gender? 1 = female, 0 = male";
         cin >> gender;
 
-        patient = new Patient(name, id, yearOfBirth, (gender ? eSex::FEMALE : eSex::MALE), *today);
+        patient = new Patient(name, id, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE), *today);
     }
 
     cout << "What is your id number?";
@@ -209,7 +211,7 @@ bool Hospital::addNewResearcher(Researcher* newResearcher)
  */
 Date Hospital::getDateFromUser()
 {
-    char inputDay, inputMonth, inputYear;
+    char * inputDay,  * inputMonth, * inputYear;
     int day, month, year;
 
     cout << "Day: ";
@@ -223,6 +225,7 @@ Date Hospital::getDateFromUser()
     day = atoi(inputDay);
     month = atoi(inputMonth);
     year = atoi(inputYear);
+
 
     return Date(year, month, day);
 }

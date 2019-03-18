@@ -1,5 +1,8 @@
 #include <cstring>
 #include "researcher.h"
+#include <iostream>
+
+using namespace std;
 
 Researcher::Researcher(char *name, int id)
 {

@@ -1,4 +1,5 @@
 #ifndef _DATE_H
+#define _DATE_H
 class Date {
 
 private:
@@ -6,10 +7,11 @@ private:
 
 public:
     Date();
-    Date(Date& d);
-    Date(int year, int month, int day);
+    // Date(Date& d);
+    Date(int , int , int );
+
+
     void show();
 };
-#define _DATE_H
 
 #endif //_DATE_H

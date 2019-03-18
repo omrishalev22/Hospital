@@ -1,4 +1,6 @@
+#include <iostream>
 #include "date.h"
+using namespace std;
 
 Date::Date() {
     this->year = 2019;
@@ -6,11 +8,12 @@ Date::Date() {
     this-> day = 1;
 };
 
-Date::Date(Date &d) {
+// TODO why do we need this ? it causes build errors
+/*Date::Date(Date &d) {
     this->year = d.year;
     this->month = d.month;
     this->day = d.day;
-}
+}*/
 
 Date::Date(int year, int month, int day)
 {
