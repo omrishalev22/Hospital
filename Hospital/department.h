@@ -10,10 +10,10 @@ class Department
 {
 private:
     char *name;
-    Staff staff;
+    Staff * staff;
     Patient ** patients;
-    int indexPatients = 0;
-    int sizePatients = 0;
+    int indexPatients;
+    int sizePatients;
 
 
 public:
@@ -32,6 +32,8 @@ public:
     bool addNewDoctor(Doctor *doctor);
     bool addNewNurse(Nurse *nurse);
     bool addNewPatient(Patient patient);
+    bool setIndexPatients(int index);
+    bool setSizePatients(int size);
 
 };
 

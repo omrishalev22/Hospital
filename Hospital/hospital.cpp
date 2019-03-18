@@ -21,13 +21,13 @@ bool Hospital::addNewDepartment()
 
     Department *department = new Department(name);
     if (this->indexDepartments >= this->sizeDepartments) {
-        Department **tempArr = new Department *[this->sizeDepartments * 2];
+        Department **tempArr = new Department *[this->sizeDepartments + 2];
         for (int i = 0; i < this->indexDepartments; i++)
             tempArr[i] = this->departments[i];
 
         delete[] this->departments;
         this->departments = tempArr;
-        this->sizeDepartments *= 2;
+        this->sizeDepartments += 2;
     }
     this->departments[this->indexDepartments++] = department;
 }
@@ -82,9 +82,9 @@ bool Hospital::addNewDoctorToDepartment()
 
 Department *Hospital::getDepartmentByName(char *name)
 {
-    if (this->sizeDepartments > 0) {
-        for (int i = 0; i < sizeDepartments; i++) {
-            if (strcmp(departments[i]->getName(), name) > 0) {
+    if (this->indexDepartments > 0) {
+        for (int i = 0; i < this->indexDepartments; i++) {
+            if (strcmp(departments[i]->getName(), name) == 0) {
                 return departments[i];
             }
         }

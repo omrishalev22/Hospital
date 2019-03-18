@@ -8,13 +8,13 @@ using namespace std;
 bool Staff::addNewNurse(Nurse *nurse)
 {
     if (this->indexNurses >= this->sizeNurses) {
-        Nurse **tempArr = new Nurse *[this->sizeNurses * 2];
+        Nurse **tempArr = new Nurse *[this->sizeNurses + 2];
         for (int i = 0; i < this->indexNurses; i++)
             tempArr[i] = this->nurses[i];
 
         delete[] this->nurses;
         this->nurses = tempArr;
-        this->sizeNurses *= 2;
+        this->sizeNurses += 2;
     }
     this->nurses[this->indexNurses++] = nurse;
 }

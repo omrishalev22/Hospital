@@ -10,8 +10,8 @@ private :
     Nurse ** nurses;
     Doctor ** doctors;
 
-    int indexDoctors,sizeDoctors;
-    int indexNurses,sizeNurses;
+    int indexDoctors = 0,sizeDoctors = 0;
+    int indexNurses = 0,sizeNurses = 0;
 
 public:
     // Setters

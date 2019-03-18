@@ -8,9 +8,19 @@ using namespace std;
 
 Department::Department(char *name)
 {
+    staff = new Staff();
+    setIndexPatients(0);
+    setSizePatients(0);
     setName(name);
 }
 
+bool Department::setIndexPatients(int index){
+    this->indexPatients = index;
+}
+
+bool Department::setSizePatients(int index){
+    this->sizePatients = index;
+}
 
 bool Department::setName(char *departmentName)
 {
@@ -20,12 +30,12 @@ bool Department::setName(char *departmentName)
 
 bool Department::addNewDoctor(Doctor *doctor)
 {
-    staff.addNewDoctor(doctor);
+    staff->addNewDoctor(doctor);
 }
 
 bool Department::addNewNurse(Nurse *nurse)
 {
-    staff.addNewNurse(nurse);
+    staff->addNewNurse(nurse);
 }
 
 char *Department::getName()
