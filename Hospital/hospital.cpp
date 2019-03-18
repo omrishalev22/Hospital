@@ -67,9 +67,16 @@ bool Hospital::addNewNurseToDepartment() {
 
     cout << "Please type the department name you want to attach nurse to:\n";
     cin >> departmentName;
+    Department * foundDepartment = getDepartmentByName(departmentName);
 
-    Nurse *nurse = getNewNurse();
-    getDepartmentByName(departmentName)->addNewNurse(nurse);
+    if (foundDepartment == nullptr) {
+        cout << "Could not find department: " << departmentName;
+        return false;
+    } else {
+        Nurse *nurse = getNewNurse();
+        foundDepartment->addNewNurse(nurse);
+        return true;
+    }
 }
 
 /**
@@ -101,9 +108,15 @@ bool Hospital::addNewDoctorToDepartment() {
     cout << "Please type the department name you want to attach doctor to:\n";
     cin >> departmentName;
 
-    Doctor *doctor = getNewDoctor();
-    getDepartmentByName(departmentName)->addNewDoctor(doctor);
-    return true;
+    Department * foundDepartment = getDepartmentByName(departmentName);
+    if (foundDepartment == nullptr) {
+        cout << "Could not find department: " << departmentName;
+        return false;
+    } else {
+        Doctor *doctor = getNewDoctor();
+        foundDepartment->addNewDoctor(doctor);
+        return true;
+    }
 }
 
 Department *Hospital::getDepartmentByName(char *name) {
