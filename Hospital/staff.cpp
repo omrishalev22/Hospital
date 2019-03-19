@@ -18,13 +18,21 @@ Staff::Staff() {
 void Staff::show() {
     int i;
     cout << "Showing all doctors:" << endl;
-    for (i = 0; i < indexDoctors; i++) {
-        doctors[i]->show();
+    if (indexDoctors == 0) {
+        cout << "There are no doctors in the specific department." << endl;
+    } else {
+        for (i = 0; i < indexDoctors; i++) {
+            doctors[i]->show();
+        }
     }
 
     cout << "Showing all nurses:" << endl;
-    for (i = 0; i < indexNurses; i++) {
-        nurses[i]->show();
+    if (indexNurses == 0) {
+        cout << "There are no nurses in the specific department." << endl;
+    } else {
+        for (i = 0; i < indexNurses; i++) {
+            nurses[i]->show();
+        }
     }
 }
 

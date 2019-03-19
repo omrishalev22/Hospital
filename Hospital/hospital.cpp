@@ -102,8 +102,8 @@ bool Hospital::addNewNurseToDepartment() {
  * @return
  */
 Doctor *Hospital::getNewDoctor() {
-    int id = 0;
-    char name[SIZE], departmentName[SIZE], interField[SIZE];
+    int id;
+    char name[SIZE], interField[SIZE];
 
     // Todo: add validations for all fields
 
@@ -211,7 +211,7 @@ bool Hospital::addNewPatientVisit() {
         cout << "Could not find the department: " << requiredDepartment << endl;
         return false;
     } else {
-        department->addNewPatient(*patient);
+        department->addNewPatient(patient);
         cout << "Patient visit has been added." << endl;
         return true;
     }
@@ -342,9 +342,13 @@ bool Hospital::addNewPatient(Patient *newPatient) {
  * Show / Print all researchers to the output.
  */
 void Hospital::showAllResearchers() {
-    cout << "Showing all researchers in the hospital: " << endl;
-    for (int i = 0; i < indexResearchers; i++) {
-        researchers[i]->show();
+    if (indexResearchers == 0) {
+        cout << "There are no researchers in the hospital." << endl;
+    } else {
+        cout << "Showing all researchers in the hospital: " << endl;
+        for (int i = 0; i < indexResearchers; i++) {
+            researchers[i]->show();
+        }
     }
 }
 

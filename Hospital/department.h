@@ -30,7 +30,7 @@ public:
     // SETTERS
     bool addNewDoctor(Doctor *doctor);
     bool addNewNurse(Nurse *nurse);
-    bool addNewPatient(Patient patient);
+    bool addNewPatient(Patient * patient);
 
     ~Department();
 

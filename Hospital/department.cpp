@@ -37,10 +37,8 @@ char *Department::getName()
 /**
  * Add new department to the hospital
  */
-bool Department::addNewPatient(Patient newPatient)
+bool Department::addNewPatient(Patient * newPatient)
 {
-
-    Patient * patient = new Patient(newPatient);
     if (this->indexPatients >= this->sizePatients) {
         Patient **tempArr = new Patient *[this->sizePatients * 2];
         for (int i = 0; i < this->indexPatients; i++)
@@ -50,7 +48,7 @@ bool Department::addNewPatient(Patient newPatient)
         this->patients = tempArr;
         this->sizePatients *= 2;
     }
-    this->patients[this->indexPatients++] = patient;
+    this->patients[this->indexPatients++] = newPatient;
     return true;
 }
 
@@ -60,8 +58,12 @@ Staff * Department::getStaffMembers() {
 
 void Department::showPatients()
 {
-    for (int i=0; i < indexPatients; i++) {
-        patients[i]->show();
+    if (indexPatients == 0) {
+        cout << "There are no patient in the current department." << endl;
+    } else {
+        for (int i=0; i < indexPatients; i++) {
+            patients[i]->show();
+        }
     }
 }
 
