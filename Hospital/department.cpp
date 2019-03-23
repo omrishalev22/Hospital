@@ -49,7 +49,6 @@ bool Department::addNewPatient(Patient *newPatient)
         this->sizePatients *= 2;
     }
     this->patients[this->indexPatients++] = newPatient;
-    this->addPatientToStaffMember(newPatient);
     return true;
 }
 
@@ -66,28 +65,6 @@ void Department::showPatients()
         for (int i = 0; i < indexPatients; i++) {
             patients[i]->show();
         }
-    }
-}
-
-
-/**
- * Random mechanism to choose a staff member to a patient
- *
- * The algorithm makes no sense in terms of logic, described in the known issues file.
- * @param patient
- * @return
- */
-bool Department::addPatientToStaffMember(Patient *patient)
-{
-    int staffSize = staff->getNumberOfDoctors() + staff->getNumberOfNurses();
-    if (strcmp(patient->getName(), "j") > 0) {
-        int index = staffSize % staff->getNumberOfNurses();
-        Nurse *nurse = staff->getNurseByIndex(index);
-        patient->setStaffMember(nurse);
-    } else {
-        int index = staffSize % staff->getNumberOfDoctors();
-        Doctor *doctor = staff->getDoctorByIndex(index);
-        patient->setStaffMember(doctor);
     }
 }
 

@@ -9,21 +9,37 @@ Date::Date() {
     this-> day = 1;
 };
 
-// TODO why do we need this ? it causes build errors
-/*Date::Date(Date &d) {
-    this->year = d.year;
-    this->month = d.month;
-    this->day = d.day;
-}*/
-
 Date::Date(int year, int month, int day)
 {
     this->year = year;
     this->month = month;
     this->day = day;
-}
+};
+
+
+Date::Date(const Date &d)
+{
+    this->year = d.year;
+    this->month = d.month;
+    this->day = d.day;
+};
+
+int Date::getYear()
+{
+    return this->year;
+};
+
+int Date::getMonth()
+{
+    return this->month;
+};
+
+int Date::getDay()
+{
+    return this->day;
+};
 
 void Date::show()
 {
     cout << this->year << "-" << this->month << "-" << this->day;
-}
+};

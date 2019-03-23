@@ -69,24 +69,26 @@ bool Staff::addNewDoctor(Doctor *doctor)
 }
 
 
-int Staff::getNumberOfDoctors()
+Nurse* Staff::getNurseByID(int id)
 {
-    return indexDoctors;
+    for (int i = 0; i < indexNurses; i++) {
+        if (nurses[i]->getID() == id) {
+            return nurses[i];
+        }
+    }
+
+    return nullptr;
 }
 
-int Staff::getNumberOfNurses()
+Doctor* Staff::getDoctorByID(int id)
 {
-    return indexNurses;
-}
+    for (int i = 0; i < indexDoctors; i++) {
+        if (doctors[i]->getID() == id) {
+            return doctors[i];
+        }
+    }
 
-Nurse *Staff::getNurseByIndex(int index)
-{
-    return nurses[index];
-}
-
-Doctor *Staff::getDoctorByIndex(int index)
-{
-    return doctors[index];
+    return nullptr;
 }
 
 Staff::~Staff()

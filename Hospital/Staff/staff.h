@@ -17,10 +17,8 @@ public:
     // Getters
     Staff();
     void show();
-    int getNumberOfDoctors();
-    int getNumberOfNurses();
-    Nurse * getNurseByIndex(int index);
-    Doctor * getDoctorByIndex(int index);
+    Nurse * getNurseByID(int id);
+    Doctor * getDoctorByID(int id);
 
     // Setters
     bool addNewNurse(Nurse * nurse);

@@ -221,7 +221,6 @@ Patient *Hospital::getNewPatient()
     char name[SIZE];
     int yearOfBirth;
     int id, gender;
-    Date today = Date();
 
     // Todo: enter validations for all fields
 
@@ -237,7 +236,7 @@ Patient *Hospital::getNewPatient()
     cout << "What is your gender? 1 = female, 0 = male" << endl;
     cin >> gender;
 
-    return new Patient(name, id, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE), today);
+    return new Patient(name, id, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE));
 }
 
 /**
@@ -251,38 +250,69 @@ bool Hospital::addNewPatientVisit()
     int id;
     Patient *patient = nullptr;
     char requiredDepartment[SIZE];
+    Department *department = nullptr;
 
     cout << "Is this your first time here? 1 = yes , 0 = no" << endl;
     cin >> isFirstVisit;
 
+    // In case it's a new visit , we need to fill out patient's data
     if (isFirstVisit) {
         patient = getNewPatient();
+
+        // Attaching the patient to a department
+        cout << "What department are you looking for?" << endl;
+        cin >> requiredDepartment;
+
+        // attaching department both to patient and to wanted department
+        department = getDepartmentByName(requiredDepartment);
+
+        if (department == nullptr) {
+            cout << "Could not find the department: " << requiredDepartment << endl;
+            if (isFirstVisit) {
+                delete patient;
+            }
+            return false;
+        }
+
+        patient->setDepartment(requiredDepartment);
     } else {
-        cout << "What is your id number?" << endl;
+        // Get patient data by ID
+        cout << "Enter the patient ID: " << endl;
         cin >> id;
-        cout << "Getting your documents from last visit..." << endl;
         patient = this->getPatientById(id);
-        cout << "Thank you " << patient->getName() << endl;
+        if (patient == nullptr) {
+            cout << "Could not find patient with ID " << id << ". The new visit process will stop now." << endl;
+            return false;
+        } else {
+            cout << "Thank you " << patient->getName() << endl;
+        }
     }
 
-    cout << "What department are you looking for?" << endl;
-    cin >> requiredDepartment;
-
-    // attaching department both to patient and to wanted department
-    patient->setDepartment(requiredDepartment);
-    Department *department = getDepartmentByName(requiredDepartment);
-
-
-    if (department == nullptr) {
-        cout << "Could not find the department: " << requiredDepartment << endl;
-        delete patient; // rollback;
+    // Adding a new visit to the patient
+    Visit * visit = getNewVisit(patient);
+    if (visit == nullptr) {
+        cout << "Since there were validation issues upon the visit data, all data will not be saved at all (including the new patient information)" << endl;
+        if (isFirstVisit) {
+            delete patient;
+        }
         return false;
-    } else {
-        department->addNewPatient(patient); // will automatically attach him to available staff member
-        cout << "Patient visit has been added." << endl;
     }
-    this->addNewPatient(patient); // add new patient to the hospital main list of patients
-    return true; // if reached this point every field is valid.
+
+    // Only for new patients - adding the new patient to the right places
+    if (isFirstVisit) {
+        department = getDepartmentByName(requiredDepartment);
+        department->addNewPatient(patient); // will automatically attach him to available staff member
+        cout << "Patient " << patient->getName() << " has been added to department " << department->getName() << endl;
+
+        this->addNewPatient(patient); // add new patient to the hospital main list of patients
+        cout << "Patient " << patient->getName() << " has sucessfully added to the hospital" << endl;
+    }
+
+    // Adding new visit the patient
+    patient->addNewVisit(visit);
+    cout << "New visit has been added to the patient history" << endl;
+
+    return true;
 
 }
 
@@ -330,6 +360,41 @@ Researcher *Hospital::getNewResearcher()
     cin >> id;
 
     return new Researcher(name, id);
+}
+
+Visit* Hospital::getNewVisit(Patient * patient)
+{
+    int isNurseChosen, personInChargeID;
+    char arrivalPurpose[SIZE];
+
+    cout << "Enter the visit / arrival purpose: " << endl;
+    cin >> arrivalPurpose;
+
+    cout << "Please the arrival date of the visit:" << endl;
+    Date arrivalDate = getDateFromUser();
+
+    cout << "Does the person in charge of this current visit is a doctor or a nurse? doctor = 0, nurse = 1" << endl;
+    cin >> isNurseChosen;
+
+    cout << "Please enter the ID of the " << (isNurseChosen == 1 ? "nurse" : "doctor") << " that is in charge:" << endl;
+    cin >> personInChargeID;
+
+    // We know that the department name in the patient in valid since we created the object already after validations.
+    if (isNurseChosen) {
+        Nurse * inChargePerson = this->getDepartmentByName(patient->getDepartmentName())->getStaffMembers()->getNurseByID(personInChargeID);
+        if (inChargePerson == nullptr) {
+            cout << "Could not find nurse with ID " << personInChargeID << " in department " << patient->getDepartmentName() << endl;
+            return nullptr;
+        }
+        return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
+    } else {
+        Doctor * inChargePerson = this->getDepartmentByName(patient->getDepartmentName())->getStaffMembers()->getDoctorByID(personInChargeID);
+        if (inChargePerson == nullptr) {
+            cout << "Could not find doctor with ID " << personInChargeID << " in department " << patient->getDepartmentName() << endl;
+            return nullptr;
+        }
+        return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
+    }
 }
 
 /**
@@ -380,7 +445,6 @@ Date Hospital::getDateFromUser()
 Article *Hospital::getNewArticle()
 {
     char name[SIZE], magazine[SIZE];
-    Date releaseDate;
 
     cout << "Enter the name of the article: " << endl;
     cin >> name;
@@ -389,7 +453,7 @@ Article *Hospital::getNewArticle()
     cin >> magazine;
 
     cout << "Enter the release date of the article: " << endl;
-    releaseDate = getDateFromUser();
+    Date releaseDate = getDateFromUser();
 
     return new Article(name, magazine, releaseDate);
 }

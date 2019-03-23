@@ -1,7 +1,7 @@
 #include <cstring>
 #include "article.h"
 
-Article::Article(char *name, char *magazine, Date releaseDate)
+Article::Article(char *name, char *magazine, Date &releaseDate)
 {
     this->name = new char[strlen(name) + 1];
     this->name = strcpy(this->name, name);

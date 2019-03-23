@@ -12,7 +12,7 @@ private:
     Date releaseDate;
 
 public:
-    Article(char * name, char * magazine, Date releaseDate);
+    Article(char * name, char * magazine, Date &releaseDate);
 
     // Getters
     char * getName();

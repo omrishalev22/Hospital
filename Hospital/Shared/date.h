@@ -7,10 +7,12 @@ private:
 
 public:
     Date();
-    // Date(Date& d);
-    Date(int , int , int );
+    Date(int year, int month, int day);
+    Date(const Date &d);
 
-
+    int getYear();
+    int getMonth();
+    int getDay();
     void show();
 };
 

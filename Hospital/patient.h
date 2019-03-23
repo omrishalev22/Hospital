@@ -1,5 +1,6 @@
 #include "Shared/date.h"
 #include "Staff/staff.h"
+#include "visit.h"
 
 #ifndef __PATIENT_H
 #define __PATIENT_H
@@ -12,26 +13,19 @@ public:
         MALE, FEMALE
     };
 
-    Patient(const Patient& patient) {
-        this->name = patient.name;
-        this->id = patient.id;
-        this->yearOfBirth = patient.yearOfBirth;
-        this->sex = patient.sex;
-        this->arrivalDate = patient.arrivalDate;
-    }
-
-    Patient(char *name, int id, int yearOfBirth, eSex sex, Date arrivalDate);
+    Patient(const Patient& patient);
+    Patient(char *name, int id, int yearOfBirth, eSex sex);
 
     // GETTERS
     int getId();
     char *getName();
     void show();
     eSex getESex();
+    char *getDepartmentName();
 
     // SETTERS
     bool setDepartment(char * departmentName);
-    bool setStaffMember(Nurse * nurse);
-    bool setStaffMember(Doctor * doctor);
+    bool addNewVisit(Visit * visit);
 
     ~Patient();
 private:
@@ -39,11 +33,10 @@ private:
     int id;
     int yearOfBirth;
     char *departmentName;
-    Date arrivalDate;
     eSex sex;
-    Doctor * doctor;
-    Nurse * nurse;
-
+    Visit ** visits;
+    int indexVisits;
+    int sizeVisits;
 
 };
 
