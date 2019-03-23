@@ -77,7 +77,7 @@ void Patient::show()
     cout << "    ID: " << this->id << endl;
     cout << "    Year of birth: " << this->yearOfBirth << endl;
     cout << "    Department: " << this->departmentName << endl;
-    cout << "    Sex: " << (this->getESex() == 0 ? "Male" : "Female") << endl;
+    cout << "    Sex: " << (this->getESex() == Patient::eSex::MALE ? "Male" : "Female") << endl;
     cout << "    Number of visits: " << this->indexVisits << endl;
     cout << "    Visits: " << endl;
 
