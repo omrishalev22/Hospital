@@ -9,7 +9,7 @@ class Doctor {
 private:
     char *name;
     int id;
-    char *interField;
+    char *internField;
 public:
     Doctor(int id, char *name, char *interField);
     int getID();

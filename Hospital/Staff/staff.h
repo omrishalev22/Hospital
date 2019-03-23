@@ -2,8 +2,8 @@
 #ifndef __STAFF_H
 #define __STAFF_H
 
-#include "Staff-Members/doctor.h"
-#include "Staff-Members/nurse.h"
+#include "Type/doctor.h"
+#include "Type/nurse.h"
 
 class Staff {
 private :
@@ -17,6 +17,10 @@ public:
     // Getters
     Staff();
     void show();
+    int getNumberOfDoctors();
+    int getNumberOfNurses();
+    Nurse * getNurseByIndex(int index);
+    Doctor * getDoctorByIndex(int index);
 
     // Setters
     bool addNewNurse(Nurse * nurse);

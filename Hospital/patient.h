@@ -1,4 +1,5 @@
-#include "date.h"
+#include "Shared/date.h"
+#include "Staff/staff.h"
 
 #ifndef __PATIENT_H
 #define __PATIENT_H
@@ -28,7 +29,11 @@ public:
     eSex getESex();
 
     // SETTERS
-    bool setRequiredDepartment(char * departmentName);
+    bool setDepartment(char * departmentName);
+    bool setStaffMember(Nurse * nurse);
+    bool setStaffMember(Doctor * doctor);
+
+    ~Patient();
 private:
     char *name;
     int id;
@@ -36,6 +41,8 @@ private:
     char *departmentName;
     Date arrivalDate;
     eSex sex;
+    Doctor * doctor;
+    Nurse * nurse;
 
 
 };

@@ -1,3 +1,13 @@
 1. All user inputs are limited to size of 150 characters
 2. There are no validations for entities fields.
 3. There are not validations for user input types (for IDs / Years / Numbers)
+4. Validation what happens in case someone adds a patient to a department with no staff in it.
+5. what should be the mechanism for choosing a staff member to patient to equally spread load.
+6. what type of validaiton should fields like departments have? can a department contain numbers? special characters?
+
+
+CHECKLIST FOR US : TODO remove this when done
+1. destructor for each cpp file
+2. comments
+3. validation
+4. fix all TODO s

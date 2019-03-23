@@ -1,11 +1,12 @@
 #include <string>
 #include <iostream>
 #include "staff.h"
-#include "consts.h"
+#include "../Shared/consts.h"
 
 using namespace std;
 
-Staff::Staff() {
+Staff::Staff()
+{
     this->doctors = new Doctor *[AMOUNT_OF_STARTED_ITEMS];
     this->indexDoctors = 0;
     this->sizeDoctors = AMOUNT_OF_STARTED_ITEMS;
@@ -15,7 +16,8 @@ Staff::Staff() {
     this->sizeNurses = AMOUNT_OF_STARTED_ITEMS;
 }
 
-void Staff::show() {
+void Staff::show()
+{
     int i;
     cout << "Showing all doctors:" << endl;
     if (indexDoctors == 0) {
@@ -36,7 +38,8 @@ void Staff::show() {
     }
 }
 
-bool Staff::addNewNurse(Nurse *nurse) {
+bool Staff::addNewNurse(Nurse *nurse)
+{
     if (this->indexNurses >= this->sizeNurses) {
         Nurse **tempArr = new Nurse *[this->sizeNurses * 2];
         for (int i = 0; i < this->indexNurses; i++)
@@ -50,7 +53,8 @@ bool Staff::addNewNurse(Nurse *nurse) {
     return true;
 }
 
-bool Staff::addNewDoctor(Doctor *doctor) {
+bool Staff::addNewDoctor(Doctor *doctor)
+{
     if (this->indexDoctors >= this->sizeDoctors) {
         Doctor **tempArr = new Doctor *[this->sizeDoctors * 2];
         for (int i = 0; i < this->indexDoctors; i++)
@@ -65,7 +69,28 @@ bool Staff::addNewDoctor(Doctor *doctor) {
 }
 
 
-Staff::~Staff() {
+int Staff::getNumberOfDoctors()
+{
+    return indexDoctors;
+}
+
+int Staff::getNumberOfNurses()
+{
+    return indexNurses;
+}
+
+Nurse *Staff::getNurseByIndex(int index)
+{
+    return nurses[index];
+}
+
+Doctor *Staff::getDoctorByIndex(int index)
+{
+    return doctors[index];
+}
+
+Staff::~Staff()
+{
     if (this->nurses != nullptr) {
         for (int i = 0; i < this->indexNurses; i++)
             delete this->nurses[i];
@@ -78,4 +103,3 @@ Staff::~Staff() {
         delete[] this->doctors;
     }
 }
-

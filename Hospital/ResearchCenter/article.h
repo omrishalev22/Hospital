@@ -1,7 +1,7 @@
 #ifndef __ARTICLE_H
 #define __ARTICLE_H
 
-#include "../date.h"
+#include "../Shared/date.h"
 
 class Article
 {

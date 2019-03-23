@@ -1,9 +1,9 @@
 #ifndef __DEPARTMENT_H
 #define __DEPARTMENT_H
 
-#include "staff.h"
-#include "Staff-Members/doctor.h"
-#include "Staff-Members/nurse.h"
+#include "Staff/staff.h"
+#include "Staff/Type/doctor.h"
+#include "Staff/Type/nurse.h"
 #include "patient.h"
 
 class Department
@@ -31,7 +31,7 @@ public:
     bool addNewDoctor(Doctor *doctor);
     bool addNewNurse(Nurse *nurse);
     bool addNewPatient(Patient * patient);
-
+    bool addPatientToStaffMember(Patient * patient);
     ~Department();
 
 };

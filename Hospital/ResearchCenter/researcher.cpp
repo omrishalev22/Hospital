@@ -1,7 +1,7 @@
 #include <cstring>
 #include "researcher.h"
 #include <iostream>
-#include "../consts.h"
+#include "../Shared/consts.h"
 
 using namespace std;
 
