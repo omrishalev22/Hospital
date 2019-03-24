@@ -31,6 +31,7 @@ public:
     bool addNewDoctor(Doctor *doctor);
     bool addNewNurse(Nurse *nurse);
     bool addNewPatient(Patient * patient);
+    bool removePatientByID(int patientID);
     ~Department();
 
 };

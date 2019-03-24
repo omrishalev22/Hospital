@@ -3,5 +3,5 @@
 
 #define SIZE 150
 #define AMOUNT_OF_STARTED_ITEMS 5
-
+#define STAYING 1
 #endif

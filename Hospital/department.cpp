@@ -68,6 +68,40 @@ void Department::showPatients()
     }
 }
 
+/**
+ * Removing a patient from list of patients by pointing the chosen patient
+ * to null and create a new array of patients without the removed one.
+ * @param patientID
+ * @return
+ */
+bool Department::removePatientByID(int patientID)
+{
+    Patient **tempArr = new Patient *[this->indexPatients];
+    int index = 0;
+
+    for (int i = 0; i < this->indexPatients; i++) {
+        // in case patient does not match the given ID add to new arr
+        if (patients[i]->getId() != patientID) {
+            tempArr[index] = this->patients[index];
+            index++;
+        } else {
+            // TODO do you think we should make a copy of patients instead of moving them by pointers?
+            // removing the access not deleting the element since it is used in other place
+            this->patients[i] = nullptr;
+        }
+    }
+
+    if (index == indexPatients) { // nothing changed, meaning no patient was found matching to the corresponding ID
+        cout << "couldn't find any patient under this ID" << endl;
+        return false;
+    }
+
+    delete[] this->patients;
+    this->patients = tempArr;
+    this->indexPatients--;
+    return true;
+}
+
 Department::~Department()
 {
     // We don't delete the patients here because we will delete them in the Hospital class.

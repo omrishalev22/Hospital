@@ -249,7 +249,6 @@ bool Hospital::addNewPatientVisit()
     bool isFirstVisit;
     int id;
     Patient *patient = nullptr;
-    char requiredDepartment[SIZE];
     Department *department = nullptr;
 
     cout << "Is this your first time here? 1 = yes , 0 = no" << endl;
@@ -258,26 +257,17 @@ bool Hospital::addNewPatientVisit()
     // In case it's a new visit , we need to fill out patient's data
     if (isFirstVisit) {
         patient = getNewPatient();
-
-        // Attaching the patient to a department
-        cout << "What department are you looking for?" << endl;
-        cin >> requiredDepartment;
-
-        // attaching department both to patient and to wanted department
-        department = getDepartmentByName(requiredDepartment);
-
-        if (department == nullptr) {
-            cout << "Could not find the department: " << requiredDepartment << endl;
-            if (isFirstVisit) {
-                delete patient;
-            }
-            return false;
+        department = getRequiredDepartment(isFirstVisit, patient);
+        if (department) {
+            patient->setDepartment(department->getName());
+        } else {
+            return false; // in case no department found, stop new visit process
         }
 
-        patient->setDepartment(requiredDepartment);
     } else {
         // Get patient data by ID
         cout << "Enter the patient ID: " << endl;
+        // Todo do we need to validate ID?
         cin >> id;
         patient = this->getPatientById(id);
         if (patient == nullptr) {
@@ -285,26 +275,45 @@ bool Hospital::addNewPatientVisit()
             return false;
         } else {
             cout << "Thank you " << patient->getName() << endl;
+
+            // since patient already visited, we make sure he wants to leave current department before moving to a new one
+            if (validator.isPatientWillingToChangeDepartment(patient)) {
+                getDepartmentByName(patient->getDepartmentName())->removePatientByID(patient->getId());
+                cout << "Patient was removed successfully from department" << endl;
+                cout << "You can now continue and move to another department" << endl;
+                department = getRequiredDepartment(isFirstVisit, patient);
+
+                if (department) {
+                    patient->setDepartment(department->getName());
+                } else {
+                    return false; // in case no department found, stop new visit process
+                }
+
+            } // if patient visit is invalid, meaning he wants to stay in current departament - new visit process stops
+            else {
+                return false;
+            };
         }
     }
 
     // Adding a new visit to the patient
-    Visit * visit = getNewVisit(patient);
+    Visit *visit = getNewVisit(patient);
     if (visit == nullptr) {
-        cout << "Since there were validation issues upon the visit data, all data will not be saved at all (including the new patient information)" << endl;
         if (isFirstVisit) {
             delete patient;
         }
         return false;
     }
 
-    // Only for new patients - adding the new patient to the right places
-    if (isFirstVisit) {
-        department = getDepartmentByName(requiredDepartment);
-        department->addNewPatient(patient); // will automatically attach him to available staff member
-        cout << "Patient " << patient->getName() << " has been added to department " << department->getName() << endl;
+    // Adding the new patient to department and hospital memory
+    // Both new and old patients should be added, new is obvious why, old since at this point we changed its department
+    department->addNewPatient(patient);
+    cout << "Patient " << patient->getName() << " has been added to department " << department->getName() << endl;
 
-        this->addNewPatient(patient); // add new patient to the hospital main list of patients
+    // Only new patients should be added to the hospital memory to prevent duplications
+    if (isFirstVisit) {
+        // add new patient to the hospital main list of patients
+        this->addNewPatient(patient);
         cout << "Patient " << patient->getName() << " has sucessfully added to the hospital" << endl;
     }
 
@@ -362,13 +371,15 @@ Researcher *Hospital::getNewResearcher()
     return new Researcher(name, id);
 }
 
-Visit* Hospital::getNewVisit(Patient * patient)
+Visit *Hospital::getNewVisit(Patient *patient)
 {
     int isNurseChosen, personInChargeID;
     char arrivalPurpose[SIZE];
 
-    cout << "Enter the visit / arrival purpose: " << endl;
-    cin >> arrivalPurpose;
+    cout << "Enter the visit / arrival purpose: (up to 149 characters) " << endl;
+    cin.ignore(); // to prevent left overs from previous inputs
+    cin.getline(arrivalPurpose, SIZE); // intake entire short description
+
 
     cout << "Please the arrival date of the visit:" << endl;
     Date arrivalDate = getDateFromUser();
@@ -379,18 +390,22 @@ Visit* Hospital::getNewVisit(Patient * patient)
     cout << "Please enter the ID of the " << (isNurseChosen == 1 ? "nurse" : "doctor") << " that is in charge:" << endl;
     cin >> personInChargeID;
 
-    // We know that the department name in the patient in valid since we created the object already after validations.
+    // we want to make sure there are members in staff before trying to look for nurse/doctor
+    // We also know that the department name in the patient is valid since we created the object already after validations
+    Staff *departmentStaff = this->getDepartmentByName(patient->getDepartmentName())->getStaffMembers();
     if (isNurseChosen) {
-        Nurse * inChargePerson = this->getDepartmentByName(patient->getDepartmentName())->getStaffMembers()->getNurseByID(personInChargeID);
+        Nurse *inChargePerson = departmentStaff ? departmentStaff->getNurseByID(personInChargeID) : nullptr;
         if (inChargePerson == nullptr) {
-            cout << "Could not find nurse with ID " << personInChargeID << " in department " << patient->getDepartmentName() << endl;
+            cout << "Could not find nurse with ID " << personInChargeID << " in department "
+                 << patient->getDepartmentName() << endl;
             return nullptr;
         }
         return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
     } else {
-        Doctor * inChargePerson = this->getDepartmentByName(patient->getDepartmentName())->getStaffMembers()->getDoctorByID(personInChargeID);
+        Doctor *inChargePerson = departmentStaff ? departmentStaff->getDoctorByID(personInChargeID) : nullptr;
         if (inChargePerson == nullptr) {
-            cout << "Could not find doctor with ID " << personInChargeID << " in department " << patient->getDepartmentName() << endl;
+            cout << "Could not find doctor with ID " << personInChargeID << " in department "
+                 << patient->getDepartmentName() << endl;
             return nullptr;
         }
         return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
@@ -582,7 +597,36 @@ void Hospital::showPatientsByDepartment()
 }
 
 /**
- * Free all memoery allocation when hospital is destroyed
+ * Search and retrive the patient's wanted department
+ * @param isFirstVisit
+ * @param patient
+ * @return
+ */
+Department *Hospital::getRequiredDepartment(int isFirstVisit, Patient *patient)
+{
+    char requiredDepartment[SIZE];
+    Department *department = nullptr;
+
+    // Attaching the patient to a department
+    cout << "What department are you looking for?" << endl;
+    cin >> requiredDepartment;
+
+    // attaching department both to patient and to wanted department
+    department = getDepartmentByName(requiredDepartment);
+
+    if (department == nullptr) {
+        cout << "Could not find the department: " << requiredDepartment << endl;
+        if (isFirstVisit) {
+            delete patient;
+        }
+        return department;
+    }
+    return department;
+}
+
+
+/**
+ * Free all memory allocation when hospital is destroyed
  */
 Hospital::~Hospital()
 {
@@ -604,3 +648,4 @@ Hospital::~Hospital()
         delete[] this->departments;
     }
 }
+
