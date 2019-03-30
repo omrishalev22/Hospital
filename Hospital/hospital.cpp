@@ -352,22 +352,12 @@ Patient *Hospital::getPatientById(int id)
 
 
 /**
- * Gets all researchers in the hospital.
- * @return
- */
-Researcher **Hospital::getResearchers()
-{
-    return this->researchers;
-}
-
-/**
  * This method get a new researcher from the user's input.
  * Will return a pointer of the created object.
  * @return
  */
 Researcher *Hospital::getNewResearcher()
 {
-    int id;
     char name[SIZE];
 
     cout << "Enter the name of the researcher: " << endl;
@@ -546,7 +536,6 @@ void Hospital::showPatientByID()
  */
 void Hospital::showAllHospitalStaff()
 {
-    // TODO dont you think we should just show all staff and not split it by departments?
     for (int i = 0; i < indexDepartments; i++) {
         cout << "All staff members from department: " << departments[i]->getName() << endl;
         departments[i]->getStaffMembers()->show();

@@ -85,7 +85,6 @@ bool Department::removePatientByID(int patientID)
             tempArr[index] = this->patients[index];
             index++;
         } else {
-            // TODO do you think we should make a copy of patients instead of moving them by pointers?
             // removing the access not deleting the element since it is used in other place
             this->patients[i] = nullptr;
         }
