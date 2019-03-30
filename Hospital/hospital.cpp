@@ -367,6 +367,11 @@ Researcher *Hospital::getNewResearcher()
     return new Researcher(name, ++numOfEmployees);
 }
 
+/**
+ * Create a new patient's visit and insert it into system.
+ * @param patient
+ * @return
+ */
 Visit *Hospital::getNewVisit(Patient *patient)
 {
     int isNurseChosen, personInChargeID;

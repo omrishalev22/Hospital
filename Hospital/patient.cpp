@@ -30,23 +30,33 @@ Patient::Patient(char *name, int id, int yearOfBirth, eSex sex)
     this->sizeVisits = AMOUNT_OF_STARTED_ITEMS;
 }
 
-
+/*
+ * Get patient's ID
+ */
 int Patient::getId()
 {
     return id;
 }
 
-
+/*
+ * Get patient's name
+ */
 char *Patient::getName()
 {
     return name;
 }
 
+/*
+ * Get patient's department he is currently attached to
+ */
 char* Patient::getDepartmentName()
 {
     return departmentName;
 }
 
+/*
+ * Set the patient's department
+ */
 bool Patient::setDepartment(char *departmentName)
 {
     this->departmentName = new char[strlen(departmentName) + 1];
@@ -54,6 +64,9 @@ bool Patient::setDepartment(char *departmentName)
     return true;
 }
 
+/*
+ * Add new visit to patient's list of visits
+ */
 bool Patient::addNewVisit(Visit * visit)
 {
     if (visit == nullptr)
@@ -73,6 +86,9 @@ bool Patient::addNewVisit(Visit * visit)
     return true;
 }
 
+/*
+ * Show patient's details
+ */
 void Patient::show()
 {
     cout << "[Patient]" << endl;
@@ -91,6 +107,10 @@ void Patient::show()
     cout << endl;
 }
 
+
+/*
+ * Get patients gender
+ */
 Patient::eSex Patient::getESex()
 {
     return sex;

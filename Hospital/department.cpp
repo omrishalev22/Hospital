@@ -17,25 +17,34 @@ Department::Department(char *name)
     this->name = strcpy(this->name, name);
 }
 
+/*
+ * Attach a new Doctor to department
+ */
 bool Department::addNewDoctor(Doctor *doctor)
 {
     staff->addNewDoctor(doctor);
     return true;
 }
 
+/*
+ * Attach a new Nurse to department
+ */
 bool Department::addNewNurse(Nurse *nurse)
 {
     staff->addNewNurse(nurse);
     return true;
 }
 
+/*
+ * Get the current department name
+ */
 char *Department::getName()
 {
     return name;
 }
 
 /**
- * Add new department to the hospital
+ * Add new patient to department
  */
 bool Department::addNewPatient(Patient *newPatient)
 {
@@ -52,11 +61,17 @@ bool Department::addNewPatient(Patient *newPatient)
     return true;
 }
 
+/*
+ * Get Department's staff members
+ */
 Staff *Department::getStaffMembers()
 {
     return this->staff;
 }
 
+/*
+ * Print to stdout all patients in current department
+ */
 void Department::showPatients()
 {
     if (indexPatients == 0) {
@@ -101,8 +116,13 @@ bool Department::removePatientByID(int patientID)
     return true;
 }
 
+/*
+ * Free memoery allocation
+ */
 Department::~Department()
 {
-    // We don't delete the patients here because we will delete them in the Hospital class.
+    // We don't delete the patients here because we will delete them in the Hospital class. just the    pointer to them
     delete[] this->patients;
+    delete[] this->name;
+    delete[] this->staff;
 }

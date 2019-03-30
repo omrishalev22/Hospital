@@ -22,6 +22,9 @@ Visit::Visit(char *arrivalPurpose, Date &arrivalDate, Doctor *doctorInCharge)
     this->nurseInCharge = nullptr;
 }
 
+/*
+ * Set visit arrival purpose
+ */
 bool Visit::setArrivalPurpose(char *arrivalPurpose)
 {
     this->arrivalPurpose = new char[strlen(arrivalPurpose) + 1];
@@ -29,6 +32,9 @@ bool Visit::setArrivalPurpose(char *arrivalPurpose)
     return true;
 }
 
+/*
+ * Print to output all the details on current visit
+ */
 void Visit::show()
 {
     cout << "        [Visit]" << endl;

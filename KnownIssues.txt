@@ -11,6 +11,5 @@
 
 CHECKLIST FOR US : TODO remove this when done
 1. destructor for each cpp file
-2. comments
 3. validation
 4. fix all TODO s
