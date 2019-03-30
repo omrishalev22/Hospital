@@ -20,7 +20,6 @@ public:
     char* getName();
     int getId();
     Article ** getArticles();
-    Article* getNewArticle();
     void show();
 
     // Setters
