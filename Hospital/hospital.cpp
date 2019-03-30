@@ -257,10 +257,11 @@ bool Hospital::addNewPatientVisit()
     // In case it's a new visit , we need to fill out patient's data
     if (isFirstVisit) {
         patient = getNewPatient();
-        department = getRequiredDepartment(isFirstVisit, patient);
+        department = getDepartmentByUserInput();
         if (department) {
             patient->setDepartment(department->getName());
         } else {
+            delete patient;
             return false; // in case no department found, stop new visit process
         }
 
@@ -277,22 +278,25 @@ bool Hospital::addNewPatientVisit()
             cout << "Thank you " << patient->getName() << endl;
 
             // since patient already visited, we make sure he wants to leave current department before moving to a new one
-            if (isPatientWillingToChangeDepartment(patient)) {
-                getDepartmentByName(patient->getDepartmentName())->removePatientByID(patient->getId());
-                cout << "Patient was removed successfully from department" << endl;
-                cout << "You can now continue and move to another department" << endl;
-                department = getRequiredDepartment(isFirstVisit, patient);
+            int isStaying;
 
-                if (department) {
-                    patient->setDepartment(department->getName());
+            cout << "It seems you are already part of department '" << patient->getDepartmentName()
+                 << "' do you want to make a new visit or stay in current department, 1 = Stay , 0 = Change" << endl;
+            cin >> isStaying;
+            if (isStaying != STAYING) {
+                cout << "Releasing patient from '" << patient->getDepartmentName() << "'" << endl;
+                Department * newDepartment = getDepartmentByUserInput();
+                if (newDepartment) {
+                    getDepartmentByName(patient->getDepartmentName())->removePatientByID(patient->getId());
+                    patient->setDepartment(newDepartment->getName());
+                    newDepartment->addNewPatient(patient);
+                    cout << "Patient " << patient->getName() << " has been added to department " << newDepartment->getName() << endl;
                 } else {
-                    return false; // in case no department found, stop new visit process
+                    // in case no department found, stop new visit process
+                    return false;
                 }
 
-            } // if patient visit is invalid, meaning he wants to stay in current departament - new visit process stops
-            else {
-                return false;
-            };
+            }
         }
     }
 
@@ -305,16 +309,13 @@ bool Hospital::addNewPatientVisit()
         return false;
     }
 
-    // Adding the new patient to department and hospital memory
-    // Both new and old patients should be added, new is obvious why, old since at this point we changed its department
-    department->addNewPatient(patient);
-    cout << "Patient " << patient->getName() << " has been added to department " << department->getName() << endl;
-
     // Only new patients should be added to the hospital memory to prevent duplications
     if (isFirstVisit) {
         // add new patient to the hospital main list of patients
         this->addNewPatient(patient);
         cout << "Patient " << patient->getName() << " has sucessfully added to the hospital" << endl;
+        department->addNewPatient(patient);
+        cout << "Patient " << patient->getName() << " has been added to department " << department->getName() << endl;
     }
 
     // Adding new visit the patient
@@ -604,7 +605,7 @@ void Hospital::showPatientsByDepartment()
  * @param patient
  * @return
  */
-Department *Hospital::getRequiredDepartment(int isFirstVisit, Patient *patient)
+Department *Hospital::getDepartmentByUserInput()
 {
     char requiredDepartment[SIZE];
     Department *department = nullptr;
@@ -618,9 +619,6 @@ Department *Hospital::getRequiredDepartment(int isFirstVisit, Patient *patient)
 
     if (department == nullptr) {
         cout << "Could not find the department: " << requiredDepartment << endl;
-        if (isFirstVisit) {
-            delete patient;
-        }
         return department;
     }
     return department;

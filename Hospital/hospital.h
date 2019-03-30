@@ -58,7 +58,7 @@ public:
     Patient * getNewPatient();
     Date getDateFromUser();
     Visit * getNewVisit(Patient * patient);
-    Department *getRequiredDepartment(int isFirstVisit, Patient *patient);
+    Department *getDepartmentByUserInput();
 
     void showAllResearchers();
     void showPatientByID();
