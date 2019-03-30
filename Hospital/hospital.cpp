@@ -61,7 +61,6 @@ void Hospital::runLoop()
         // just to make success/error message show on the screen before jumping back to main menu
         cout << "Press any key to continue.." << endl;
         cin.ignore();
-        cin.get();
     } while (userInput != -1);
 }
 
@@ -89,7 +88,13 @@ Department *Hospital::getNewDepartment()
 {
     char name[SIZE];
     cout << "Please type the department name:" << endl;
-    cin >> name;
+    cin.ignore(); // to prevent left overs from previous inputs
+    cin.getline(name, SIZE);
+
+    if (!isCharactersOnly(name)) {
+        cout << "Please enter a valid name (with letters and spaces only)" << endl;
+        return nullptr;
+    }
 
     if (getDepartmentByName(name) != nullptr) {
         cout << "There is already an existing department with the name: " << name << endl;
@@ -131,7 +136,8 @@ Nurse *Hospital::getNewNurse()
     // TODO we need to validate stuff like is nurse exists in system and stuff like this. what do you think?
 
     cout << "Please type the nurse's name:" << endl;
-    cin >> name;
+    cin.ignore(); // to prevent left overs from previous inputs
+    cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
         cout << "Please enter a valid name (with letters and spaces only)" << endl;
@@ -157,7 +163,14 @@ bool Hospital::addNewNurseToDepartment()
     char departmentName[SIZE];
 
     cout << "Please type the department name you want to attach nurse to:" << endl;
-    cin >> departmentName;
+    cin.ignore(); // to prevent left overs from previous inputs
+    cin.getline(departmentName, SIZE);
+
+    if (!isCharactersOnly(departmentName)) {
+        cout << "Please enter a valid name (with letters and spaces only)" << endl;
+        return false;
+    }
+
     Department *foundDepartment = getDepartmentByName(departmentName);
 
     if (foundDepartment == nullptr) {
@@ -165,6 +178,9 @@ bool Hospital::addNewNurseToDepartment()
         return false;
     } else {
         Nurse *nurse = getNewNurse();
+        if (nurse == nullptr) {
+            return false;
+        }
         foundDepartment->addNewNurse(nurse);
         cout << "Successfully added new nurse (ID " << nurse->getID() << ") to department: " << departmentName << endl;
         return true;
@@ -182,7 +198,7 @@ Doctor *Hospital::getNewDoctor()
     // Todo: add validations for all fields
 
     cout << "Please type the doctor's name:" << endl;
-    cin >> name;
+    cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
         cout << "Please enter a valid name (with letters and spaces only)" << endl;
@@ -209,7 +225,7 @@ bool Hospital::addNewDoctorToDepartment()
     char departmentName[SIZE];
 
     cout << "Please type the department name you want to attach doctor to:" << endl;
-    cin >> departmentName;
+    cin.getline(departmentName, SIZE);
 
     Department *foundDepartment = getDepartmentByName(departmentName);
     if (foundDepartment == nullptr) {
@@ -217,6 +233,9 @@ bool Hospital::addNewDoctorToDepartment()
         return false;
     } else {
         Doctor *doctor = getNewDoctor();
+        if (doctor == nullptr) { // in case validation fails go back to main menu
+            return false;
+        }
         foundDepartment->addNewDoctor(doctor);
         cout << "Successfully added new doctor (ID " << doctor->getID() << ") to department: " << departmentName
              << endl;
@@ -253,7 +272,7 @@ Patient *Hospital::getNewPatient()
     // Todo: enter validations for all fields
 
     cout << "What is your name?" << endl;
-    cin >> name;
+    cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
         cout << "Please enter a valid name (with letters and spaces only)" << endl;
@@ -262,7 +281,6 @@ Patient *Hospital::getNewPatient()
 
     cout << "What is your id?" << endl;
     cin >> id;
-
 
     if (!isValidID(id)) {
         cout << "Please enter a valid ID number (9 numbers)" << endl;
@@ -295,7 +313,7 @@ Patient *Hospital::getNewPatient()
  */
 bool Hospital::addNewPatientVisit()
 {
-    bool isFirstVisit;
+    bool isFirstVisit; // set to bool, if greater than 1 will treat it as 1
     int id;
     Patient *patient = nullptr;
     Department *department = nullptr;
@@ -321,10 +339,15 @@ bool Hospital::addNewPatientVisit()
     } else {
         // Get patient data by ID
         cout << "Enter the patient ID: " << endl;
-        // Todo do we need to validate ID?
         cin >> id;
+
+        if (!isValidID(id)) {
+            cout << "Please enter a valid ID number (9 numbers)" << endl;
+            return false;
+        }
+
         patient = this->getPatientById(id);
-        if (patient == nullptr) {
+        if (patient == nullptr) {  // in case validation fails go back to main menu
             cout << "Could not find patient with ID " << id << ". The new visit process will stop now." << endl;
             return false;
         } else {
@@ -336,14 +359,18 @@ bool Hospital::addNewPatientVisit()
             cout << "It seems you are already part of department '" << patient->getDepartmentName()
                  << "' do you want to make a new visit or stay in current department, 1 = Stay , 0 = Change" << endl;
             cin >> isStaying;
+
+
+
             if (isStaying != STAYING) {
                 cout << "Releasing patient from '" << patient->getDepartmentName() << "'" << endl;
-                Department * newDepartment = getDepartmentByUserInput();
+                Department *newDepartment = getDepartmentByUserInput();
                 if (newDepartment) {
                     getDepartmentByName(patient->getDepartmentName())->removePatientByID(patient->getId());
                     patient->setDepartment(newDepartment->getName());
                     newDepartment->addNewPatient(patient);
-                    cout << "Patient " << patient->getName() << " has been added to department " << newDepartment->getName() << endl;
+                    cout << "Patient " << patient->getName() << " has been added to department "
+                         << newDepartment->getName() << endl;
                 } else {
                     // in case no department found, stop new visit process
                     return false;
@@ -407,7 +434,7 @@ Researcher *Hospital::getNewResearcher()
     char name[SIZE];
 
     cout << "Enter the name of the researcher: " << endl;
-    cin >> name;
+    cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
         cout << "The name is invalid (please specify a name with letters and spaces only)" << endl;
@@ -428,7 +455,6 @@ Visit *Hospital::getNewVisit(Patient *patient)
     char arrivalPurpose[SIZE];
 
     cout << "Enter the visit / arrival purpose: (up to 149 characters) " << endl;
-    cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(arrivalPurpose, SIZE); // intake entire short description
 
     cout << "Please the arrival date of the visit:" << endl;
@@ -508,7 +534,6 @@ bool Hospital::addNewResearcher(Researcher *newResearcher)
  */
 Date Hospital::getDateFromUser()
 {
-    // Todo: add validation for input of the date numbers
     int day, month, year;
 
     cout << "Day: ";
@@ -531,7 +556,6 @@ Article *Hospital::getNewArticle()
     char name[SIZE], magazine[SIZE];
 
     cout << "Enter the name of the article: " << endl;
-    cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
@@ -540,6 +564,7 @@ Article *Hospital::getNewArticle()
     }
 
     cout << "Enter the name of the magazine the article is in: " << endl;
+    cin.ignore();
     cin.getline(magazine, SIZE);
 
     if (!isCharactersOnly(name)) {
@@ -604,8 +629,13 @@ void Hospital::showPatientByID()
     int patientId;
     Patient *foundPatient;
     cout << "What is your id number?";
-    // Todo: add validation for good ID
     cin >> patientId;
+
+    if (!isValidID(patientId)) {
+        cout << "Please enter a valid ID number (9 numbers)" << endl;
+        return;
+    }
+
     foundPatient = this->getPatientById(patientId);
 
     if (foundPatient == nullptr) {
@@ -623,6 +653,7 @@ void Hospital::showAllHospitalStaff()
     for (int i = 0; i < indexDepartments; i++) {
         cout << "All staff members from department: " << departments[i]->getName() << endl;
         departments[i]->getStaffMembers()->show();
+        cout << endl; // break line after showing department staff;
     }
 }
 
@@ -650,9 +681,13 @@ bool Hospital::addNewArticleToResearcher()
 {
     int id;
 
-    // Todo: add validation to user input
     cout << "Please enter researcher ID: " << endl;
     cin >> id;
+
+    if (!isValidID(id)) {
+        cout << "Please enter a valid ID number (9 numbers)" << endl;
+        return false;
+    }
 
     Researcher *foundResearcher = getResearcherById(id);
     if (foundResearcher == nullptr) {
@@ -671,8 +706,8 @@ void Hospital::showPatientsByDepartment()
 {
     char departmentName[SIZE];
     cout << "What is the department name?";
-    // Todo: add validation for good name
-    cin >> departmentName;
+    cin.ignore(); // to prevent left overs from previous inputs
+    cin.getline(departmentName, SIZE);
 
     Department *foundDepartment = this->getDepartmentByName(departmentName);
 
@@ -698,7 +733,13 @@ Department *Hospital::getDepartmentByUserInput()
 
     // Attaching the patient to a department
     cout << "What department are you looking for?" << endl;
-    cin >> requiredDepartment;
+    cin.ignore(); // to prevent left overs from previous inputs
+    cin.getline(requiredDepartment, SIZE);
+
+    if (!isCharactersOnly(requiredDepartment)) {
+        cout << "Please enter a valid name (with letters and spaces only)" << endl;
+        return nullptr;
+    }
 
     // attaching department both to patient and to wanted department
     department = getDepartmentByName(requiredDepartment);
