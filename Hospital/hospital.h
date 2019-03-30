@@ -7,6 +7,7 @@
 #include "ResearchCenter/article.h"
 #include "Shared/date.h"
 #include "visit.h"
+void flushBuffer();
 
 #define MENU_TEXT (""\
 "\n Welcome to our Hospital, please choose what you wish to do: \n"\

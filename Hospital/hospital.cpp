@@ -20,6 +20,8 @@ void Hospital::runLoop()
     do {
         cout << MENU_TEXT;
         cin >> userInput;
+        flushBuffer();
+
         switch (userInput) {
             case -1:
                 break;
@@ -88,8 +90,7 @@ Department *Hospital::getNewDepartment()
 {
     char name[SIZE];
     cout << "Please type the department name:" << endl;
-    cin.ignore(); // to prevent left overs from previous inputs
-    cin.getline(name, SIZE);
+    cin.getline(name,SIZE);
 
     if (!isCharactersOnly(name)) {
         cout << "Please enter a valid name (with letters and spaces only)" << endl;
@@ -146,6 +147,7 @@ Nurse *Hospital::getNewNurse()
 
     cout << "Please type the nurse's years of experience:" << endl;
     cin >> yearsOfExperience;
+    flushBuffer();
 
     if (yearsOfExperience < 0 || yearsOfExperience > 120) {
         cout << "Please enter a valid amount of experience years" << endl;
@@ -163,7 +165,6 @@ bool Hospital::addNewNurseToDepartment()
     char departmentName[SIZE];
 
     cout << "Please type the department name you want to attach nurse to:" << endl;
-    cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(departmentName, SIZE);
 
     if (!isCharactersOnly(departmentName)) {
@@ -206,7 +207,6 @@ Doctor *Hospital::getNewDoctor()
     }
 
     cout << "Please type the doctor's internship field:" << endl;
-    cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(interField, SIZE); // intake entire short description
 
     if (!isCharactersOnly(interField)) {
@@ -281,6 +281,7 @@ Patient *Hospital::getNewPatient()
 
     cout << "What is your id?" << endl;
     cin >> id;
+    flushBuffer();
 
     if (!isValidID(id)) {
         cout << "Please enter a valid ID number (9 numbers)" << endl;
@@ -289,6 +290,7 @@ Patient *Hospital::getNewPatient()
 
     cout << "What is your year of birth?" << endl;
     cin >> yearOfBirth;
+    flushBuffer();
 
     if (yearOfBirth < 1920 || yearOfBirth > 2019) {
         cout << "Please enter a valid year of birth" << endl;
@@ -297,6 +299,7 @@ Patient *Hospital::getNewPatient()
 
     cout << "What is your gender? 1 = female, 0 = male" << endl;
     cin >> gender;
+    flushBuffer();
 
     if (gender != 0 && gender != 1) {
         cout << "Please enter a valid gender" << endl;
@@ -320,6 +323,7 @@ bool Hospital::addNewPatientVisit()
 
     cout << "Is this your first time here? 1 = yes , 0 = no" << endl;
     cin >> isFirstVisit;
+    flushBuffer();
 
     // In case it's a new visit , we need to fill out patient's data
     if (isFirstVisit) {
@@ -340,6 +344,7 @@ bool Hospital::addNewPatientVisit()
         // Get patient data by ID
         cout << "Enter the patient ID: " << endl;
         cin >> id;
+        flushBuffer();
 
         if (!isValidID(id)) {
             cout << "Please enter a valid ID number (9 numbers)" << endl;
@@ -359,8 +364,7 @@ bool Hospital::addNewPatientVisit()
             cout << "It seems you are already part of department '" << patient->getDepartmentName()
                  << "' do you want to make a new visit or stay in current department, 1 = Stay , 0 = Change" << endl;
             cin >> isStaying;
-
-
+            flushBuffer();
 
             if (isStaying != STAYING) {
                 cout << "Releasing patient from '" << patient->getDepartmentName() << "'" << endl;
@@ -467,6 +471,7 @@ Visit *Hospital::getNewVisit(Patient *patient)
 
     cout << "Does the person in charge of this current visit is a doctor or a nurse? doctor = 0, nurse = 1" << endl;
     cin >> isNurseChosen;
+    flushBuffer();
 
     if (isNurseChosen != 0 && isNurseChosen != 1) {
         cout << "Please enter a valid choice (1/0)" << endl;
@@ -475,6 +480,7 @@ Visit *Hospital::getNewVisit(Patient *patient)
 
     cout << "Please enter the ID of the " << (isNurseChosen == 1 ? "nurse" : "doctor") << " that is in charge:" << endl;
     cin >> personInChargeID;
+    flushBuffer();
 
     if (!isValidID(personInChargeID)) {
         cout << "Please enter a valid ID number (9 numbers)" << endl;
@@ -538,10 +544,15 @@ Date Hospital::getDateFromUser()
 
     cout << "Day: ";
     cin >> day;
+    flushBuffer();
+
     cout << "Month: ";
     cin >> month;
+    flushBuffer();
+
     cout << "Year: ";
     cin >> year;
+    flushBuffer();
 
     return Date(year, month, day);
 }
@@ -564,7 +575,6 @@ Article *Hospital::getNewArticle()
     }
 
     cout << "Enter the name of the magazine the article is in: " << endl;
-    cin.ignore();
     cin.getline(magazine, SIZE);
 
     if (!isCharactersOnly(name)) {
@@ -630,6 +640,7 @@ void Hospital::showPatientByID()
     Patient *foundPatient;
     cout << "What is your id number?";
     cin >> patientId;
+    flushBuffer();
 
     if (!isValidID(patientId)) {
         cout << "Please enter a valid ID number (9 numbers)" << endl;
@@ -683,6 +694,7 @@ bool Hospital::addNewArticleToResearcher()
 
     cout << "Please enter researcher ID: " << endl;
     cin >> id;
+    flushBuffer();
 
     if (!isValidID(id)) {
         cout << "Please enter a valid ID number (9 numbers)" << endl;
@@ -706,7 +718,6 @@ void Hospital::showPatientsByDepartment()
 {
     char departmentName[SIZE];
     cout << "What is the department name?";
-    cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(departmentName, SIZE);
 
     Department *foundDepartment = this->getDepartmentByName(departmentName);
@@ -733,7 +744,6 @@ Department *Hospital::getDepartmentByUserInput()
 
     // Attaching the patient to a department
     cout << "What department are you looking for?" << endl;
-    cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(requiredDepartment, SIZE);
 
     if (!isCharactersOnly(requiredDepartment)) {
@@ -774,5 +784,13 @@ Hospital::~Hospital()
             delete this->departments[i];
         delete[] this->departments;
     }
+}
+
+/**
+ * Flushes buffer ( left overs ) after cin
+ */
+void flushBuffer(){
+    char flush[SIZE];
+    cin.getline(flush,SIZE);
 }
 
