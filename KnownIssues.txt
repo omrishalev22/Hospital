@@ -14,3 +14,20 @@ CHECKLIST FOR US : TODO remove this when done
 2. comments
 3. validation
 4. fix all TODO s
+
+1. list of doctors and nurses is not showing properly.
+[Doctor]
+    Name: ron
+    ID: 3
+    Intership field: making things apen
+Showing all nurses:
+[Nurse]
+    Name: sky
+    ID: 1
+    Years of experience: 1
+About to show all staff members of department: rosh
+Showing all doctors:
+[Doctor]
+    Name: omri
+    ID: 2
+    Intership field: dealing with head problems

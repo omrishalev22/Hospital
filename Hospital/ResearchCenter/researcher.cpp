@@ -38,7 +38,7 @@ void Researcher::show()
     cout << "    Number of articles: " << this->indexArticles << endl;
 }
 
-bool Researcher::addNewArticle(Article *article)
+bool Researcher::addNewArticle(Article *article,char * researcherName)
 {
     if (this->indexArticles >= this->sizeArticles)
     {
@@ -51,6 +51,8 @@ bool Researcher::addNewArticle(Article *article)
         this->sizeArticles *= 2;
     }
     this->articles[this->indexArticles++] = article;
+    cout << "Successfully added a new article by " << researcherName << " under magazine " <<
+    article->getMagazineName() << endl;
     return true;
 }
 

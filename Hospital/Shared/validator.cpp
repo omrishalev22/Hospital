@@ -5,7 +5,7 @@
 
 using namespace std;
 
-bool Validator::isCharactersOnly(char *input, unsigned int length)
+bool isCharactersOnly(char *input, unsigned int length)
 {
     for (int i = 0; i < length; i++) {
         int uppercaseChar = toupper(input[i]); //Convert character to upper case
@@ -23,7 +23,7 @@ bool Validator::isCharactersOnly(char *input, unsigned int length)
  * @param patient
  * @return
  */
-bool Validator::isPatientWillingToChangeDepartment(Patient *patient)
+bool isPatientWillingToChangeDepartment(Patient *patient)
 {
     int isStaying;
 

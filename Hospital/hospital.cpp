@@ -8,6 +8,7 @@
 #include "Shared/validator.h"
 
 using namespace std;
+int Hospital::numOfEmployees = 0;
 
 /**
  * The main loop method of the hospital application
@@ -56,6 +57,11 @@ void Hospital::runLoop()
                 cout << "Command could not be found, Please try something else" << endl;
                 break;
         }
+
+        // just to make success/error message show on the screen before jumping back to main menu
+        cout << "Press any key to continue.." << endl;
+        cin.ignore();
+        cin.get();
     } while (userInput != -1);
 }
 
@@ -110,14 +116,11 @@ bool Hospital::addNewDepartment(Department *newDepartment)
  */
 Nurse *Hospital::getNewNurse()
 {
-    int id, yearsOfExperience;
+    int yearsOfExperience;
     char name[SIZE];
 
     // Todo: add validations to all fields - in terms of types we dont need to validate
     // TODO we need to validate stuff like is nurse exists in system and stuff like this. what do you think?
-
-    cout << "Please type the nurse's ID:" << endl;
-    cin >> id;
 
     cout << "Please type the nurse's name:" << endl;
     cin >> name;
@@ -125,7 +128,7 @@ Nurse *Hospital::getNewNurse()
     cout << "Please type the nurse's years of experience:" << endl;
     cin >> yearsOfExperience;
 
-    return new Nurse(name, id, yearsOfExperience);
+    return new Nurse(name, ++numOfEmployees, yearsOfExperience);
 }
 
 /**
@@ -156,21 +159,18 @@ bool Hospital::addNewNurseToDepartment()
  */
 Doctor *Hospital::getNewDoctor()
 {
-    int id;
     char name[SIZE], interField[SIZE];
 
     // Todo: add validations for all fields
-
-    cout << "Please type the doctor's ID:" << endl;
-    cin >> id;
 
     cout << "Please type the doctor's name:" << endl;
     cin >> name;
 
     cout << "Please type the doctor's internship field:" << endl;
-    cin >> interField;
+    cin.ignore(); // to prevent left overs from previous inputs
+    cin.getline(interField, SIZE); // intake entire short description
 
-    return new Doctor(id, name, interField);
+    return new Doctor(++numOfEmployees, name, interField);
 }
 
 /**
@@ -277,7 +277,7 @@ bool Hospital::addNewPatientVisit()
             cout << "Thank you " << patient->getName() << endl;
 
             // since patient already visited, we make sure he wants to leave current department before moving to a new one
-            if (validator.isPatientWillingToChangeDepartment(patient)) {
+            if (isPatientWillingToChangeDepartment(patient)) {
                 getDepartmentByName(patient->getDepartmentName())->removePatientByID(patient->getId());
                 cout << "Patient was removed successfully from department" << endl;
                 cout << "You can now continue and move to another department" << endl;
@@ -365,10 +365,8 @@ Researcher *Hospital::getNewResearcher()
     cout << "Enter the name of the researcher: " << endl;
     cin >> name;
 
-    cout << "Enter the ID of the researcher: " << endl;
-    cin >> id;
 
-    return new Researcher(name, id);
+    return new Researcher(name, ++numOfEmployees);
 }
 
 Visit *Hospital::getNewVisit(Patient *patient)
@@ -430,6 +428,7 @@ bool Hospital::addNewResearcher(Researcher *newResearcher)
         this->sizeResearchers *= 2;
     }
     this->researchers[this->indexResearchers++] = newResearcher;
+    cout << "Successfully added new researcher (ID " << newResearcher->getId() << ")" << endl;
     return true;
 }
 
@@ -462,10 +461,11 @@ Article *Hospital::getNewArticle()
     char name[SIZE], magazine[SIZE];
 
     cout << "Enter the name of the article: " << endl;
-    cin >> name;
+    cin.ignore(); // to prevent left overs from previous inputs
+    cin.getline(name, SIZE);
 
     cout << "Enter the name of the magazine the article is in: " << endl;
-    cin >> magazine;
+    cin.getline(magazine, SIZE);
 
     cout << "Enter the release date of the article: " << endl;
     Date releaseDate = getDateFromUser();
@@ -532,8 +532,9 @@ void Hospital::showPatientByID()
  */
 void Hospital::showAllHospitalStaff()
 {
+    // TODO dont you think we should just show all staff and not split it by departments?
     for (int i = 0; i < indexDepartments; i++) {
-        cout << "About to show all staff members of department: " << departments[i]->getName() << endl;
+        cout << "All staff members from department: " << departments[i]->getName() << endl;
         departments[i]->getStaffMembers()->show();
     }
 }
@@ -571,7 +572,7 @@ bool Hospital::addNewArticleToResearcher()
         cout << "Could not find a researcher with ID: " << id << endl;
         return false;
     } else {
-        foundResearcher->addNewArticle(getNewArticle());
+        foundResearcher->addNewArticle(getNewArticle(),foundResearcher->getName());
         return true;
     }
 }
@@ -595,6 +596,7 @@ void Hospital::showPatientsByDepartment()
         foundDepartment->showPatients();
     }
 }
+
 
 /**
  * Search and retrive the patient's wanted department

@@ -26,6 +26,7 @@
 class Hospital
 {
 private:
+    static int numOfEmployees; // helps in granting employee's ID automatically
 
     Department ** departments;
     int indexDepartments;
@@ -57,7 +58,6 @@ public:
     Patient * getNewPatient();
     Date getDateFromUser();
     Visit * getNewVisit(Patient * patient);
-    Validator validator;
     Department *getRequiredDepartment(int isFirstVisit, Patient *patient);
 
     void showAllResearchers();

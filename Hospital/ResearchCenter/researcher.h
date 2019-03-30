@@ -24,7 +24,7 @@ public:
     void show();
 
     // Setters
-    bool addNewArticle(Article* article);
+    bool addNewArticle(Article* article, char * name);
     ~Researcher();
 };
 
