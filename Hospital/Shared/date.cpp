@@ -27,3 +27,15 @@ void Date::show()
 {
     cout << this->year << "-" << this->month << "-" << this->day;
 };
+
+int Date::getDay() {
+    return this->day;
+}
+
+int Date::getMonth() {
+    return this->month;
+}
+
+int Date::getYear() {
+    return this->year;
+}

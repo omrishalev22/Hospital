@@ -434,6 +434,11 @@ Visit *Hospital::getNewVisit(Patient *patient)
     cout << "Please the arrival date of the visit:" << endl;
     Date arrivalDate = getDateFromUser();
 
+    if (!isValidDate(arrivalDate)) {
+        cout << "Please enter a valid  date" << endl;
+        return nullptr;
+    }
+
     cout << "Does the person in charge of this current visit is a doctor or a nurse? doctor = 0, nurse = 1" << endl;
     cin >> isNurseChosen;
 
@@ -544,6 +549,11 @@ Article *Hospital::getNewArticle()
 
     cout << "Enter the release date of the article: " << endl;
     Date releaseDate = getDateFromUser();
+
+    if (!isValidDate(releaseDate)) {
+        cout << "Please enter a valid release date" << endl;
+        return nullptr;
+    }
 
     return new Article(name, magazine, releaseDate);
 }

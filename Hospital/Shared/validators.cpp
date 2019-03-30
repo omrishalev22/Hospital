@@ -15,3 +15,11 @@ bool isCharactersOnly(char * text) {
 bool isValidID(int id) {
     return !(id < 100000000 || id > 999999999);
 }
+
+bool isValidDate(Date date) {
+    int day = date.getDay();
+    int month = date.getMonth();
+    int year = date.getYear();
+
+    return !(day < 1 || day > 31 || month < 1 || month > 31 || year < 1900);
+}
