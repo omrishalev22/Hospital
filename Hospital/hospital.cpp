@@ -5,7 +5,6 @@
 #include "patient.h"
 #include "Shared/date.h"
 #include "Shared/consts.h"
-#include "Shared/validator.h"
 
 using namespace std;
 int Hospital::numOfEmployees = 0;
