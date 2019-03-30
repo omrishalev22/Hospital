@@ -5,6 +5,7 @@
 #include "patient.h"
 #include "Shared/date.h"
 #include "Shared/consts.h"
+#include "Shared/validators.h"
 
 using namespace std;
 int Hospital::numOfEmployees = 0;
@@ -132,8 +133,18 @@ Nurse *Hospital::getNewNurse()
     cout << "Please type the nurse's name:" << endl;
     cin >> name;
 
+    if (!isCharactersOnly(name)) {
+        cout << "Please enter a valid name (with letters and spaces only)" << endl;
+        return nullptr;
+    }
+
     cout << "Please type the nurse's years of experience:" << endl;
     cin >> yearsOfExperience;
+
+    if (yearsOfExperience < 0 || yearsOfExperience > 120) {
+        cout << "Please enter a valid amount of experience years" << endl;
+        return nullptr;
+    }
 
     return new Nurse(name, ++numOfEmployees, yearsOfExperience);
 }
@@ -173,9 +184,19 @@ Doctor *Hospital::getNewDoctor()
     cout << "Please type the doctor's name:" << endl;
     cin >> name;
 
+    if (!isCharactersOnly(name)) {
+        cout << "Please enter a valid name (with letters and spaces only)" << endl;
+        return nullptr;
+    }
+
     cout << "Please type the doctor's internship field:" << endl;
     cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(interField, SIZE); // intake entire short description
+
+    if (!isCharactersOnly(interField)) {
+        cout << "Please enter a valid intership field (with letters and spaces only)" << endl;
+        return nullptr;
+    }
 
     return new Doctor(++numOfEmployees, name, interField);
 }
@@ -234,14 +255,35 @@ Patient *Hospital::getNewPatient()
     cout << "What is your name?" << endl;
     cin >> name;
 
+    if (!isCharactersOnly(name)) {
+        cout << "Please enter a valid name (with letters and spaces only)" << endl;
+        return nullptr;
+    }
+
     cout << "What is your id?" << endl;
     cin >> id;
+
+
+    if (!isValidID(id)) {
+        cout << "Please enter a valid ID number (9 numbers)" << endl;
+        return nullptr;
+    }
 
     cout << "What is your year of birth?" << endl;
     cin >> yearOfBirth;
 
+    if (yearOfBirth < 1920 || yearOfBirth > 2019) {
+        cout << "Please enter a valid year of birth" << endl;
+        return nullptr;
+    }
+
     cout << "What is your gender? 1 = female, 0 = male" << endl;
     cin >> gender;
+
+    if (gender != 0 && gender != 1) {
+        cout << "Please enter a valid gender" << endl;
+        return nullptr;
+    }
 
     return new Patient(name, id, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE));
 }
@@ -264,6 +306,10 @@ bool Hospital::addNewPatientVisit()
     // In case it's a new visit , we need to fill out patient's data
     if (isFirstVisit) {
         patient = getNewPatient();
+        if (patient == nullptr) {
+            return false;
+        }
+
         department = getDepartmentByUserInput();
         if (department) {
             patient->setDepartment(department->getName());
@@ -363,6 +409,10 @@ Researcher *Hospital::getNewResearcher()
     cout << "Enter the name of the researcher: " << endl;
     cin >> name;
 
+    if (!isCharactersOnly(name)) {
+        cout << "The name is invalid (please specify a name with letters and spaces only)" << endl;
+        return nullptr;
+    }
 
     return new Researcher(name, ++numOfEmployees);
 }
@@ -381,15 +431,24 @@ Visit *Hospital::getNewVisit(Patient *patient)
     cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(arrivalPurpose, SIZE); // intake entire short description
 
-
     cout << "Please the arrival date of the visit:" << endl;
     Date arrivalDate = getDateFromUser();
 
     cout << "Does the person in charge of this current visit is a doctor or a nurse? doctor = 0, nurse = 1" << endl;
     cin >> isNurseChosen;
 
+    if (isNurseChosen != 0 && isNurseChosen != 1) {
+        cout << "Please enter a valid choice (1/0)" << endl;
+        return nullptr;
+    }
+
     cout << "Please enter the ID of the " << (isNurseChosen == 1 ? "nurse" : "doctor") << " that is in charge:" << endl;
     cin >> personInChargeID;
+
+    if (!isValidID(personInChargeID)) {
+        cout << "Please enter a valid ID number (9 numbers)" << endl;
+        return nullptr;
+    }
 
     // we want to make sure there are members in staff before trying to look for nurse/doctor
     // We also know that the department name in the patient is valid since we created the object already after validations
@@ -470,8 +529,18 @@ Article *Hospital::getNewArticle()
     cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(name, SIZE);
 
+    if (!isCharactersOnly(name)) {
+        cout << "Please enter a valid article name (with letters and spaces only)" << endl;
+        return nullptr;
+    }
+
     cout << "Enter the name of the magazine the article is in: " << endl;
     cin.getline(magazine, SIZE);
+
+    if (!isCharactersOnly(name)) {
+        cout << "Please enter a valid magazine name (with letters and spaces only)" << endl;
+        return nullptr;
+    }
 
     cout << "Enter the release date of the article: " << endl;
     Date releaseDate = getDateFromUser();
