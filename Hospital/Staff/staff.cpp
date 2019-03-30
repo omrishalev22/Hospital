@@ -40,6 +40,9 @@ void Staff::show()
 
 bool Staff::addNewNurse(Nurse *nurse)
 {
+    if (nurse == nullptr)
+        return false;
+
     if (this->indexNurses >= this->sizeNurses) {
         Nurse **tempArr = new Nurse *[this->sizeNurses * 2];
         for (int i = 0; i < this->indexNurses; i++)
@@ -55,6 +58,9 @@ bool Staff::addNewNurse(Nurse *nurse)
 
 bool Staff::addNewDoctor(Doctor *doctor)
 {
+    if (doctor == nullptr)
+        return false;
+
     if (this->indexDoctors >= this->sizeDoctors) {
         Doctor **tempArr = new Doctor *[this->sizeDoctors * 2];
         for (int i = 0; i < this->indexDoctors; i++)

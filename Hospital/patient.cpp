@@ -56,6 +56,9 @@ bool Patient::setDepartment(char *departmentName)
 
 bool Patient::addNewVisit(Visit * visit)
 {
+    if (visit == nullptr)
+        return false;
+
     if (this->indexVisits >= this->sizeVisits)
     {
         Visit** tempArr = new Visit*[this->sizeVisits * 2];

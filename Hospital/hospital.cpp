@@ -89,6 +89,11 @@ Department *Hospital::getNewDepartment()
     char name[SIZE];
     cout << "Please type the department name:" << endl;
     cin >> name;
+
+    if (getDepartmentByName(name) != nullptr) {
+        cout << "There is already an existing department with the name: " << name << endl;
+        return nullptr;
+    }
     return new Department(name);
 }
 
@@ -97,6 +102,9 @@ Department *Hospital::getNewDepartment()
  */
 bool Hospital::addNewDepartment(Department *newDepartment)
 {
+    if (newDepartment == nullptr)
+        return false;
+
     if (this->indexDepartments >= this->sizeDepartments) {
         Department **tempArr = new Department *[this->sizeDepartments * 2];
         for (int i = 0; i < this->indexDepartments; i++)
@@ -418,6 +426,9 @@ Visit *Hospital::getNewVisit(Patient *patient)
  */
 bool Hospital::addNewResearcher(Researcher *newResearcher)
 {
+    if (newResearcher == nullptr)
+        return false;
+
     if (this->indexResearchers >= this->sizeResearchers) {
         Researcher **tempArr = new Researcher *[this->sizeResearchers * 2];
         for (int i = 0; i < this->indexResearchers; i++)
@@ -480,6 +491,9 @@ Article *Hospital::getNewArticle()
  */
 bool Hospital::addNewPatient(Patient *newPatient)
 {
+    if (newPatient == nullptr)
+        return false;
+
     if (this->indexPatients >= this->sizePatients) {
         Patient **tempArr = new Patient *[this->sizePatients * 2];
         for (int i = 0; i < this->indexPatients; i++)

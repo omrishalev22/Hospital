@@ -40,6 +40,9 @@ void Researcher::show()
 
 bool Researcher::addNewArticle(Article *article)
 {
+    if (article == nullptr)
+        return false;
+
     if (this->indexArticles >= this->sizeArticles)
     {
         Article** tempArr = new Article*[this->sizeArticles * 2];
