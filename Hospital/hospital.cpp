@@ -572,7 +572,7 @@ bool Hospital::addNewArticleToResearcher()
         cout << "Could not find a researcher with ID: " << id << endl;
         return false;
     } else {
-        foundResearcher->addNewArticle(getNewArticle(),foundResearcher->getName());
+        foundResearcher->addNewArticle(getNewArticle());
         return true;
     }
 }
