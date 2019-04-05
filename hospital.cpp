@@ -691,11 +691,6 @@ bool Hospital::addNewArticleToResearcher()
     cin >> id;
     flushBuffer();
 
-    if (!isValidID(id)) {
-        cout << "Please enter a valid ID number (9 numbers)" << endl;
-        return false;
-    }
-
     Researcher *foundResearcher = getResearcherById(id);
     if (foundResearcher == nullptr) {
         cout << "Could not find a researcher with ID: " << id << endl;
