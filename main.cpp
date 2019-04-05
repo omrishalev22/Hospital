@@ -1,4 +1,4 @@
-#include "Hospital/hospital.h"
+#include "hospital.h"
 
 int main() {
     // Create new hospital, and run the menu loop

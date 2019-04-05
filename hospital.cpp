@@ -482,11 +482,6 @@ Visit *Hospital::getNewVisit(Patient *patient)
     cin >> personInChargeID;
     flushBuffer();
 
-    if (!isValidID(personInChargeID)) {
-        cout << "Please enter a valid ID number (9 numbers)" << endl;
-        return nullptr;
-    }
-
     // we want to make sure there are members in staff before trying to look for nurse/doctor
     // We also know that the department name in the patient is valid since we created the object already after validations
     Staff *departmentStaff = this->getDepartmentByName(patient->getDepartmentName())->getStaffMembers();
