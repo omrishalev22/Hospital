@@ -2,23 +2,17 @@
 #define __RESEARCHER_H
 
 #include "article.h"
+#include "../person.h"
 
-class Researcher
+class Researcher : public Person
 {
 private:
-
-    char * name;
-    int id;
     Article ** articles;
     int indexArticles;
     int sizeArticles;
 
 public:
-    Researcher(char * name, int id);
-
-    // Getters
-    char* getName();
-    int getId();
+    Researcher(int id, char * name);
     Article ** getArticles();
     void show();
 

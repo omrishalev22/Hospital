@@ -5,24 +5,11 @@
 
 using namespace std;
 
-Researcher::Researcher(char *name, int id)
+Researcher::Researcher(int id, char *name) : Person(id, name)
 {
-    this->name = new char[strlen(name) + 1];
-    this->name = strcpy(this->name, name);
-    this->id = id;
     this->articles = new Article*[AMOUNT_OF_STARTED_ITEMS];
     this->indexArticles = 0;
     this->sizeArticles = AMOUNT_OF_STARTED_ITEMS;
-}
-
-char* Researcher::getName()
-{
-    return this->name;
-}
-
-int Researcher::getId()
-{
-    return this->id;
 }
 
 Article ** Researcher::getArticles()
@@ -33,8 +20,7 @@ Article ** Researcher::getArticles()
 void Researcher::show()
 {
     cout << "[Researcher]" << endl;
-    cout << "    Name: " << this->name << endl;
-    cout << "    ID: " << this->id << endl;
+	this->Person::show();
     cout << "    Number of articles: " << this->indexArticles << endl;
 }
 

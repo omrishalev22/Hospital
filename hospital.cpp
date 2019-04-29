@@ -445,7 +445,7 @@ Researcher *Hospital::getNewResearcher()
         return nullptr;
     }
 
-    return new Researcher(name, ++numOfEmployees);
+    return new Researcher(++numOfEmployees, name);
 }
 
 /**
@@ -525,7 +525,7 @@ bool Hospital::addNewResearcher(Researcher *newResearcher)
         this->sizeResearchers *= 2;
     }
     this->researchers[this->indexResearchers++] = newResearcher;
-    cout << "Successfully added new researcher (ID " << newResearcher->getId() << ")" << endl;
+    cout << "Successfully added new researcher (ID " << newResearcher->getID() << ")" << endl;
     return true;
 }
 
@@ -671,7 +671,7 @@ void Hospital::showAllHospitalStaff()
 Researcher *Hospital::getResearcherById(int id)
 {
     for (int i = 0; i < indexResearchers; i++) {
-        if (researchers[i]->getId() == id) {
+        if (researchers[i]->getID() == id) {
             return researchers[i];
         }
     }
