@@ -3,15 +3,14 @@
 #ifndef __NURSE_H
 #define __NURSE_H
 
-class Nurse {
+#include "../../person.h"
+
+class Nurse : public Person {
 private:
-    char * name;
-    int id;
-    int yearsOfExperience;
-public :
-    Nurse(char * name,int id, int yearsOfExperience);
-    int getID();
-    void show();
+	int yearsOfExperience;
+public:
+	Nurse(int id, char * name, int yearsOfExperience);
+	void show();
 
 };
 #endif //__NURSE_H

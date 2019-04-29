@@ -154,7 +154,7 @@ Nurse *Hospital::getNewNurse()
         return nullptr;
     }
 
-    return new Nurse(name, ++numOfEmployees, yearsOfExperience);
+    return new Nurse(++numOfEmployees, name, yearsOfExperience);
 }
 
 /**

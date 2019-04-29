@@ -5,23 +5,13 @@
 
 using namespace std;
 
-Nurse::Nurse(char *name, int id, int yearsOfExperience) {
-    this->name = new char[strlen(name) + 1];
-    this->name = strcpy(this->name, name);
-    this -> id =  id;
-    this -> yearsOfExperience =  yearsOfExperience;
+Nurse::Nurse(int id, char *name, int yearsOfExperience) : Person(id, name) {
+	this->yearsOfExperience = yearsOfExperience;
 }
-
-int Nurse::getID()
-{
-    return this->id;
-}
-
 
 void Nurse::show()
 {
-    cout << "[Nurse]" << endl;
-    cout << "    Name: " << this->name << endl;
-    cout << "    ID: " << this->id << endl;
-    cout << "    Years of experience: " << this->yearsOfExperience << endl;
+	cout << "[Nurse]" << endl;
+	this->Person::show();
+	cout << "    Years of experience: " << this->yearsOfExperience << endl;
 }

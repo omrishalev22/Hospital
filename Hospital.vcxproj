@@ -115,6 +115,7 @@
     <ClCompile Include="hospital.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="patient.cpp" />
+    <ClCompile Include="person.cpp" />
     <ClCompile Include="ResearchCenter\article.cpp" />
     <ClCompile Include="ResearchCenter\researcher.cpp" />
     <ClCompile Include="Shared\date.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="department.h" />
     <ClInclude Include="hospital.h" />
     <ClInclude Include="patient.h" />
+    <ClInclude Include="person.h" />
     <ClInclude Include="ResearchCenter\article.h" />
     <ClInclude Include="ResearchCenter\researcher.h" />
     <ClInclude Include="Shared\consts.h" />

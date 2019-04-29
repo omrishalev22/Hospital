@@ -5,15 +5,14 @@
 #ifndef __DOCTOR_H
 #define __DOCTOR_H
 
-class Doctor {
+#include "../../person.h"
+
+class Doctor : public Person {
 private:
-    char *name;
-    int id;
-    char *internField;
+	char *internField;
 public:
-    Doctor(int id, char *name, char *interField);
-    int getID();
-    void show();
+	Doctor(int id, char *name, char *interField);
+	void show();
 };
 
 #endif //__DOCTOR_H
