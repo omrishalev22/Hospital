@@ -7,6 +7,7 @@ protected:
 	char *name;
 
 public:
+	Person() {};
 	Person(int id, char *name);
 	int getID();
 	char* getName();

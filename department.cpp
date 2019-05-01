@@ -96,7 +96,7 @@ bool Department::removePatientByID(int patientID)
 
     for (int i = 0; i < this->indexPatients; i++) {
         // in case patient does not match the given ID add to new arr
-        if (patients[i]->getId() != patientID) {
+        if (patients[i]->getID() != patientID) {
             tempArr[index] = this->patients[index];
             index++;
         } else {

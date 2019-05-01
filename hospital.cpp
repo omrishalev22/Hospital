@@ -306,7 +306,7 @@ Patient *Hospital::getNewPatient()
         return nullptr;
     }
 
-    return new Patient(name, id, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE));
+    return new Patient(id, name, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE));
 }
 
 /**
@@ -370,7 +370,7 @@ bool Hospital::addNewPatientVisit()
                 cout << "Releasing patient from '" << patient->getDepartmentName() << "'" << endl;
                 Department *newDepartment = getDepartmentByUserInput();
                 if (newDepartment) {
-                    getDepartmentByName(patient->getDepartmentName())->removePatientByID(patient->getId());
+                    getDepartmentByName(patient->getDepartmentName())->removePatientByID(patient->getID());
                     patient->setDepartment(newDepartment->getName());
                     newDepartment->addNewPatient(patient);
                     cout << "Patient " << patient->getName() << " has been added to department "
@@ -419,7 +419,7 @@ bool Hospital::addNewPatientVisit()
 Patient *Hospital::getPatientById(int id)
 {
     for (int i = 0; i < indexPatients; i++) {
-        if (patients[i]->getId() == id) {
+        if (patients[i]->getID() == id) {
             return patients[i];
         }
     }

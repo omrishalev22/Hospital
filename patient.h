@@ -1,11 +1,12 @@
 #include "Shared/date.h"
 #include "Staff/staff.h"
 #include "visit.h"
+#include "person.h"
 
 #ifndef __PATIENT_H
 #define __PATIENT_H
 
-class Patient
+class Patient : public Person
 {
 public:
     enum eSex
@@ -14,11 +15,9 @@ public:
     };
 
     Patient(const Patient& patient);
-    Patient(char *name, int id, int yearOfBirth, eSex sex);
+    Patient(int id, char *name, int yearOfBirth, eSex sex);
 
     // GETTERS
-    int getId();
-    char *getName();
     void show();
     eSex getESex();
     char *getDepartmentName();
@@ -29,8 +28,6 @@ public:
 
     ~Patient();
 private:
-    char *name;
-    int id;
     int yearOfBirth;
     char *departmentName;
     eSex sex;

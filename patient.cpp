@@ -18,32 +18,13 @@ Patient::Patient(const Patient &patient)
     this->sizeVisits = AMOUNT_OF_STARTED_ITEMS;
 }
 
-Patient::Patient(char *name, int id, int yearOfBirth, eSex sex)
+Patient::Patient(int id, char *name, int yearOfBirth, eSex sex) : Person(id, name)
 {
-    this->name = new char[strlen(name) + 1];
-    this->name = strcpy(this->name, name);
-    this->id = id;
-    this->yearOfBirth = yearOfBirth;
+	this->yearOfBirth = yearOfBirth;
     this->sex = sex;
     this->visits = new Visit*[AMOUNT_OF_STARTED_ITEMS];
     this->indexVisits = 0;
     this->sizeVisits = AMOUNT_OF_STARTED_ITEMS;
-}
-
-/*
- * Get patient's ID
- */
-int Patient::getId()
-{
-    return id;
-}
-
-/*
- * Get patient's name
- */
-char *Patient::getName()
-{
-    return name;
 }
 
 /*
@@ -92,8 +73,7 @@ bool Patient::addNewVisit(Visit * visit)
 void Patient::show()
 {
     cout << "[Patient]" << endl;
-    cout << "    Name: " << this->name << endl;
-    cout << "    ID: " << this->id << endl;
+	this->Person::show();
     cout << "    Year of birth: " << this->yearOfBirth << endl;
     cout << "    Department: " << this->departmentName << endl;
     cout << "    Sex: " << (this->getESex() == Patient::eSex::MALE ? "Male" : "Female") << endl;
