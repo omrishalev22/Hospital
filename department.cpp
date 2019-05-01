@@ -22,7 +22,7 @@ Department::Department(char *name)
  */
 bool Department::addNewDoctor(Doctor *doctor)
 {
-    staff->addNewDoctor(doctor);
+    staff->addNewStaffMember(doctor);
     return true;
 }
 
@@ -31,7 +31,7 @@ bool Department::addNewDoctor(Doctor *doctor)
  */
 bool Department::addNewNurse(Nurse *nurse)
 {
-    staff->addNewNurse(nurse);
+    staff->addNewStaffMember(nurse);
     return true;
 }
 

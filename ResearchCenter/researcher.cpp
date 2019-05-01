@@ -19,7 +19,6 @@ Article ** Researcher::getArticles()
 
 void Researcher::show()
 {
-    cout << "[Researcher]" << endl;
 	this->Person::show();
     cout << "    Number of articles: " << this->indexArticles << endl;
 }

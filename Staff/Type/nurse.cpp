@@ -11,7 +11,6 @@ Nurse::Nurse(int id, char *name, int yearsOfExperience) : Person(id, name) {
 
 void Nurse::show()
 {
-	cout << "[Nurse]" << endl;
 	this->Person::show();
 	cout << "    Years of experience: " << this->yearsOfExperience << endl;
 }

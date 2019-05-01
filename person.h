@@ -12,6 +12,7 @@ public:
 	int getID();
 	char* getName();
 	void show();
+	virtual void dummy() {};
 };
 
 #endif //__PERSON_H

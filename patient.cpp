@@ -72,7 +72,6 @@ bool Patient::addNewVisit(Visit * visit)
  */
 void Patient::show()
 {
-    cout << "[Patient]" << endl;
 	this->Person::show();
     cout << "    Year of birth: " << this->yearOfBirth << endl;
     cout << "    Department: " << this->departmentName << endl;

@@ -6,20 +6,11 @@
 
 using namespace std;
 
-Visit::Visit(char *arrivalPurpose, Date &arrivalDate, Nurse *nurseInCharge)
+Visit::Visit(char *arrivalPurpose, Date &arrivalDate, Person * personInCharge)
 {
     this->setArrivalPurpose(arrivalPurpose);
     this->arrivalDate = Date(arrivalDate);
-    this->nurseInCharge = nurseInCharge;
-    this->doctorInCharge = nullptr;
-}
-
-Visit::Visit(char *arrivalPurpose, Date &arrivalDate, Doctor *doctorInCharge)
-{
-    this->setArrivalPurpose(arrivalPurpose);
-    this->arrivalDate = Date(arrivalDate);
-    this->doctorInCharge = doctorInCharge;
-    this->nurseInCharge = nullptr;
+    this->personInCharge = personInCharge;
 }
 
 /*
@@ -42,18 +33,12 @@ void Visit::show()
     cout << "        Arrival date: ";
     this->arrivalDate.show();
     cout << endl;
-
-    if (this->doctorInCharge == nullptr) {
-        cout << "        Nurse in charge ID: " << this->nurseInCharge->getID() << endl;
-    } else {
-        cout << "        Doctor in charge ID: " << this->doctorInCharge->getID() << endl;
-    }
+	cout << "        " << typeid(*personInCharge).name() + 6 << " in charge ID: " << this->personInCharge->getID() << endl;
     cout << endl;
 }
 
 Visit::~Visit()
 {
     delete[] this->arrivalPurpose;
-    delete this->nurseInCharge;
-    delete this->doctorInCharge;
+    delete this->personInCharge;
 }

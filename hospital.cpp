@@ -485,23 +485,13 @@ Visit *Hospital::getNewVisit(Patient *patient)
     // we want to make sure there are members in staff before trying to look for nurse/doctor
     // We also know that the department name in the patient is valid since we created the object already after validations
     Staff *departmentStaff = this->getDepartmentByName(patient->getDepartmentName())->getStaffMembers();
-    if (isNurseChosen) {
-        Nurse *inChargePerson = departmentStaff ? departmentStaff->getNurseByID(personInChargeID) : nullptr;
-        if (inChargePerson == nullptr) {
-            cout << "Could not find nurse with ID " << personInChargeID << " in department "
-                 << patient->getDepartmentName() << endl;
-            return nullptr;
-        }
-        return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
-    } else {
-        Doctor *inChargePerson = departmentStaff ? departmentStaff->getDoctorByID(personInChargeID) : nullptr;
-        if (inChargePerson == nullptr) {
-            cout << "Could not find doctor with ID " << personInChargeID << " in department "
-                 << patient->getDepartmentName() << endl;
-            return nullptr;
-        }
-        return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
-    }
+	Person *inChargePerson = departmentStaff ? departmentStaff->getStaffMemberByID(personInChargeID) : nullptr;
+	if (inChargePerson == nullptr) {
+		cout << "Could not find " << (isNurseChosen ? "nurse" : "doctor") << " with ID " << personInChargeID << " in department "
+			<< patient->getDepartmentName() << endl;
+		return nullptr;
+	}
+	return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
 }
 
 /**
