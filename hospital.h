@@ -21,6 +21,7 @@ void flushBuffer();
 "\n (8) Show all staff members in the system\n"\
 "\n (9) Show all researchers in the Researchers center\n"\
 "\n (10) Show patient details by ID\n"\
+"\n (11) Show first department in the hospital by using 'operator<<'\n"\
 "\n or enter -1 to exit\n")
 
 class Hospital

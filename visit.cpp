@@ -30,9 +30,7 @@ void Visit::show()
 {
     cout << "        [Visit]" << endl;
     cout << "        Arrival purpose: " << this->arrivalPurpose << endl;
-    cout << "        Arrival date: ";
-    this->arrivalDate.show();
-    cout << endl;
+    cout << "        Arrival date: " << arrivalDate << endl;
 	cout << "        " << typeid(*personInCharge).name() + 6 << " in charge ID: " << this->personInCharge->getID() << endl;
     cout << endl;
 }

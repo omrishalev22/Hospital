@@ -44,6 +44,11 @@ bool Researcher::addNewArticle(Article *article)
     return true;
 }
 
+bool Researcher::operator>(const Researcher& other)
+{
+	return this->indexArticles > other.indexArticles;
+}
+
 Researcher::~Researcher()
 {
     if (this->articles != nullptr) {

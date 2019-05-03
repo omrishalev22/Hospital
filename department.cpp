@@ -18,12 +18,11 @@ Department::Department(char *name)
 }
 
 /*
- * Attach a new Doctor to department
+ * Attach new staff member to the department
  */
-bool Department::addNewDoctor(Doctor *doctor)
-{
-    staff->addNewStaffMember(doctor);
-    return true;
+bool Department::operator+=(Person* staffMember) {
+	this->staff->addNewStaffMember(staffMember);
+	return true;
 }
 
 /*
@@ -114,6 +113,12 @@ bool Department::removePatientByID(int patientID)
     this->patients = tempArr;
     this->indexPatients--;
     return true;
+}
+
+ostream& operator<<(ostream& os, const Department& department)
+{
+	os << "Department: " << department.name;
+	return os;
 }
 
 /*

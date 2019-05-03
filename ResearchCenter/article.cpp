@@ -26,3 +26,9 @@ Date Article::getReleaseDate()
 {
     return this->releaseDate;
 }
+
+ostream& operator<<(ostream& os, const Article& obj)
+{
+	os << "Article '" << obj.name << "' in Magazine '" << obj.magazine << "'";
+	return os;
+}

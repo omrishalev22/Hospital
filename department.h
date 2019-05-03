@@ -5,6 +5,9 @@
 #include "Staff/Type/doctor.h"
 #include "Staff/Type/nurse.h"
 #include "patient.h"
+#include <iostream>
+
+using namespace std;
 
 class Department
 {
@@ -23,12 +26,12 @@ public:
     // GETTERS
     char *getName();
     Staff * getStaffMembers();
-
     void showPatients();
+	friend ostream& operator<<(ostream& os, const Department& department);
 
 
     // SETTERS
-    bool addNewDoctor(Doctor *doctor);
+	bool operator+=(Person* staffMember);
     bool addNewNurse(Nurse *nurse);
     bool addNewPatient(Patient * patient);
     bool removePatientByID(int patientID);

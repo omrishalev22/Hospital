@@ -55,6 +55,14 @@ void Hospital::runLoop()
             case 10:
                 showPatientByID();
                 break;
+			case 11:
+				if (this->indexDepartments > 0) {
+					cout << "Showing first department in the hospital using 'operator<<': " << *(this->departments[0]) << endl;
+				}
+				else {
+					cout << "Please create a department in order to test the 'operator<<'" << endl;
+				}
+				break;
             default:
                 cout << "Command could not be found, Please try something else" << endl;
                 break;
@@ -182,7 +190,7 @@ bool Hospital::addNewNurseToDepartment()
         if (nurse == nullptr) {
             return false;
         }
-        foundDepartment->addNewNurse(nurse);
+        *foundDepartment += nurse;
         cout << "Successfully added new nurse (ID " << nurse->getID() << ") to department: " << departmentName << endl;
         return true;
     }
@@ -236,7 +244,7 @@ bool Hospital::addNewDoctorToDepartment()
         if (doctor == nullptr) { // in case validation fails go back to main menu
             return false;
         }
-        foundDepartment->addNewDoctor(doctor);
+        *foundDepartment += doctor;
         cout << "Successfully added new doctor (ID " << doctor->getID() << ") to department: " << departmentName
              << endl;
         return true;

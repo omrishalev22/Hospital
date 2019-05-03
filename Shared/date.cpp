@@ -28,6 +28,12 @@ void Date::show()
     cout << this->year << "-" << this->month << "-" << this->day;
 };
 
+ostream& operator<<(ostream& os, const Date& dt)
+{
+	os << dt.year << "-" << dt.month << "-" << dt.day;
+	return os;
+}
+
 int Date::getDay() {
     return this->day;
 }

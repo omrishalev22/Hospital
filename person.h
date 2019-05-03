@@ -11,8 +11,7 @@ public:
 	Person(int id, char *name);
 	int getID();
 	char* getName();
-	void show();
-	virtual void dummy() {};
+	virtual void show();
 };
 
 #endif //__PERSON_H

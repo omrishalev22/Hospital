@@ -15,6 +15,7 @@ public:
     Researcher(int id, char * name);
     Article ** getArticles();
     void show();
+	bool operator>(const Researcher& other);
 
     // Setters
     bool addNewArticle(Article* article);
