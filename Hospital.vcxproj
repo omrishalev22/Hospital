@@ -124,6 +124,7 @@
     <ClCompile Include="Staff\Type\doctor.cpp" />
     <ClCompile Include="Staff\Type\surgent.cpp" />
     <ClCompile Include="Staff\Type\nurse.cpp" />
+    <ClCompile Include="surgery_visit.cpp" />
     <ClCompile Include="visit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +141,7 @@
     <ClInclude Include="Staff\Type\doctor.h" />
     <ClInclude Include="Staff\Type\surgent.h" />
     <ClInclude Include="Staff\Type\nurse.h" />
+    <ClInclude Include="surgery_visit.h" />
     <ClInclude Include="visit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

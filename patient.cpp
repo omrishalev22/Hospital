@@ -81,6 +81,7 @@ void Patient::show()
 
     for (int i = 0; i < this->indexVisits; i++) {
         this->visits[i]->show();
+		cout << endl;
     }
 
     cout << endl;

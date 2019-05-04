@@ -13,7 +13,7 @@ public:
     Visit(char * arrivalPurpose, Date &arrivalDate, Person * personInCharge);
 
     // GETTERS
-    void show();
+    virtual void show();
 
     // SETTERS
     bool setArrivalPurpose(char * arrivalPurpose);

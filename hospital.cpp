@@ -490,7 +490,7 @@ Researcher *Hospital::getNewResearcher()
  */
 Visit *Hospital::getNewVisit(Patient *patient)
 {
-    int isNurseChosen, personInChargeID;
+    int isNurseChosen, personInChargeID, isSurgeryVisit;
     char arrivalPurpose[SIZE];
 
     cout << "Enter the visit / arrival purpose: (up to 149 characters) " << endl;
@@ -525,6 +525,21 @@ Visit *Hospital::getNewVisit(Patient *patient)
 		cout << "Could not find " << (isNurseChosen ? "nurse" : "doctor") << " with ID " << personInChargeID << " in department "
 			<< patient->getDepartmentName() << endl;
 		return nullptr;
+	}
+
+	cout << "Is this visit a regular visit or a surgery visit? regular = 0, surgery = 1" << endl;
+	cin >> isSurgeryVisit;
+
+	if (isSurgeryVisit) {
+		int roomNumber;
+		bool isFeasting;
+		cout << "Please enter the visit's room number:" << endl;
+		cin >> roomNumber;
+		cin.clear();
+		cout << "Is the patient is feasting? 1 = true, 0 = false" << endl;
+		cin >> isFeasting;
+		cin.clear();
+		return new SurgeryVisit(arrivalPurpose, arrivalDate, inChargePerson, roomNumber, isFeasting);
 	}
 	return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
 }

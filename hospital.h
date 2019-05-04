@@ -7,6 +7,8 @@
 #include "ResearchCenter/article.h"
 #include "Shared/date.h"
 #include "visit.h"
+#include "surgery_visit.h"
+
 void flushBuffer();
 
 #define MENU_TEXT (""\
