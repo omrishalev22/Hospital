@@ -3,7 +3,7 @@
 
 #include "article.h"
 #include "../person.h"
-#include "../../Hospital//Staff/Type/doctor.h"
+#include "../Staff/Type/doctor.h"
 
 class Researcher : public Person
 {
