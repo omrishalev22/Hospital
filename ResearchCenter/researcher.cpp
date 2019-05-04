@@ -10,6 +10,12 @@ Researcher::Researcher(int id, char *name) : Person(id, name)
     this->articles = new Article*[AMOUNT_OF_STARTED_ITEMS];
     this->indexArticles = 0;
     this->sizeArticles = AMOUNT_OF_STARTED_ITEMS;
+	this->isDoctor = false;
+}
+
+Researcher::Researcher(const Doctor & doctor): Person(doctor)
+{
+	this->isDoctor = true;
 }
 
 Article ** Researcher::getArticles()
@@ -47,6 +53,11 @@ bool Researcher::addNewArticle(Article *article)
 bool Researcher::operator>(const Researcher& other)
 {
 	return this->indexArticles > other.indexArticles;
+}
+
+bool Researcher::getIsDoctor()
+{
+	return this->isDoctor;
 }
 
 Researcher::~Researcher()

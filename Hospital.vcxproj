@@ -122,6 +122,7 @@
     <ClCompile Include="Shared\validators.cpp" />
     <ClCompile Include="Staff\staff.cpp" />
     <ClCompile Include="Staff\Type\doctor.cpp" />
+    <ClCompile Include="Staff\Type\surgent.cpp" />
     <ClCompile Include="Staff\Type\nurse.cpp" />
     <ClCompile Include="visit.cpp" />
   </ItemGroup>
@@ -137,6 +138,7 @@
     <ClInclude Include="Shared\validators.h" />
     <ClInclude Include="Staff\staff.h" />
     <ClInclude Include="Staff\Type\doctor.h" />
+    <ClInclude Include="Staff\Type\surgent.h" />
     <ClInclude Include="Staff\Type\nurse.h" />
     <ClInclude Include="visit.h" />
   </ItemGroup>

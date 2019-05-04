@@ -3,6 +3,7 @@
 
 #include "Staff/staff.h"
 #include "Staff/Type/doctor.h"
+#include "Staff/Type/surgent.h"
 #include "Staff/Type/nurse.h"
 #include "patient.h"
 #include <iostream>

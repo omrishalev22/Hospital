@@ -8,7 +8,7 @@
 #include "../../person.h"
 
 class Doctor : public Person {
-private:
+protected:
 	char *internField;
 public:
 	Doctor(int id, char *name, char *interField);

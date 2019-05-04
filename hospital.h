@@ -20,8 +20,9 @@ void flushBuffer();
 "\n (7) Show all patients by department name\n"\
 "\n (8) Show all staff members in the system\n"\
 "\n (9) Show all researchers in the Researchers center\n"\
-"\n (10) Show patient details by ID\n"\
-"\n (11) Show first department in the hospital by using 'operator<<'\n"\
+"\n (10) Show all doctor researchers in the Researchers center\n"\
+"\n (11) Show patient details by ID\n"\
+"\n (12) Show first department in the hospital by using 'operator<<'\n"\
 "\n or enter -1 to exit\n")
 
 class Hospital
@@ -62,6 +63,7 @@ public:
     Department *getDepartmentByUserInput();
 
     void showAllResearchers();
+	void showAllDoctorResearchers();
     void showPatientByID();
     void showAllHospitalStaff();
     void showPatientsByDepartment();

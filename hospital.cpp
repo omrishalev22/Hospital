@@ -53,9 +53,12 @@ void Hospital::runLoop()
                 showAllResearchers();
                 break;
             case 10:
-                showPatientByID();
+				showAllDoctorResearchers();
                 break;
 			case 11:
+				showPatientByID();
+				break;
+			case 12:
 				if (this->indexDepartments > 0) {
 					cout << "Showing first department in the hospital using 'operator<<': " << *(this->departments[0]) << endl;
 				}
@@ -203,6 +206,7 @@ bool Hospital::addNewNurseToDepartment()
 Doctor *Hospital::getNewDoctor()
 {
     char name[SIZE], interField[SIZE];
+	bool isSurgent;
 
     // Todo: add validations for all fields
 
@@ -222,7 +226,20 @@ Doctor *Hospital::getNewDoctor()
         return nullptr;
     }
 
-    return new Doctor(++numOfEmployees, name, interField);
+	cout << "Is the doctor a surgent ?  1 = yes , 0 = no" << endl;
+	cin >> isSurgent;
+	flushBuffer();
+
+
+	if (isSurgent) {
+		cout << "How many operations has the doctor done so far ?" << endl;
+		int numOfOperations;
+		cin >> numOfOperations;
+		flushBuffer();
+		return new Surgent(Doctor(++numOfEmployees, name, interField), numOfOperations);
+	}
+
+    return  new Doctor(++numOfEmployees, name, interField);
 }
 
 /**
@@ -231,6 +248,7 @@ Doctor *Hospital::getNewDoctor()
 bool Hospital::addNewDoctorToDepartment()
 {
     char departmentName[SIZE];
+	bool isResearcher;
 
     cout << "Please type the department name you want to attach doctor to:" << endl;
     cin.getline(departmentName, SIZE);
@@ -244,6 +262,15 @@ bool Hospital::addNewDoctorToDepartment()
         if (doctor == nullptr) { // in case validation fails go back to main menu
             return false;
         }
+	
+		cout << "Is doctor a researcher aswell? 1 = yes , 0 = no" << endl;
+		cin >> isResearcher;
+		flushBuffer();
+
+		if (isResearcher) {
+			addNewResearcher(new Researcher(*doctor));
+		}
+
         *foundDepartment += doctor;
         cout << "Successfully added new doctor (ID " << doctor->getID() << ") to department: " << departmentName
              << endl;
@@ -622,6 +649,25 @@ void Hospital::showAllResearchers()
             researchers[i]->show();
         }
     }
+}
+
+/**
+* Show / Print all researchers that are doctors only to the output.
+*/
+void Hospital::showAllDoctorResearchers()
+{
+	if (indexResearchers == 0) {
+		cout << "There are no researchers in the hospital." << endl;
+	}
+	else {
+		cout << "Showing all researchers in the hospital: " << endl;
+		for (int i = 0; i < indexResearchers; i++) {
+			// check if researcher is a doctor, if he is, print his details to the screen
+			if ((researchers[i]->getIsDoctor())) {
+				researchers[i]->show();
+			}
+		}
+	}
 }
 
 /**
