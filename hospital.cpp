@@ -531,14 +531,15 @@ Visit *Hospital::getNewVisit(Patient *patient)
 
 	if (isSurgeryVisit) {
 		int roomNumber;
-		bool isFeasting;
+		bool isFasting;
 		cout << "Please enter the visit's room number:" << endl;
 		cin >> roomNumber;
-		cin.clear();
-		cout << "Is the patient is feasting? 1 = true, 0 = false" << endl;
-		cin >> isFeasting;
-		cin.clear();
-		return new SurgeryVisit(arrivalPurpose, arrivalDate, inChargePerson, roomNumber, isFeasting);
+		flushBuffer();
+		cout << "Is the patient is fasting? 1 = true, 0 = false" << endl;
+		cin >> isFasting;
+		flushBuffer();
+
+		return new SurgeryVisit(arrivalPurpose, arrivalDate, inChargePerson, roomNumber, isFasting);
 	}
 	return new Visit(arrivalPurpose, arrivalDate, inChargePerson);
 }
