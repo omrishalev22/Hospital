@@ -12,7 +12,6 @@ Doctor::Doctor(int id, char *name, char *interField) : Person(id, name) {
 
 void Doctor::show()
 {
-	cout << "[Doctor]" << endl;
 	this->Person::show();
 	cout << "    Intership field: " << this->internField << endl;
 }
