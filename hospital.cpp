@@ -24,6 +24,8 @@ void Hospital::runLoop()
 
         switch (userInput) {
             case -1:
+				cout << "Press any key to exit..." << endl;
+				cin.ignore();
                 break;
             case 1:
                 addNewDepartment(getNewDepartment());
@@ -71,9 +73,6 @@ void Hospital::runLoop()
                 break;
         }
 
-        // just to make success/error message show on the screen before jumping back to main menu
-        cout << "Press any key to continue.." << endl;
-        cin.ignore();
     } while (userInput != -1);
 }
 
@@ -160,7 +159,7 @@ Nurse *Hospital::getNewNurse()
     cin >> yearsOfExperience;
     flushBuffer();
 
-    if (yearsOfExperience < 0 || yearsOfExperience > 120) {
+    if (yearsOfExperience < MIN_YEARS_OF_EXEPERIENCE || yearsOfExperience > MAX_YEARS_OF_EXEPERIENCE) {
         cout << "Please enter a valid amount of experience years" << endl;
         return nullptr;
     }
@@ -327,7 +326,7 @@ Patient *Hospital::getNewPatient()
     cin >> yearOfBirth;
     flushBuffer();
 
-    if (yearOfBirth < 1920 || yearOfBirth > 2019) {
+    if (yearOfBirth < MIN_YEAR_OF_BIRTH || yearOfBirth > MAX_YEAR_OF_BIRTH) {
         cout << "Please enter a valid year of birth" << endl;
         return nullptr;
     }
@@ -807,6 +806,11 @@ Department *Hospital::getDepartmentByUserInput()
         cout << "Could not find the department: " << requiredDepartment << endl;
         return department;
     }
+	else if (department->getStaffMembers()->isEmpty()) {
+		cout << "Could not attach to a department without any staff members!" << endl;
+		return nullptr;
+	}
+
     return department;
 }
 

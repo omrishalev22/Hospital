@@ -1,4 +1,5 @@
 #include "validators.h"
+#include "consts.h"
 #include <ctype.h>
 #include <cstring>
 
@@ -19,7 +20,7 @@ bool isCharactersOnly(char * text) {
  * Check id range is valid
  */
 bool isValidID(int id) {
-    return !(id < 100000000 || id > 999999999);
+    return !(id < MIN_ID || id > MAX_ID);
 }
 
 /*
@@ -30,5 +31,5 @@ bool isValidDate(Date date) {
     int month = date.getMonth();
     int year = date.getYear();
 
-    return !(day < 1 || day > 31 || month < 1 || month > 31 || year < 1900);
+    return !(day < MIN_DAY || day > MAX_DAY || month < MIN_MONTH || month > MAX_MONTH || year < MIN_YEAR);
 }

@@ -12,6 +12,11 @@ Staff::Staff()
 	this->sizeMembers = AMOUNT_OF_STARTED_ITEMS;
 }
 
+bool Staff::isEmpty()
+{
+	return this->indexMembers == 0;
+}
+
 void Staff::show()
 {
     int i;

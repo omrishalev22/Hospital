@@ -4,4 +4,15 @@
 #define SIZE 150
 #define AMOUNT_OF_STARTED_ITEMS 5
 #define STAYING 1
+#define MIN_YEARS_OF_EXEPERIENCE 0
+#define MAX_YEARS_OF_EXEPERIENCE 120
+#define MIN_YEAR_OF_BIRTH 1920
+#define MAX_YEAR_OF_BIRTH 2019
+#define MIN_ID 100000000
+#define MAX_ID 999999999
+#define MIN_DAY 1
+#define MAX_DAY 31
+#define MIN_MONTH 1
+#define MAX_MONTH 12
+#define MIN_YEAR 1900
 #endif

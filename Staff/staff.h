@@ -12,6 +12,7 @@ private :
 public:
     // Getters
     Staff();
+	bool isEmpty();
     void show();
 	Person * getStaffMemberByID(int id);
 
