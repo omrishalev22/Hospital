@@ -40,20 +40,18 @@ private:
 public:
 
     // Getters
-    Researcher ** getResearchers();
-    Department * getDepartmentByName(char* name);
-    Patient * getPatientById(int id);
-    Researcher * getResearcherById(int id);
-
-    Department * getNewDepartment();
-    Researcher * getNewResearcher();
-    Article * getNewArticle();
-    Doctor * getNewDoctor();
-    Nurse * getNewNurse();
-    Patient * getNewPatient();
-    Date getDateFromUser();
-    Visit * getNewVisit(Patient * patient);
-    Department *getDepartmentByUserInput();
+	Department * getDepartmentByName(char* name);
+	Patient * getPatientById(int id);
+	Researcher * getResearcherById(int id);
+    Department * getNewDepartment() throw (const char *);
+    Researcher * getNewResearcher() throw (const char *);
+    Article * getNewArticle() throw (const char *);
+    Doctor * getNewDoctor() throw (const char *);
+    Nurse * getNewNurse() throw (const char *);
+    Patient * getNewPatient() throw (const char *);
+    Date getDateFromUser() throw (const char *);
+    Visit * getNewVisit(Patient * patient) throw (const char *);
+    Department *getDepartmentByUserInput() throw (const char *);
 
     void showAllResearchers();
 	void showAllDoctorResearchers();
@@ -65,9 +63,9 @@ public:
     bool addNewDepartment(Department * newDepartment);
     bool addNewPatient(Patient * newPatient);
     bool addNewResearcher(Researcher * newResearcher);
-    bool addNewNurseToDepartment();
-    bool addNewDoctorToDepartment();
-    bool addNewPatientVisit();
+	bool addNewNurseToDepartment() throw (const char *);
+	bool addNewDoctorToDepartment() throw (const char *);
+	bool addNewPatientVisit() throw (const char *);
     bool addNewArticleToResearcher();
 
     void runLoop();

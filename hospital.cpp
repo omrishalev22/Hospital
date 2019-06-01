@@ -20,44 +20,45 @@ void Hospital::runLoop()
 
     do {
         cout << MENU_TEXT;
+		cin.clear();
         cin >> userInput;
-        flushBuffer();
-
-        switch (userInput) {
-            case -1:
+		flushBuffer();
+		try {
+			switch (userInput) {
+			case -1:
 				cout << "Press any key to exit..." << endl;
 				cin.ignore();
-                break;
-            case 1:
-                addNewDepartment(getNewDepartment());
-                break;
-            case 2:
-                addNewNurseToDepartment();
-                break;
-            case 3:
-                addNewDoctorToDepartment();
-                break;
-            case 4:
-                addNewPatientVisit();
-                break;
-            case 5:
-                addNewResearcher(getNewResearcher());
-                break;
-            case 6:
-                addNewArticleToResearcher();
-                break;
-            case 7:
-                showPatientsByDepartment();
-                break;
-            case 8:
-                showAllHospitalStaff();
-                break;
-            case 9:
-                showAllResearchers();
-                break;
-            case 10:
+				break;
+			case 1:
+				addNewDepartment(getNewDepartment());
+				break;
+			case 2:
+				addNewNurseToDepartment();
+				break;
+			case 3:
+				addNewDoctorToDepartment();
+				break;
+			case 4:
+				addNewPatientVisit();
+				break;
+			case 5:
+				addNewResearcher(getNewResearcher());
+				break;
+			case 6:
+				addNewArticleToResearcher();
+				break;
+			case 7:
+				showPatientsByDepartment();
+				break;
+			case 8:
+				showAllHospitalStaff();
+				break;
+			case 9:
+				showAllResearchers();
+				break;
+			case 10:
 				showAllDoctorResearchers();
-                break;
+				break;
 			case 11:
 				showPatientByID();
 				break;
@@ -69,10 +70,14 @@ void Hospital::runLoop()
 					cout << "Please create a department in order to test the 'operator<<'" << endl;
 				}
 				break;
-            default:
-                cout << "Command could not be found, Please try something else" << endl;
-                break;
-        }
+			default:
+				cout << "Command could not be found, Please try something else" << endl;
+				break;
+			}
+		}
+		catch (const char* error) {
+			cout << error << endl;
+		}
 
     } while (userInput != -1);
 }
@@ -81,20 +86,18 @@ void Hospital::runLoop()
  * Get a new department from user input.
  * @return
  */
-Department *Hospital::getNewDepartment()
+Department *Hospital::getNewDepartment() throw (const char *)
 {
     char name[SIZE];
     cout << "Please type the department name:" << endl;
     cin.getline(name,SIZE);
 
     if (!isCharactersOnly(name)) {
-        cout << "Please enter a valid name (with letters and spaces only)" << endl;
-        return nullptr;
+		throw ("Please enter a valid name (with letters and spaces only)");
     }
 
     if (getDepartmentByName(name) != nullptr) {
-        cout << "There is already an existing department with the name: " << name << endl;
-        return nullptr;
+		throw ("There is already an existing department with the name: ");
     }
     return new Department(name);
 }
@@ -113,7 +116,7 @@ bool Hospital::addNewDepartment(Department *newDepartment)
 /**
  * Get new Nurse from user input.
  */
-Nurse *Hospital::getNewNurse()
+Nurse *Hospital::getNewNurse() throw (const char *)
 {
     int yearsOfExperience;
     char name[SIZE];
@@ -122,8 +125,7 @@ Nurse *Hospital::getNewNurse()
     cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
-        cout << "Please enter a valid name (with letters and spaces only)" << endl;
-        return nullptr;
+		throw("Please enter a valid name (with letters and spaces only)");
     }
 
     cout << "Please type the nurse's years of experience:" << endl;
@@ -131,8 +133,7 @@ Nurse *Hospital::getNewNurse()
     flushBuffer();
 
     if (yearsOfExperience < MIN_YEARS_OF_EXEPERIENCE || yearsOfExperience > MAX_YEARS_OF_EXEPERIENCE) {
-        cout << "Please enter a valid amount of experience years" << endl;
-        return nullptr;
+		throw("Please enter a valid amount of experience years");
     }
 
     return new Nurse(++numOfEmployees, name, yearsOfExperience);
@@ -141,7 +142,7 @@ Nurse *Hospital::getNewNurse()
 /**
  * Add new Nurse to a specific department
  */
-bool Hospital::addNewNurseToDepartment()
+bool Hospital::addNewNurseToDepartment() throw (const char *)
 {
     char departmentName[SIZE];
 
@@ -149,15 +150,14 @@ bool Hospital::addNewNurseToDepartment()
     cin.getline(departmentName, SIZE);
 
     if (!isCharactersOnly(departmentName)) {
-        cout << "Please enter a valid name (with letters and spaces only)" << endl;
-        return false;
+		throw ("Please enter a valid name (with letters and spaces only)");
     }
 
     Department *foundDepartment = getDepartmentByName(departmentName);
 
     if (foundDepartment == nullptr) {
-        cout << "Could not find department: " << departmentName << endl;
-        return false;
+		// TODO when changing to char * to string add departmentName to message
+		throw ("Could not find department");
     } else {
         Nurse *nurse = getNewNurse();
         if (nurse == nullptr) {
@@ -173,27 +173,23 @@ bool Hospital::addNewNurseToDepartment()
  * Get a new doctor by user input.
  * @return Doctor
  */
-Doctor *Hospital::getNewDoctor()
+Doctor *Hospital::getNewDoctor() throw (const char *)
 {
     char name[SIZE], interField[SIZE];
 	bool isSurgent;
-
-    // Todo: add validations for all fields
 
     cout << "Please type the doctor's name:" << endl;
     cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
-        cout << "Please enter a valid name (with letters and spaces only)" << endl;
-        return nullptr;
+		throw("Please enter a valid name (with letters and spaces only)");
     }
 
     cout << "Please type the doctor's internship field:" << endl;
     cin.getline(interField, SIZE); // intake entire short description
 
     if (!isCharactersOnly(interField)) {
-        cout << "Please enter a valid intership field (with letters and spaces only)" << endl;
-        return nullptr;
+		throw("Please enter a valid intership field (with letters and spaces only)");
     }
 
 	cout << "Is the doctor a surgent ?  1 = yes , 0 = no" << endl;
@@ -201,8 +197,7 @@ Doctor *Hospital::getNewDoctor()
 	flushBuffer();
 
 	if (isSurgent != 0 && isSurgent != 1) {
-		cout << "Please enter a valid input" << endl;
-		return false;
+		throw("Please enter a valid input");
 	}
 
 
@@ -220,7 +215,7 @@ Doctor *Hospital::getNewDoctor()
 /**
  * Add new Doctor to a specific department
  */
-bool Hospital::addNewDoctorToDepartment()
+bool Hospital::addNewDoctorToDepartment() throw (const char *)
 {
     char departmentName[SIZE];
 	bool isResearcher;
@@ -230,7 +225,7 @@ bool Hospital::addNewDoctorToDepartment()
 
     Department *foundDepartment = getDepartmentByName(departmentName);
     if (foundDepartment == nullptr) {
-        cout << "Could not find department: " << departmentName << endl;
+		throw("Could not find the department");
         return false;
     } else {
         Doctor *doctor = getNewDoctor();
@@ -243,8 +238,7 @@ bool Hospital::addNewDoctorToDepartment()
 		flushBuffer();
 
 		if (isResearcher != 0 && isResearcher != 1) {
-			cout << "Please enter a valid input" << endl;
-			return false;
+			throw("Please enter a valid input");
 		}
 
 
@@ -279,20 +273,17 @@ Department *Hospital::getDepartmentByName(char *name)
  * Get a patient object from user input.
  * @return
  */
-Patient *Hospital::getNewPatient()
+Patient *Hospital::getNewPatient()  throw (const char *)
 {
     char name[SIZE];
     int yearOfBirth;
     int id, gender;
 
-    // Todo: enter validations for all fields
-
     cout << "What is your name?" << endl;
     cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
-        cout << "Please enter a valid name (with letters and spaces only)" << endl;
-        return nullptr;
+		throw ("Please enter a valid name (with letters and spaces only)");
     }
 
     cout << "What is your id?" << endl;
@@ -300,8 +291,7 @@ Patient *Hospital::getNewPatient()
     flushBuffer();
 
     if (!isValidID(id)) {
-        cout << "Please enter a valid ID number (9 numbers)" << endl;
-        return nullptr;
+		throw("Please enter a valid ID number (9 numbers)");
     }
 
     cout << "What is your year of birth?" << endl;
@@ -309,8 +299,7 @@ Patient *Hospital::getNewPatient()
     flushBuffer();
 
     if (yearOfBirth < MIN_YEAR_OF_BIRTH || yearOfBirth > MAX_YEAR_OF_BIRTH) {
-        cout << "Please enter a valid year of birth" << endl;
-        return nullptr;
+		throw("Please enter a valid year of birth");
     }
 
     cout << "What is your gender? 1 = female, 0 = male" << endl;
@@ -318,8 +307,7 @@ Patient *Hospital::getNewPatient()
     flushBuffer();
 
     if (gender != 0 && gender != 1) {
-        cout << "Please enter a valid gender" << endl;
-        return nullptr;
+		throw("Please enter a valid gender");
     }
 
     return new Patient(id, name, yearOfBirth, (gender ? Patient::eSex::FEMALE : Patient::eSex::MALE));
@@ -330,7 +318,7 @@ Patient *Hospital::getNewPatient()
  * and an available staff member of that department.
  * @return
  */
-bool Hospital::addNewPatientVisit()
+bool Hospital::addNewPatientVisit()  throw (const char *)
 {
     bool isFirstVisit; // set to bool, if greater than 1 will treat it as 1
     int id;
@@ -341,7 +329,7 @@ bool Hospital::addNewPatientVisit()
 
     cin >> isFirstVisit;
 		if (isFirstVisit != 0 && isFirstVisit != 1) {
-		cout << "Please enter a valid input" << endl;
+			throw("Please enter a valid input");
 		return false;
 	}
 
@@ -372,8 +360,7 @@ bool Hospital::addNewPatientVisit()
         flushBuffer();
 
         if (!isValidID(id)) {
-            cout << "Please enter a valid ID number (9 numbers)" << endl;
-            return false;
+			throw("Please enter a valid ID number (9 numbers)");
         }
 
         patient = this->getPatientById(id);
@@ -392,7 +379,7 @@ bool Hospital::addNewPatientVisit()
             flushBuffer();
 
 			if (isStaying != 0 && isStaying != 1) {
-				cout << "Please enter a valid input" << endl;
+				throw("Please enter a valid input");
 				return false;
 			}
 
@@ -463,7 +450,7 @@ Patient *Hospital::getPatientById(int id)
  * Will return a pointer of the created object.
  * @return
  */
-Researcher *Hospital::getNewResearcher()
+Researcher *Hospital::getNewResearcher() throw (const char *)
 {
     char name[SIZE];
 
@@ -471,7 +458,7 @@ Researcher *Hospital::getNewResearcher()
     cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
-        cout << "The name is invalid (please specify a name with letters and spaces only)" << endl;
+		throw ("The name is invalid (please specify a name with letters and spaces only)");
         return nullptr;
     }
 
@@ -483,7 +470,7 @@ Researcher *Hospital::getNewResearcher()
  * @param patient
  * @return
  */
-Visit *Hospital::getNewVisit(Patient *patient)
+Visit *Hospital::getNewVisit(Patient *patient) throw (const char *)
 {
     int isNurseChosen, personInChargeID, isSurgeryVisit;
     char arrivalPurpose[SIZE];
@@ -495,8 +482,7 @@ Visit *Hospital::getNewVisit(Patient *patient)
     Date arrivalDate = getDateFromUser();
 
     if (!isValidDate(arrivalDate)) {
-        cout << "Please enter a valid  date" << endl;
-        return nullptr;
+		throw("Please enter a valid  date");
     }
 
     cout << "Does the person in charge of this current visit is a doctor or a nurse? doctor = 0, nurse = 1" << endl;
@@ -504,8 +490,7 @@ Visit *Hospital::getNewVisit(Patient *patient)
     flushBuffer();
 
     if (isNurseChosen != 0 && isNurseChosen != 1) {
-        cout << "Please enter a valid choice (1/0)" << endl;
-        return nullptr;
+		throw("Please enter a valid choice (1/0)");
     }
 
     cout << "Please enter the ID of the " << (isNurseChosen == 1 ? "nurse" : "doctor") << " that is in charge:" << endl;
@@ -536,8 +521,7 @@ Visit *Hospital::getNewVisit(Patient *patient)
 		flushBuffer();
 
 		if (isFasting != 0 && isFasting != 1) {
-			cout << "Please enter a valid input" << endl;
-			return false;
+			throw("Please enter a valid input");
 		}
 
 		return new SurgeryVisit(arrivalPurpose, arrivalDate, inChargePerson, roomNumber, isFasting);
@@ -564,7 +548,7 @@ bool Hospital::addNewResearcher(Researcher *newResearcher)
  * Get a Date object from the user.
  * @return
  */
-Date Hospital::getDateFromUser()
+Date Hospital::getDateFromUser() throw (const char *)
 {
     int day, month, year;
 
@@ -588,7 +572,7 @@ Date Hospital::getDateFromUser()
  * Will return a pointer to a created article.
  * @return
  */
-Article *Hospital::getNewArticle()
+Article *Hospital::getNewArticle() throw (const char *)
 {
     char name[SIZE], magazine[SIZE];
 
@@ -596,23 +580,21 @@ Article *Hospital::getNewArticle()
     cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
-        cout << "Please enter a valid article name (with letters and spaces only)" << endl;
-        return nullptr;
+		throw ("Please enter a valid article name (with letters and spaces only)");
     }
 
     cout << "Enter the name of the magazine the article is in: " << endl;
     cin.getline(magazine, SIZE);
 
     if (!isCharactersOnly(name)) {
-        cout << "Please enter a valid magazine name (with letters and spaces only)" << endl;
-        return nullptr;
+		throw("Please enter a valid magazine name (with letters and spaces only)");
     }
 
     cout << "Enter the release date of the article: " << endl;
     Date releaseDate = getDateFromUser();
 
     if (!isValidDate(releaseDate)) {
-        cout << "Please enter a valid release date" << endl;
+		throw("Please enter a valid release date");
         return nullptr;
     }
 
@@ -767,7 +749,7 @@ void Hospital::showPatientsByDepartment()
  * @param patient
  * @return
  */
-Department *Hospital::getDepartmentByUserInput()
+Department *Hospital::getDepartmentByUserInput() throw (const char *)
 {
     char requiredDepartment[SIZE];
     Department *department = nullptr;
@@ -777,7 +759,7 @@ Department *Hospital::getDepartmentByUserInput()
     cin.getline(requiredDepartment, SIZE);
 
     if (!isCharactersOnly(requiredDepartment)) {
-        cout << "Please enter a valid name (with letters and spaces only)" << endl;
+		throw ("Please enter a valid name (with letters and spaces only)");
         return nullptr;
     }
 

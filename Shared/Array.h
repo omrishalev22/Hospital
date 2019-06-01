@@ -73,6 +73,16 @@ const Array<T>& Array<T>::operator+=(const T& newVal)
 	{
 		arr[logicalSize++] = newVal;
 	}
+	else
+	{
+		this-> physicalSize = this-> logicalSize * 2;
+		T* tmp = new T[physicalSize];
+
+		for (int i = 0; i <= logicalSize; i++) {
+			tmp[i] = arr[i];
+		}
+		arr = tmp;
+	}
 	return *this;
 }
 
