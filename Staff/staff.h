@@ -3,15 +3,14 @@
 #define __STAFF_H
 
 #include "../person.h"
+#include "../Shared/Array.h"
 
 class Staff {
 private :
-	Person ** members;
-	int indexMembers, sizeMembers;
+	Array<Person*> members;
     
 public:
     // Getters
-    Staff();
 	bool isEmpty();
     void show();
 	Person * getStaffMemberByID(int id);
@@ -19,7 +18,6 @@ public:
     // Setters
 	bool addNewStaffMember(Person * member);
 
-    ~Staff();
 };
 
 #endif //__STAFF_H

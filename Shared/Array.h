@@ -1,6 +1,8 @@
-#include "Shared/consts.h"
+#include "./consts.h"
+
 #ifndef __ARRAY_H
 #define __ARRAY_H
+
 
 template<class T>
 class Array
@@ -17,12 +19,7 @@ public:
 	const Array& operator=(const Array& other);
 	const Array& operator+=(const T& newVal);
 	T operator[](const int index);
-	friend ostream& operator<<(ostream& os, const Array& arr)
-	{
-		for (int i = 0; i < arr.logicalSize; i++)
-			os << arr.arr[i] << arr.delimiter;
-		return os;
-	}
+
 };
 
 

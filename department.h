@@ -7,17 +7,16 @@
 #include "Staff/Type/nurse.h"
 #include "patient.h"
 #include <iostream>
-
+#include "Shared/Array.h"
 using namespace std;
 
 class Department
 {
 private:
     char *name;
-    Staff * staff;
-    Patient ** patients;
-    int indexPatients;
-    int sizePatients;
+
+	Staff * staff;
+	Array<Patient*>patients;
 
 
 public:
@@ -26,17 +25,17 @@ public:
 
     // GETTERS
     char *getName();
-    Staff * getStaffMembers();
+	Staff * getStaffMembers();
     void showPatients();
+	Patient * getPatientByID(int);
 	friend ostream& operator<<(ostream& os, const Department& department);
 
 
     // SETTERS
 	bool operator+=(Person* staffMember);
-    bool addNewNurse(Nurse *nurse);
-    bool addNewPatient(Patient * patient);
+	bool addNewNurse(Nurse *nurse);
+	bool addNewPatient(Patient * patient);
     bool removePatientByID(int patientID);
-    ~Department();
 
 };
 

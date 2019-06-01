@@ -118,11 +118,7 @@ Nurse *Hospital::getNewNurse()
     int yearsOfExperience;
     char name[SIZE];
 
-    // Todo: add validations to all fields - in terms of types we dont need to validate
-    // TODO we need to validate stuff like is nurse exists in system and stuff like this. what do you think?
-
     cout << "Please type the nurse's name:" << endl;
-    cin.ignore(); // to prevent left overs from previous inputs
     cin.getline(name, SIZE);
 
     if (!isCharactersOnly(name)) {
@@ -204,6 +200,11 @@ Doctor *Hospital::getNewDoctor()
 	cin >> isSurgent;
 	flushBuffer();
 
+	if (isSurgent != 0 && isSurgent != 1) {
+		cout << "Please enter a valid input" << endl;
+		return nullptr;
+	}
+
 
 	if (isSurgent) {
 		cout << "How many operations has the doctor done so far ?" << endl;
@@ -241,11 +242,17 @@ bool Hospital::addNewDoctorToDepartment()
 		cin >> isResearcher;
 		flushBuffer();
 
+		if (isResearcher != 0 && isResearcher != 1) {
+			cout << "Please enter a valid input" << endl;
+			return nullptr;
+		}
+
+
 		if (isResearcher) {
 			addNewResearcher(new Researcher(*doctor));
 		}
 
-        *foundDepartment += doctor;
+		*foundDepartment += doctor;
         cout << "Successfully added new doctor (ID " << doctor->getID() << ") to department: " << departmentName
              << endl;
         return true;
@@ -331,8 +338,15 @@ bool Hospital::addNewPatientVisit()
     Department *department = nullptr;
 
     cout << "Is this your first time here? 1 = yes , 0 = no" << endl;
+
     cin >> isFirstVisit;
     flushBuffer();
+
+	if (isFirstVisit != 0 && isFirstVisit != 1) {
+		cout << "Please enter a valid input" << endl;
+		return nullptr;
+	}
+
 
     // In case it's a new visit , we need to fill out patient's data
     if (isFirstVisit) {
@@ -374,6 +388,11 @@ bool Hospital::addNewPatientVisit()
                  << "' do you want to make a new visit or stay in current department, 1 = Stay , 0 = Change" << endl;
             cin >> isStaying;
             flushBuffer();
+
+			if (isStaying != 0 && isStaying != 1) {
+				cout << "Please enter a valid input" << endl;
+				return nullptr;
+			}
 
             if (isStaying != STAYING) {
                 cout << "Releasing patient from '" << patient->getDepartmentName() << "'" << endl;
@@ -513,6 +532,11 @@ Visit *Hospital::getNewVisit(Patient *patient)
 		cout << "Is the patient is fasting? 1 = true, 0 = false" << endl;
 		cin >> isFasting;
 		flushBuffer();
+
+		if (isFasting != 0 && isFasting != 1) {
+			cout << "Please enter a valid input" << endl;
+			return nullptr;
+		}
 
 		return new SurgeryVisit(arrivalPurpose, arrivalDate, inChargePerson, roomNumber, isFasting);
 	}
