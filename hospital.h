@@ -8,6 +8,7 @@
 #include "Shared/date.h"
 #include "visit.h"
 #include "surgery_visit.h"
+#include "Shared/Array.h"
 
 void flushBuffer();
 
@@ -32,21 +33,11 @@ class Hospital
 private:
     static int numOfEmployees; // helps in granting employee's ID automatically
 
-    Department ** departments;
-    int indexDepartments;
-    int sizeDepartments;
-
-    Patient ** patients;
-    int indexPatients;
-    int sizePatients;
-
-    Researcher** researchers;
-    int indexResearchers;
-    int sizeResearchers;
+	Array<Department *> departments;
+	Array<Patient * > patients;
+	Array<Researcher *> researchers;
 
 public:
-
-    Hospital();
 
     // Getters
     Researcher ** getResearchers();
@@ -78,8 +69,6 @@ public:
     bool addNewDoctorToDepartment();
     bool addNewPatientVisit();
     bool addNewArticleToResearcher();
-
-    ~Hospital();
 
     void runLoop();
 };

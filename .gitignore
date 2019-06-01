@@ -4,3 +4,4 @@ Debug/*
 Debug
 *.sln
 .vs
+/Hospital.VC.VC.opendb

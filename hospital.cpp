@@ -6,6 +6,7 @@
 #include "Shared/date.h"
 #include "Shared/consts.h"
 #include "Shared/validators.h"
+#include "Shared/Array.h"
 
 using namespace std;
 int Hospital::numOfEmployees = 0;
@@ -61,7 +62,7 @@ void Hospital::runLoop()
 				showPatientByID();
 				break;
 			case 12:
-				if (this->indexDepartments > 0) {
+				if (this->departments.getSize() > 0) {
 					cout << "Showing first department in the hospital using 'operator<<': " << *(this->departments[0]) << endl;
 				}
 				else {
@@ -75,22 +76,6 @@ void Hospital::runLoop()
 
     } while (userInput != -1);
 }
-
-Hospital::Hospital()
-{
-    this->departments = new Department *[AMOUNT_OF_STARTED_ITEMS];
-    this->indexDepartments = 0;
-    this->sizeDepartments = AMOUNT_OF_STARTED_ITEMS;
-
-    this->patients = new Patient *[AMOUNT_OF_STARTED_ITEMS];
-    this->indexPatients = 0;
-    this->sizePatients = AMOUNT_OF_STARTED_ITEMS;
-
-    this->researchers = new Researcher *[AMOUNT_OF_STARTED_ITEMS];
-    this->indexResearchers = 0;
-    this->sizeResearchers = AMOUNT_OF_STARTED_ITEMS;
-};
-
 
 /**
  * Get a new department from user input.
@@ -114,24 +99,14 @@ Department *Hospital::getNewDepartment()
     return new Department(name);
 }
 
-/**
+/**`
  * Add new department to the hospital
  */
 bool Hospital::addNewDepartment(Department *newDepartment)
 {
     if (newDepartment == nullptr)
         return false;
-
-    if (this->indexDepartments >= this->sizeDepartments) {
-        Department **tempArr = new Department *[this->sizeDepartments * 2];
-        for (int i = 0; i < this->indexDepartments; i++)
-            tempArr[i] = this->departments[i];
-
-        delete[] this->departments;
-        this->departments = tempArr;
-        this->sizeDepartments *= 2;
-    }
-    this->departments[this->indexDepartments++] = newDepartment;
+	departments += newDepartment;
     return true;
 }
 
@@ -284,7 +259,7 @@ bool Hospital::addNewDoctorToDepartment()
  */
 Department *Hospital::getDepartmentByName(char *name)
 {
-    for (int i = 0; i < this->indexDepartments; i++) {
+    for (int i = 0; i < this->departments.getSize(); i++) {
         if (strcmp(departments[i]->getName(), name) == 0) {
             return departments[i];
         }
@@ -452,7 +427,7 @@ bool Hospital::addNewPatientVisit()
  */
 Patient *Hospital::getPatientById(int id)
 {
-    for (int i = 0; i < indexPatients; i++) {
+    for (int i = 0; i < patients.getSize(); i++) {
         if (patients[i]->getID() == id) {
             return patients[i];
         }
@@ -554,17 +529,7 @@ bool Hospital::addNewResearcher(Researcher *newResearcher)
 {
     if (newResearcher == nullptr)
         return false;
-
-    if (this->indexResearchers >= this->sizeResearchers) {
-        Researcher **tempArr = new Researcher *[this->sizeResearchers * 2];
-        for (int i = 0; i < this->indexResearchers; i++)
-            tempArr[i] = this->researchers[i];
-
-        delete[] this->researchers;
-        this->researchers = tempArr;
-        this->sizeResearchers *= 2;
-    }
-    this->researchers[this->indexResearchers++] = newResearcher;
+	this->researchers += newResearcher;
     cout << "Successfully added new researcher (ID " << newResearcher->getID() << ")" << endl;
     return true;
 }
@@ -637,17 +602,7 @@ bool Hospital::addNewPatient(Patient *newPatient)
 {
     if (newPatient == nullptr)
         return false;
-
-    if (this->indexPatients >= this->sizePatients) {
-        Patient **tempArr = new Patient *[this->sizePatients * 2];
-        for (int i = 0; i < this->indexPatients; i++)
-            tempArr[i] = this->patients[i];
-
-        delete[] this->patients;
-        this->patients = tempArr;
-        this->sizePatients *= 2;
-    }
-    this->patients[this->indexPatients++] = newPatient;
+	this->patients += newPatient;
     return true;
 }
 
@@ -656,11 +611,11 @@ bool Hospital::addNewPatient(Patient *newPatient)
  */
 void Hospital::showAllResearchers()
 {
-    if (indexResearchers == 0) {
+    if (researchers.getSize() == 0) {
         cout << "There are no researchers in the hospital." << endl;
     } else {
         cout << "Showing all researchers in the hospital: " << endl;
-        for (int i = 0; i < indexResearchers; i++) {
+        for (int i = 0; i < researchers.getSize(); i++) {
             researchers[i]->show();
         }
     }
@@ -671,12 +626,12 @@ void Hospital::showAllResearchers()
 */
 void Hospital::showAllDoctorResearchers()
 {
-	if (indexResearchers == 0) {
+	if (researchers.getSize() == 0) {
 		cout << "There are no researchers in the hospital." << endl;
 	}
 	else {
 		cout << "Showing all researchers in the hospital: " << endl;
-		for (int i = 0; i < indexResearchers; i++) {
+		for (int i = 0; i < researchers.getSize(); i++) {
 			// check if researcher is a doctor, if he is, print his details to the screen
 			if ((researchers[i]->getIsDoctor())) {
 				researchers[i]->show();
@@ -715,7 +670,7 @@ void Hospital::showPatientByID()
  */
 void Hospital::showAllHospitalStaff()
 {
-    for (int i = 0; i < indexDepartments; i++) {
+    for (int i = 0; i < departments.getSize(); i++) {
         cout << "All staff members from department: " << departments[i]->getName() << endl;
         departments[i]->getStaffMembers()->show();
         cout << endl; // break line after showing department staff;
@@ -729,7 +684,7 @@ void Hospital::showAllHospitalStaff()
  */
 Researcher *Hospital::getResearcherById(int id)
 {
-    for (int i = 0; i < indexResearchers; i++) {
+    for (int i = 0; i < researchers.getSize(); i++) {
         if (researchers[i]->getID() == id) {
             return researchers[i];
         }
@@ -815,30 +770,6 @@ Department *Hospital::getDepartmentByUserInput()
     return department;
 }
 
-
-/**
- * Free all memory allocation when hospital is destroyed
- */
-Hospital::~Hospital()
-{
-    if (this->researchers != nullptr) {
-        for (int i = 0; i < this->indexResearchers; i++)
-            delete this->researchers[i];
-        delete[] this->researchers;
-    }
-
-    if (this->patients != nullptr) {
-        for (int i = 0; i < this->indexPatients; i++)
-            delete this->patients[i];
-        delete[] this->patients;
-    }
-
-    if (this->departments != nullptr) {
-        for (int i = 0; i < this->indexDepartments; i++)
-            delete this->departments[i];
-        delete[] this->departments;
-    }
-}
 
 /**
  * Flushes buffer ( left overs ) after cin

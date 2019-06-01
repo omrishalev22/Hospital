@@ -134,6 +134,7 @@
     <ClInclude Include="person.h" />
     <ClInclude Include="ResearchCenter\article.h" />
     <ClInclude Include="ResearchCenter\researcher.h" />
+    <ClInclude Include="Shared\Array.h" />
     <ClInclude Include="Shared\consts.h" />
     <ClInclude Include="Shared\date.h" />
     <ClInclude Include="Shared\validators.h" />
