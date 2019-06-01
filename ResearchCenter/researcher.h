@@ -5,7 +5,6 @@
 #include "../person.h"
 #include "../Staff/Type/doctor.h"
 #include "../Shared/Array.h"
-
 class Researcher : public Person
 {
 private:

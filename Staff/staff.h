@@ -3,11 +3,12 @@
 #define __STAFF_H
 
 #include "../person.h"
-#include "../Shared/Array.h"
+#include <vector>
+using namespace std;
 
 class Staff {
 private :
-	Array<Person*> members;
+	vector< Person* > members;
     
 public:
     // Getters

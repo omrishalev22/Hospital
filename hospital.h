@@ -8,7 +8,7 @@
 #include "Shared/date.h"
 #include "visit.h"
 #include "surgery_visit.h"
-#include "Shared/Array.h"
+#include <vector>
 
 void flushBuffer();
 
@@ -33,9 +33,9 @@ class Hospital
 private:
     static int numOfEmployees; // helps in granting employee's ID automatically
 
-	Array<Department *> departments;
-	Array<Patient * > patients;
-	Array<Researcher *> researchers;
+	vector<Department *> departments;
+	vector<Patient * > patients;
+	vector<Researcher *> researchers;
 
 public:
 

@@ -63,7 +63,7 @@ void Hospital::runLoop()
 				showPatientByID();
 				break;
 			case 12:
-				if (this->departments.getSize() > 0) {
+				if (this->departments.size() > 0) {
 					cout << "Showing first department in the hospital using 'operator<<': " << *(this->departments[0]) << endl;
 				}
 				else {
@@ -109,7 +109,7 @@ bool Hospital::addNewDepartment(Department *newDepartment)
 {
     if (newDepartment == nullptr)
         return false;
-	departments += newDepartment;
+	departments.push_back(newDepartment);
     return true;
 }
 
@@ -260,7 +260,7 @@ bool Hospital::addNewDoctorToDepartment() throw (const char *)
  */
 Department *Hospital::getDepartmentByName(char *name)
 {
-    for (int i = 0; i < this->departments.getSize(); i++) {
+    for (size_t i = 0; i < this->departments.size(); i++) {
         if (strcmp(departments[i]->getName(), name) == 0) {
             return departments[i];
         }
@@ -435,7 +435,7 @@ bool Hospital::addNewPatientVisit()  throw (const char *)
  */
 Patient *Hospital::getPatientById(int id)
 {
-    for (int i = 0; i < patients.getSize(); i++) {
+    for (size_t i = 0; i < patients.size(); i++) {
         if (patients[i]->getID() == id) {
             return patients[i];
         }
@@ -539,7 +539,7 @@ bool Hospital::addNewResearcher(Researcher *newResearcher)
 {
     if (newResearcher == nullptr)
         return false;
-	this->researchers += newResearcher;
+	this->researchers.push_back(newResearcher);
     cout << "Successfully added new researcher (ID " << newResearcher->getID() << ")" << endl;
     return true;
 }
@@ -610,7 +610,7 @@ bool Hospital::addNewPatient(Patient *newPatient)
 {
     if (newPatient == nullptr)
         return false;
-	this->patients += newPatient;
+	this->patients.push_back(newPatient);
     return true;
 }
 
@@ -619,11 +619,11 @@ bool Hospital::addNewPatient(Patient *newPatient)
  */
 void Hospital::showAllResearchers()
 {
-    if (researchers.getSize() == 0) {
+    if (researchers.size() == 0) {
         cout << "There are no researchers in the hospital." << endl;
     } else {
         cout << "Showing all researchers in the hospital: " << endl;
-        for (int i = 0; i < researchers.getSize(); i++) {
+        for (size_t i = 0; i < researchers.size(); i++) {
             researchers[i]->show();
         }
     }
@@ -634,12 +634,12 @@ void Hospital::showAllResearchers()
 */
 void Hospital::showAllDoctorResearchers()
 {
-	if (researchers.getSize() == 0) {
+	if (researchers.size() == 0) {
 		cout << "There are no researchers in the hospital." << endl;
 	}
 	else {
 		cout << "Showing all researchers in the hospital: " << endl;
-		for (int i = 0; i < researchers.getSize(); i++) {
+		for (size_t i = 0; i < researchers.size(); i++) {
 			// check if researcher is a doctor, if he is, print his details to the screen
 			if ((researchers[i]->getIsDoctor())) {
 				researchers[i]->show();
@@ -678,7 +678,7 @@ void Hospital::showPatientByID()
  */
 void Hospital::showAllHospitalStaff()
 {
-    for (int i = 0; i < departments.getSize(); i++) {
+    for (size_t i = 0; i < departments.size(); i++) {
         cout << "All staff members from department: " << departments[i]->getName() << endl;
         departments[i]->getStaffMembers()->show();
         cout << endl; // break line after showing department staff;
@@ -692,7 +692,7 @@ void Hospital::showAllHospitalStaff()
  */
 Researcher *Hospital::getResearcherById(int id)
 {
-    for (int i = 0; i < researchers.getSize(); i++) {
+    for (size_t i = 0; i < researchers.size(); i++) {
         if (researchers[i]->getID() == id) {
             return researchers[i];
         }

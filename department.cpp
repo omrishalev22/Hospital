@@ -48,7 +48,7 @@ Staff * Department::getStaffMembers()
  */
 bool Department::addNewPatient(Patient *newPatient)
 {
-    this->patients += newPatient;
+    this->patients.push_back(newPatient);
     return true;
 }
 
@@ -58,25 +58,14 @@ bool Department::addNewPatient(Patient *newPatient)
  */
 void Department::showPatients()
 {
-    if (patients.getSize() == 0) {
+    if (patients.size() == 0) {
         cout << "There are no patient in the current department." << endl;
     } else {
-        for (int i = 0; i < patients.getSize(); i++) {
+        for (size_t i = 0; i < patients.size(); i++) {
             patients[i]->show();
         }
     }
 }
-
-Patient * Department::getPatientByID(int id)
-{
-	for (int i = 0; i < patients.getSize(); i++) {
-		if (patients[i]->getID() == id) {
-			return patients[i];
-		}
-	}
-	return nullptr;
-}
-
 
 /**
  * Filtering current patients based on the given patient ID, at this point we are sure
@@ -87,19 +76,15 @@ Patient * Department::getPatientByID(int id)
  */
 bool Department::removePatientByID(int patientID)
 {
-	Patient * patient = this->getPatientByID(patientID);
-	if (patient == nullptr) {
-		return false;
-	}
-
-	Array<Patient *> tmp(this->patients.getSize());
-	int counter = 0;
-	for (int i = 0; i < patients.getSize(); i++) {
-		if (patients[i]->getID() != patientID) {
-			tmp += patients[counter];
+	int patientIndex = 0;
+	vector<Patient *>::iterator it = patients.begin();
+	for (it = patients.begin(); it != patients.end(); ++it) {
+		if ((*it)->getID() == patientID) {
+			continue;
 		}
+		patientIndex++;
 	}
-	patients = tmp;
+	patients.erase(patients.begin()+ patientIndex);
     return true;
 }
 

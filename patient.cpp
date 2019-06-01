@@ -44,7 +44,7 @@ bool Patient::setDepartment(char *departmentName)
  */
 bool Patient::addNewVisit(Visit * visit)
 {
-    this->visits += visit;
+    this->visits.push_back(visit);
     return true;
 }
 
@@ -57,10 +57,10 @@ void Patient::show()
     cout << "    Year of birth: " << this->yearOfBirth << endl;
     cout << "    Department: " << this->departmentName << endl;
     cout << "    Sex: " << (this->getESex() == Patient::eSex::MALE ? "Male" : "Female") << endl;
-    cout << "    Number of visits: " << this->visits.getSize() << endl;
+    cout << "    Number of visits: " << this->visits.size() << endl;
     cout << "    Visits: " << endl;
 
-    for (int i = 0; i < this->visits.getSize(); i++) {
+    for (size_t i = 0; i < this->visits.size(); i++) {
         this->visits[i]->show();
 		cout << endl;
     }

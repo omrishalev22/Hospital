@@ -2,6 +2,7 @@
 #include "Staff/staff.h"
 #include "visit.h"
 #include "person.h"
+#include <vector>
 
 #ifndef __PATIENT_H
 #define __PATIENT_H
@@ -31,7 +32,7 @@ private:
     int yearOfBirth;
     char *departmentName;
     eSex sex;
-    Array<Visit*> visits;
+    vector<Visit*> visits;
 };
 
 #endif //__PATIENT_H

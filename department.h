@@ -7,7 +7,8 @@
 #include "Staff/Type/nurse.h"
 #include "patient.h"
 #include <iostream>
-#include "Shared/Array.h"
+#include <vector>
+
 using namespace std;
 
 class Department
@@ -16,7 +17,7 @@ private:
     char *name;
 
 	Staff * staff;
-	Array<Patient*>patients;
+	vector<Patient*>patients;
 
 
 public:
@@ -27,7 +28,6 @@ public:
     char *getName();
 	Staff * getStaffMembers();
     void showPatients();
-	Patient * getPatientByID(int);
 	friend ostream& operator<<(ostream& os, const Department& department);
 
 
