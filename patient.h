@@ -31,10 +31,7 @@ private:
     int yearOfBirth;
     char *departmentName;
     eSex sex;
-    Visit ** visits;
-    int indexVisits;
-    int sizeVisits;
-
+    Array<Visit*> visits;
 };
 
 #endif //__PATIENT_H

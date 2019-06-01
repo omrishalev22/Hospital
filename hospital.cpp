@@ -202,7 +202,7 @@ Doctor *Hospital::getNewDoctor()
 
 	if (isSurgent != 0 && isSurgent != 1) {
 		cout << "Please enter a valid input" << endl;
-		return nullptr;
+		return false;
 	}
 
 
@@ -244,7 +244,7 @@ bool Hospital::addNewDoctorToDepartment()
 
 		if (isResearcher != 0 && isResearcher != 1) {
 			cout << "Please enter a valid input" << endl;
-			return nullptr;
+			return false;
 		}
 
 
@@ -340,12 +340,14 @@ bool Hospital::addNewPatientVisit()
     cout << "Is this your first time here? 1 = yes , 0 = no" << endl;
 
     cin >> isFirstVisit;
+		if (isFirstVisit != 0 && isFirstVisit != 1) {
+		cout << "Please enter a valid input" << endl;
+		return false;
+	}
+
     flushBuffer();
 
-	if (isFirstVisit != 0 && isFirstVisit != 1) {
-		cout << "Please enter a valid input" << endl;
-		return nullptr;
-	}
+
 
 
     // In case it's a new visit , we need to fill out patient's data
@@ -391,7 +393,7 @@ bool Hospital::addNewPatientVisit()
 
 			if (isStaying != 0 && isStaying != 1) {
 				cout << "Please enter a valid input" << endl;
-				return nullptr;
+				return false;
 			}
 
             if (isStaying != STAYING) {
@@ -535,7 +537,7 @@ Visit *Hospital::getNewVisit(Patient *patient)
 
 		if (isFasting != 0 && isFasting != 1) {
 			cout << "Please enter a valid input" << endl;
-			return nullptr;
+			return false;
 		}
 
 		return new SurgeryVisit(arrivalPurpose, arrivalDate, inChargePerson, roomNumber, isFasting);
