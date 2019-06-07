@@ -14,7 +14,7 @@ using namespace std;
 class Department
 {
 private:
-    char *name;
+    std::string name;
 
 	Staff * staff;
 	vector<Patient*>patients;
@@ -22,10 +22,10 @@ private:
 
 public:
 
-    explicit Department(char *name);
+    explicit Department(const string& name);
 
     // GETTERS
-    char *getName();
+    const string& getName();
 	Staff * getStaffMembers();
     void showPatients();
 	friend ostream& operator<<(ostream& os, const Department& department);

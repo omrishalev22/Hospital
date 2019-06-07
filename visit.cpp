@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Visit::Visit(char *arrivalPurpose, Date &arrivalDate, Person * personInCharge)
+Visit::Visit(const string& arrivalPurpose, Date &arrivalDate, Person * personInCharge)
 {
     this->setArrivalPurpose(arrivalPurpose);
     this->arrivalDate = Date(arrivalDate);
@@ -16,10 +16,9 @@ Visit::Visit(char *arrivalPurpose, Date &arrivalDate, Person * personInCharge)
 /*
  * Set visit arrival purpose
  */
-bool Visit::setArrivalPurpose(char *arrivalPurpose)
+bool Visit::setArrivalPurpose(const std::string& arrivalPurpose)
 {
-    this->arrivalPurpose = new char[strlen(arrivalPurpose) + 1];
-    this->arrivalPurpose = strcpy(this->arrivalPurpose, arrivalPurpose);
+    this->arrivalPurpose = arrivalPurpose;
     return true;
 }
 
@@ -36,6 +35,5 @@ void Visit::show()
 
 Visit::~Visit()
 {
-    delete[] this->arrivalPurpose;
     delete this->personInCharge;
 }

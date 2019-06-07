@@ -16,21 +16,21 @@ public:
     };
 
     Patient(const Patient& patient);
-    Patient(int id, char *name, int yearOfBirth, eSex sex);
+    Patient(int id, const string& name, int yearOfBirth, eSex sex);
 
     // GETTERS
     void show();
     eSex getESex();
-    char *getDepartmentName();
+    const string& getDepartmentName();
 
     // SETTERS
-    bool setDepartment(char * departmentName);
+    bool setDepartment(const string& departmentName);
     bool addNewVisit(Visit * visit);
 
     ~Patient();
 private:
     int yearOfBirth;
-    char *departmentName;
+    std::string departmentName;
     eSex sex;
     vector<Visit*> visits;
 };

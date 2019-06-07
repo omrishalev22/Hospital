@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Researcher::Researcher(int id, char *name) : Person(id, name)
+Researcher::Researcher(int id, const string& name) : Person(id, name)
 {
 	this->isDoctor = false;
 }

@@ -1,22 +1,16 @@
 #include "person.h"
-#include <string>
-#include <iostream>
-#include <cstring>
 
-using namespace std;
-
-Person::Person(int id, char *name) {
+Person::Person(int id, string name) {
 	this->id = id;
-	this->name = new char[strlen(name) + 1];
-	this->name = strcpy(this->name, name);
+	this->name = name;
 }
 
 int Person::getID() {
 	return this->id;
 }
 
-char* Person::getName() {
-	return this->name;
+const string & Person::getName() const {
+	return name;
 }
 
 void Person::show()

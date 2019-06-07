@@ -5,23 +5,26 @@
 #include "Staff/staff.h"
 #include "Staff/Type/nurse.h"
 #include "person.h"
+#include <string>
+
+using namespace std;
 
 class Visit
 {
 public:
 
-    Visit(char * arrivalPurpose, Date &arrivalDate, Person * personInCharge);
+    Visit(const string& arrivalPurpose, Date &arrivalDate, Person * personInCharge);
 
     // GETTERS
     virtual void show();
 
     // SETTERS
-    bool setArrivalPurpose(char * arrivalPurpose);
+    bool setArrivalPurpose(const std::string& arrivalPurpose);
 
     ~Visit();
 private:
     Date arrivalDate;
-    char *arrivalPurpose;
+    string arrivalPurpose;
 	Person * personInCharge;
 
 

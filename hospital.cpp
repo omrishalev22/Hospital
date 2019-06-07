@@ -88,9 +88,9 @@ void Hospital::runLoop()
  */
 Department *Hospital::getNewDepartment() throw (const char *)
 {
-    char name[SIZE];
+	string name;
     cout << "Please type the department name:" << endl;
-    cin.getline(name,SIZE);
+	getline(cin, name);
 
     if (!isCharactersOnly(name)) {
 		throw ("Please enter a valid name (with letters and spaces only)");
@@ -119,10 +119,10 @@ bool Hospital::addNewDepartment(Department *newDepartment)
 Nurse *Hospital::getNewNurse() throw (const char *)
 {
     int yearsOfExperience;
-    char name[SIZE];
+	string name;
 
     cout << "Please type the nurse's name:" << endl;
-    cin.getline(name, SIZE);
+	getline(cin, name);
 
     if (!isCharactersOnly(name)) {
 		throw("Please enter a valid name (with letters and spaces only)");
@@ -144,10 +144,10 @@ Nurse *Hospital::getNewNurse() throw (const char *)
  */
 bool Hospital::addNewNurseToDepartment() throw (const char *)
 {
-    char departmentName[SIZE];
+    string departmentName;
 
     cout << "Please type the department name you want to attach nurse to:" << endl;
-    cin.getline(departmentName, SIZE);
+	getline(cin, departmentName);
 
     if (!isCharactersOnly(departmentName)) {
 		throw ("Please enter a valid name (with letters and spaces only)");
@@ -175,18 +175,18 @@ bool Hospital::addNewNurseToDepartment() throw (const char *)
  */
 Doctor *Hospital::getNewDoctor() throw (const char *)
 {
-    char name[SIZE], interField[SIZE];
+    string name, interField;
 	bool isSurgent;
 
     cout << "Please type the doctor's name:" << endl;
-    cin.getline(name, SIZE);
+	getline(cin, name);
 
     if (!isCharactersOnly(name)) {
 		throw("Please enter a valid name (with letters and spaces only)");
     }
 
     cout << "Please type the doctor's internship field:" << endl;
-    cin.getline(interField, SIZE); // intake entire short description
+	getline(cin, interField);
 
     if (!isCharactersOnly(interField)) {
 		throw("Please enter a valid intership field (with letters and spaces only)");
@@ -217,11 +217,11 @@ Doctor *Hospital::getNewDoctor() throw (const char *)
  */
 bool Hospital::addNewDoctorToDepartment() throw (const char *)
 {
-    char departmentName[SIZE];
+    string departmentName;
 	bool isResearcher;
 
     cout << "Please type the department name you want to attach doctor to:" << endl;
-    cin.getline(departmentName, SIZE);
+	getline(cin, departmentName);
 
     Department *foundDepartment = getDepartmentByName(departmentName);
     if (foundDepartment == nullptr) {
@@ -258,10 +258,10 @@ bool Hospital::addNewDoctorToDepartment() throw (const char *)
  * @param name
  * @return Department
  */
-Department *Hospital::getDepartmentByName(char *name)
+Department *Hospital::getDepartmentByName(const string& name)
 {
     for (size_t i = 0; i < this->departments.size(); i++) {
-        if (strcmp(departments[i]->getName(), name) == 0) {
+        if (name == departments[i]->getName()) {
             return departments[i];
         }
     }
@@ -275,12 +275,12 @@ Department *Hospital::getDepartmentByName(char *name)
  */
 Patient *Hospital::getNewPatient()  throw (const char *)
 {
-    char name[SIZE];
+	string name;
     int yearOfBirth;
     int id, gender;
 
     cout << "What is your name?" << endl;
-    cin.getline(name, SIZE);
+	getline(cin, name);
 
     if (!isCharactersOnly(name)) {
 		throw ("Please enter a valid name (with letters and spaces only)");
@@ -452,10 +452,10 @@ Patient *Hospital::getPatientById(int id)
  */
 Researcher *Hospital::getNewResearcher() throw (const char *)
 {
-    char name[SIZE];
+	string name;
 
     cout << "Enter the name of the researcher: " << endl;
-    cin.getline(name, SIZE);
+	getline(cin, name);
 
     if (!isCharactersOnly(name)) {
 		throw ("The name is invalid (please specify a name with letters and spaces only)");
@@ -473,11 +473,10 @@ Researcher *Hospital::getNewResearcher() throw (const char *)
 Visit *Hospital::getNewVisit(Patient *patient) throw (const char *)
 {
     int isNurseChosen, personInChargeID, isSurgeryVisit;
-    char arrivalPurpose[SIZE];
+    string arrivalPurpose;
 
-    cout << "Enter the visit / arrival purpose: (up to 149 characters) " << endl;
-    cin.getline(arrivalPurpose, SIZE); // intake entire short description
-
+    cout << "Enter the visit / arrival purpose:" << endl;
+	getline(cin, arrivalPurpose);
     cout << "Please the arrival date of the visit:" << endl;
     Date arrivalDate = getDateFromUser();
 
@@ -574,17 +573,17 @@ Date Hospital::getDateFromUser() throw (const char *)
  */
 Article *Hospital::getNewArticle() throw (const char *)
 {
-    char name[SIZE], magazine[SIZE];
+	string name, magazine;
 
     cout << "Enter the name of the article: " << endl;
-    cin.getline(name, SIZE);
+	getline(cin, name);
 
     if (!isCharactersOnly(name)) {
 		throw ("Please enter a valid article name (with letters and spaces only)");
     }
 
     cout << "Enter the name of the magazine the article is in: " << endl;
-    cin.getline(magazine, SIZE);
+	getline(cin, name);
 
     if (!isCharactersOnly(name)) {
 		throw("Please enter a valid magazine name (with letters and spaces only)");
@@ -728,9 +727,9 @@ bool Hospital::addNewArticleToResearcher()
  */
 void Hospital::showPatientsByDepartment()
 {
-    char departmentName[SIZE];
+    string departmentName;
     cout << "What is the department name?";
-    cin.getline(departmentName, SIZE);
+	getline(cin, departmentName);
 
     Department *foundDepartment = this->getDepartmentByName(departmentName);
 
@@ -751,12 +750,12 @@ void Hospital::showPatientsByDepartment()
  */
 Department *Hospital::getDepartmentByUserInput() throw (const char *)
 {
-    char requiredDepartment[SIZE];
+    string requiredDepartment;
     Department *department = nullptr;
 
     // Attaching the patient to a department
     cout << "What department are you looking for?" << endl;
-    cin.getline(requiredDepartment, SIZE);
+	getline(cin, requiredDepartment);
 
     if (!isCharactersOnly(requiredDepartment)) {
 		throw ("Please enter a valid name (with letters and spaces only)");

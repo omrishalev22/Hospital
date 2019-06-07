@@ -5,6 +5,8 @@
 #include "../person.h"
 #include "../Staff/Type/doctor.h"
 #include "../Shared/Array.h"
+#include <string>
+
 class Researcher : public Person
 {
 private:
@@ -12,7 +14,7 @@ private:
 	bool isDoctor;
 
 public:
-    Researcher(int id, char * name);
+    Researcher(int id, const string& name);
 	Researcher(const Doctor& doctor);
 	Array<Article*> getArticles();
     void show();

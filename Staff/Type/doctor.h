@@ -9,9 +9,9 @@
 
 class Doctor : public Person {
 protected:
-	char *internField;
+	string internField;
 public:
-	Doctor(int id, char *name, char *interField);
+	Doctor(int id, string name, string interField);
 	void show();
 };
 

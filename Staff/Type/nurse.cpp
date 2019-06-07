@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Nurse::Nurse(int id, char *name, int yearsOfExperience) : Person(id, name) {
+Nurse::Nurse(int id, const string& name, int yearsOfExperience) : Person(id, name) {
 	this->yearsOfExperience = yearsOfExperience;
 }
 

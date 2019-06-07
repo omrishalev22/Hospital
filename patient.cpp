@@ -15,7 +15,7 @@ Patient::Patient(const Patient &patient)
     this->sex = patient.sex;
 }
 
-Patient::Patient(int id, char *name, int yearOfBirth, eSex sex) : Person(id, name)
+Patient::Patient(int id, const string& name, int yearOfBirth, eSex sex) : Person(id, name)
 {
 	this->yearOfBirth = yearOfBirth;
     this->sex = sex;
@@ -24,18 +24,17 @@ Patient::Patient(int id, char *name, int yearOfBirth, eSex sex) : Person(id, nam
 /*
  * Get patient's department he is currently attached to
  */
-char* Patient::getDepartmentName()
+const string& Patient::getDepartmentName()
 {
-    return departmentName;
+    return this->departmentName;
 }
 
 /*
  * Set the patient's department
  */
-bool Patient::setDepartment(char *departmentName)
+bool Patient::setDepartment(const string& departmentName)
 {
-    this->departmentName = new char[strlen(departmentName) + 1];
-    this->departmentName = strcpy(this->departmentName, departmentName);
+	this->departmentName = departmentName;
     return true;
 }
 
@@ -79,6 +78,4 @@ Patient::eSex Patient::getESex()
 
 Patient::~Patient()
 {
-    delete[] this->name;
-    delete[] this->departmentName;
 }

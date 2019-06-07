@@ -3,14 +3,12 @@
 #include <cstring>
 #include "department.h"
 #include "Shared/consts.h"
-#include "Shared/Array.h"
 
 using namespace std;
 
-Department::Department(char *name)
+Department::Department(const string& name)
 {
-    this->name = new char[strlen(name) + 1];
-    this->name = strcpy(this->name, name);
+	this->name = name;
 	this->staff = new Staff();
 }
 
@@ -33,7 +31,7 @@ bool Department::addNewNurse(Nurse *nurse)
 /*
  * Get the current department name
  */
-char *Department::getName()
+const string& Department::getName()
 {
     return name;
 }

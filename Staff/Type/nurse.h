@@ -9,7 +9,7 @@ class Nurse : public Person {
 private:
 	int yearsOfExperience;
 public:
-	Nurse(int id, char * name, int yearsOfExperience);
+	Nurse(int id, const string& name, int yearsOfExperience);
 	void show();
 
 };

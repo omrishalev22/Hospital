@@ -1,6 +1,6 @@
 #include "surgery_visit.h"
 
-SurgeryVisit::SurgeryVisit(char * arrivalPurpose, Date &arrivalDate, Person * personInCharge, int roomNumber, bool isFeasting) : Visit(arrivalPurpose, arrivalDate, personInCharge)
+SurgeryVisit::SurgeryVisit(const string& arrivalPurpose, Date &arrivalDate, Person * personInCharge, int roomNumber, bool isFeasting) : Visit(arrivalPurpose, arrivalDate, personInCharge)
 {
 	this->roomNumber = roomNumber;
 	this->isFeasting = isFeasting;

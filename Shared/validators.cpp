@@ -6,9 +6,9 @@
 /*
  * Check string contains only characters - no numeric values
  */
-bool isCharactersOnly(char * text) {
-    for (int i = 0; i < (int)strlen(text); i++) {
-        if (!((isalpha(text[i]))|| (text[i]=='.') || (isspace(text[i])))) {
+bool isCharactersOnly(const string& text) {
+    for (char c : text) {
+        if (!((isalpha(c))|| (c=='.') || (isspace(c)))) {
             return false;
         }
     }

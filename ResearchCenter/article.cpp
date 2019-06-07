@@ -1,23 +1,19 @@
 #include <cstring>
 #include "article.h"
 
-Article::Article(char *name, char *magazine, Date &releaseDate)
+Article::Article(const string& name, const string& magazine, Date &releaseDate)
 {
-    this->name = new char[strlen(name) + 1];
-    this->name = strcpy(this->name, name);
-
-    this->magazine = new char[strlen(magazine) + 1];
-    this->magazine = strcpy(this->magazine, magazine);
-
+	this->name = name;
+	this->magazine = magazine;
     this->releaseDate = Date(releaseDate);
 }
 
-char* Article::getName()
+const string& Article::getName()
 {
     return this->name;
 }
 
-char* Article::getMagazineName()
+const string& Article::getMagazineName()
 {
     return this->magazine;
 }

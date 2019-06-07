@@ -5,9 +5,8 @@
 
 using namespace std;
 
-Doctor::Doctor(int id, char *name, char *interField) : Person(id, name) {
-	this->internField = new char[strlen(interField) + 1];
-	this->internField = strcpy(this->internField, interField);
+Doctor::Doctor(int id, string name, string interField) : Person(id, name) {
+	this->internField = interField;
 }
 
 void Doctor::show()

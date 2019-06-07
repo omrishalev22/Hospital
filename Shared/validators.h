@@ -3,7 +3,7 @@
 
 #include "date.h"
 
-bool isCharactersOnly(char * text);
+bool isCharactersOnly(const string& text);
 bool isValidID(int id);
 bool isValidDate(Date date);
 

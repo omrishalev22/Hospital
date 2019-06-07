@@ -6,7 +6,7 @@
 class SurgeryVisit : public Visit
 {
 public:
-	SurgeryVisit(char * arrivalPurpose, Date &arrivalDate, Person * personInCharge, int roomNumber, bool isFeasting);
+	SurgeryVisit(const string& arrivalPurpose, Date &arrivalDate, Person * personInCharge, int roomNumber, bool isFeasting);
 	void show();
 
 private:

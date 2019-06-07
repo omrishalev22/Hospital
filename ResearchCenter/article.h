@@ -3,22 +3,22 @@
 
 #include "../Shared/date.h"
 #include <iostream>
-
+#include <string>
 using namespace std;
 
 class Article
 {
 private:
-    char * name;
-    char * magazine;
+    std::string name;
+    std::string magazine;
     Date releaseDate;
 
 public:
-    Article(char * name, char * magazine, Date &releaseDate);
+    Article(const string& name, const string& magazine, Date &releaseDate);
 
     // Getters
-    char * getName();
-    char * getMagazineName();
+    const string& getName();
+    const string& getMagazineName();
     Date getReleaseDate();
 	friend ostream& operator<<(ostream& os, const Article& obj);
 };

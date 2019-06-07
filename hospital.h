@@ -9,6 +9,7 @@
 #include "visit.h"
 #include "surgery_visit.h"
 #include <vector>
+#include <string>
 
 void flushBuffer();
 
@@ -40,7 +41,7 @@ private:
 public:
 
     // Getters
-	Department * getDepartmentByName(char* name);
+	Department * getDepartmentByName(const string& name);
 	Patient * getPatientById(int id);
 	Researcher * getResearcherById(int id);
     Department * getNewDepartment() throw (const char *);

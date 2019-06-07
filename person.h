@@ -1,16 +1,21 @@
 #ifndef __PERSON_H
 #define __PERSON_H
+#include <string>
+#include <iostream>
+#include <cstring>
+
+using namespace std;
 
 class Person {
 protected:
 	int id;
-	char *name;
+	string name;
 
 public:
 	Person() {};
-	Person(int id, char *name);
+	Person(int id, string name);
 	int getID();
-	char* getName();
+	const string & getName() const;
 	virtual void show();
 };
 
