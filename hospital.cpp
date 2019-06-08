@@ -77,6 +77,11 @@ void Hospital::runLoop()
 		}
 		catch (const char* error) {
 			cout << error << endl;
+			// making sure no additional input left in buffer after errors - extra saftey
+			if (cin.fail()) {
+				cin.clear();
+				flushBuffer();
+			}
 		}
 
     } while (userInput != -1);
