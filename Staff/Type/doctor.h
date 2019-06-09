@@ -12,6 +12,9 @@ protected:
 	string internField;
 public:
 	Doctor(int id, string name, string interField);
+	Doctor(ifstream& inFile);
+	void save(ofstream& outFile) const;
+
 	void show();
 };
 

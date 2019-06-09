@@ -45,3 +45,19 @@ int Date::getMonth() {
 int Date::getYear() {
     return this->year;
 }
+
+Date Date::loadDate(ifstream& inFile)
+{
+	int year, month, day;
+	inFile.read((char *)&year, sizeof(year));
+	inFile.read((char *)&month, sizeof(month));
+	inFile.read((char *)&day, sizeof(day));
+	return Date(year, month, day);
+}
+
+void Date::save(ofstream& outFile) const
+{
+	outFile.write((const char*)&year, sizeof(year));
+	outFile.write((const char*)&month, sizeof(month));
+	outFile.write((const char*)&day, sizeof(day));
+}

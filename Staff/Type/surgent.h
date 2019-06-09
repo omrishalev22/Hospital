@@ -8,6 +8,9 @@ private:
 	int numOfOperations;
 public:
 	Surgent(const Doctor& doctor, int numOfOperations);
+	Surgent(ifstream& inFile);
+	void save(ofstream& outFile) const;
+
 	int getNumOfOperations();
 	bool setNumOfOperations();
 };

@@ -112,6 +112,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="department.cpp" />
+    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="entityGenerator.cpp" />
     <ClCompile Include="hospital.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="patient.cpp" />
@@ -120,7 +122,6 @@
     <ClCompile Include="ResearchCenter\researcher.cpp" />
     <ClCompile Include="Shared\date.cpp" />
     <ClCompile Include="Shared\validators.cpp" />
-    <ClCompile Include="Staff\staff.cpp" />
     <ClCompile Include="Staff\Type\doctor.cpp" />
     <ClCompile Include="Staff\Type\surgent.cpp" />
     <ClCompile Include="Staff\Type\nurse.cpp" />
@@ -129,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="department.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="entityGenerator.h" />
     <ClInclude Include="hospital.h" />
     <ClInclude Include="patient.h" />
     <ClInclude Include="person.h" />
@@ -138,7 +141,6 @@
     <ClInclude Include="Shared\consts.h" />
     <ClInclude Include="Shared\date.h" />
     <ClInclude Include="Shared\validators.h" />
-    <ClInclude Include="Staff\staff.h" />
     <ClInclude Include="Staff\Type\doctor.h" />
     <ClInclude Include="Staff\Type\surgent.h" />
     <ClInclude Include="Staff\Type\nurse.h" />

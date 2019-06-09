@@ -10,6 +10,9 @@ private:
 	int yearsOfExperience;
 public:
 	Nurse(int id, const string& name, int yearsOfExperience);
+	Nurse(ifstream& inFile);
+	void save(ofstream& outFile) const;
+
 	void show();
 
 };

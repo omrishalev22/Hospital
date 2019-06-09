@@ -1,5 +1,4 @@
 #include "Shared/date.h"
-#include "Staff/staff.h"
 #include "visit.h"
 #include <cstring>
 #include <iostream>
@@ -10,7 +9,21 @@ Visit::Visit(const string& arrivalPurpose, Date &arrivalDate, Person * personInC
 {
     this->setArrivalPurpose(arrivalPurpose);
     this->arrivalDate = Date(arrivalDate);
-    this->personInCharge = personInCharge;
+    this->personInCharge = personInCharge->getName();
+}
+
+Visit::Visit(ifstream& inFile)
+{
+	getline(inFile, arrivalPurpose);
+	this->arrivalDate = Date::loadDate(inFile);
+	getline(inFile, personInCharge);
+}
+
+void Visit::save(ofstream& outFile) const
+{
+	outFile << arrivalPurpose << endl;
+	arrivalDate.save(outFile);
+	outFile << personInCharge << endl;
 }
 
 /*
@@ -30,10 +43,9 @@ void Visit::show()
     cout << "       [" << typeid(*this).name() + 6 << "]" << endl;
     cout << "        Arrival purpose: " << this->arrivalPurpose << endl;
     cout << "        Arrival date: " << arrivalDate << endl;
-	cout << "        " << typeid(*personInCharge).name() + 6 << " in charge ID: " << this->personInCharge->getID() << endl;
+	cout << "        Staff member in charge: " << this->personInCharge << endl;
 }
 
 Visit::~Visit()
 {
-    delete this->personInCharge;
 }

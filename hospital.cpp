@@ -8,8 +8,81 @@
 #include "Shared/validators.h"
 #include "Shared/Array.h"
 
+# define DATA_FILE "hospital.dat"
+
 using namespace std;
 int Hospital::numOfEmployees = 0;
+
+void Hospital::loadFile()
+{
+	int i, amountOfPatients, amountOfResearchers, amountOfDepartments;
+	ifstream inFile(DATA_FILE, ios::binary);
+	
+	if (!inFile.good()) {
+		cout << "Could not load storage for the hospital! Running with clean state." << endl;
+		return;
+	}
+
+	// Load patients
+	inFile.read((char *)&amountOfPatients, sizeof(amountOfPatients));
+	for (i = 0; i < amountOfPatients; i++) {
+		this->patients.push_back(new Patient(inFile));
+	}
+	
+	// Load Researchers
+	inFile.read((char *)&amountOfResearchers, sizeof(amountOfResearchers));
+	for (i = 0; i < amountOfResearchers; i++) {
+		this->researchers.push_back(new Researcher(inFile));
+	}
+
+	// Load departments
+	inFile.read((char *)&amountOfDepartments, sizeof(amountOfDepartments));
+	for (i = 0; i < amountOfDepartments; i++) {
+		this->departments.push_back(new Department(inFile));
+	}
+
+	// Populate numOfEmployees
+	int tempNumOfEmployees = 0;
+	for (i = 0; i < this->departments.size(); i++) {
+		tempNumOfEmployees += this->departments[i]->getAmountOfStaffMembers();
+	}
+	Hospital::numOfEmployees = tempNumOfEmployees;
+
+	inFile.close();
+}
+
+void Hospital::saveFile()
+{
+	ofstream outFile(DATA_FILE, ios::binary | ios::trunc);
+
+	if (!outFile.good()) {
+		cout << "Could not save data to storage." << endl;
+	}
+
+	int i, amountOfPatients, amountOfResearchers, amountOfDepartments;
+	amountOfPatients = (int)patients.size();
+	amountOfResearchers = (int)researchers.size();
+	amountOfDepartments = (int)departments.size();
+
+	// Save patients
+	outFile.write((const char *)&amountOfPatients, sizeof(amountOfPatients));
+	for (i = 0; i < amountOfPatients; i++) {
+		patients[i]->save(outFile);
+	}
+
+	// Save researchers
+	outFile.write((const char *)&amountOfResearchers, sizeof(amountOfResearchers));
+	for (i = 0; i < amountOfResearchers; i++) {
+		researchers[i]->save(outFile);
+	}
+
+	outFile.write((const char *)&amountOfDepartments, sizeof(amountOfDepartments));
+	for (i = 0; i < amountOfDepartments; i++) {
+		departments[i]->save(outFile);
+	}
+
+	outFile.close();
+}
 
 /**
  * The main loop method of the hospital application
@@ -503,8 +576,7 @@ Visit *Hospital::getNewVisit(Patient *patient) throw (const char *)
 
     // we want to make sure there are members in staff before trying to look for nurse/doctor
     // We also know that the department name in the patient is valid since we created the object already after validations
-    Staff *departmentStaff = this->getDepartmentByName(patient->getDepartmentName())->getStaffMembers();
-	Person *inChargePerson = departmentStaff ? departmentStaff->getStaffMemberByID(personInChargeID) : nullptr;
+	Person *inChargePerson = this->getDepartmentByName(patient->getDepartmentName())->getStaffMemberByID(personInChargeID);
 	if (inChargePerson == nullptr) {
 		cout << "Could not find " << (isNurseChosen ? "nurse" : "doctor") << " with ID " << personInChargeID << " in department "
 			<< patient->getDepartmentName() << endl;
@@ -684,7 +756,7 @@ void Hospital::showAllHospitalStaff()
 {
     for (size_t i = 0; i < departments.size(); i++) {
         cout << "All staff members from department: " << departments[i]->getName() << endl;
-        departments[i]->getStaffMembers()->show();
+        departments[i]->showStaff();
         cout << endl; // break line after showing department staff;
     }
 }
@@ -774,7 +846,7 @@ Department *Hospital::getDepartmentByUserInput() throw (const char *)
         cout << "Could not find the department: " << requiredDepartment << endl;
         return department;
     }
-	else if (department->getStaffMembers()->isEmpty()) {
+	else if (department->isStaffEmpty()) {
 		cout << "Could not attach to a department without any staff members!" << endl;
 		return nullptr;
 	}

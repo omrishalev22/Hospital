@@ -1,6 +1,1 @@
-1. All user inputs are limited to size of 150 characters
-2. There are not validations for user input types (for IDs / Years / Numbers)
-3. what type of validaiton should fields like departments have? can a department contain numbers? special characters?
-4. No accurate date validation.
-5. No ability to receive today's date.
-6. A patient can stay at 1 department at time.
+1. No accurate date validation.

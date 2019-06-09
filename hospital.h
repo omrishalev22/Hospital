@@ -10,6 +10,7 @@
 #include "surgery_visit.h"
 #include <vector>
 #include <string>
+#include "entityGenerator.h"
 
 void flushBuffer();
 
@@ -68,7 +69,9 @@ public:
 	bool addNewDoctorToDepartment() throw (const char *);
 	bool addNewPatientVisit() throw (const char *);
     bool addNewArticleToResearcher();
-
+	
+	void loadFile();
+	void saveFile();
     void runLoop();
 };
 

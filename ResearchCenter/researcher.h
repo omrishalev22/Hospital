@@ -6,6 +6,7 @@
 #include "../Staff/Type/doctor.h"
 #include "../Shared/Array.h"
 #include <string>
+#include <ostream>
 
 class Researcher : public Person
 {
@@ -16,6 +17,9 @@ private:
 public:
     Researcher(int id, const string& name);
 	Researcher(const Doctor& doctor);
+	Researcher(ifstream& inFile);
+	void save(ofstream& outFile) const;
+
 	Array<Article*> getArticles();
     void show();
 	bool operator>(Researcher& other);

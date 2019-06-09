@@ -3,20 +3,60 @@
 #include <cstring>
 #include "department.h"
 #include "Shared/consts.h"
+#include "entityGenerator.h"
 
 using namespace std;
 
 Department::Department(const string& name)
 {
 	this->name = name;
-	this->staff = new Staff();
+}
+
+Department::Department(ifstream& inFile)
+{
+	getline(inFile, name);
+	int amountOfPatients, amountOfStaffMembers;
+	// Loading patients
+	inFile.read((char *)&amountOfPatients, sizeof(amountOfPatients));
+	for (int i = 0; i < amountOfPatients; i++) {
+		patients.push_back(EntityGenerator::loadEntity(inFile));
+	}
+
+	// Loading members
+	inFile.read((char *)&amountOfStaffMembers, sizeof(amountOfStaffMembers));
+	for (int i = 0; i < amountOfStaffMembers; i++) {
+		members.push_back(EntityGenerator::loadEntity(inFile));
+	}
+}
+
+void Department::save(ofstream& outFile) const
+{
+	outFile << name << endl;
+	// Saving patients
+	int amountOfPatients = (int)patients.size();
+	outFile.write((const char *)&amountOfPatients, sizeof(amountOfPatients));
+	EntityGenerator::EntityType type;
+	for (size_t i = 0; i < patients.size(); i++) {
+		type = EntityGenerator::getType(patients[i]);
+		outFile.write((const char *)&type, sizeof(type));
+		patients[i]->save(outFile);
+	}
+
+	// Saving staff members
+	int amountOfStaffMembers = (int)members.size();
+	outFile.write((const char *)&amountOfStaffMembers, sizeof(amountOfStaffMembers));
+	for (size_t j = 0; j < members.size(); j++) {
+		type = EntityGenerator::getType(members[j]);
+		outFile.write((const char *)&type, sizeof(type));
+		members[j]->save(outFile);
+	}
 }
 
 /*
 * Attach new staff member to the department
 */
 bool Department::operator+=(Person* staffMember) {
-	this->staff->addNewStaffMember(staffMember);
+	this->addNewStaffMember(staffMember);
 	return true;
 }
 /*
@@ -24,7 +64,7 @@ bool Department::operator+=(Person* staffMember) {
  */
 bool Department::addNewNurse(Nurse *nurse)
 {
-	this->staff->addNewStaffMember(nurse);
+	this->addNewStaffMember(nurse);
     return true;
 }
 
@@ -34,11 +74,6 @@ bool Department::addNewNurse(Nurse *nurse)
 const string& Department::getName()
 {
     return name;
-}
-
-Staff * Department::getStaffMembers()
-{
-	return this->staff;
 }
 
 /**
@@ -75,9 +110,9 @@ void Department::showPatients()
 bool Department::removePatientByID(int patientID)
 {
 	int patientIndex = 0;
-	vector<Patient *>::iterator it = patients.begin();
+	vector<Entity *>::iterator it = patients.begin();
 	for (it = patients.begin(); it != patients.end(); ++it) {
-		if ((*it)->getID() == patientID) {
+		if (((Patient *)*it)->getID() == patientID) {
 			continue;
 		}
 		patientIndex++;
@@ -90,4 +125,46 @@ ostream& operator<<(ostream& os, const Department& department)
 {
 	os << "Department: " << department.name;
 	return os;
+}
+
+
+bool Department::isStaffEmpty()
+{
+	return this->members.size() == 0;
+}
+
+void Department::showStaff()
+{
+	int i;
+	cout << "Showing all staff members:" << endl;
+	if (this->members.size() == 0) {
+		cout << "There are no staff members in the specific department." << endl;
+	}
+	else {
+		for (i = 0; i < members.size(); i++) {
+			members[i]->show();
+		}
+	}
+}
+
+bool Department::addNewStaffMember(Person * member)
+{
+	this->members.push_back(member);
+	return true;
+}
+
+Person * Department::getStaffMemberByID(int id)
+{
+	for (int i = 0; i < members.size(); i++) {
+		if (((Person *)members[i])->getID() == id) {
+			return (Person *)(members[i]);
+		}
+	}
+
+	return nullptr;
+}
+
+int Department::getAmountOfStaffMembers()
+{
+	return (int)members.size();
 }

@@ -6,6 +6,19 @@ SurgeryVisit::SurgeryVisit(const string& arrivalPurpose, Date &arrivalDate, Pers
 	this->isFeasting = isFeasting;
 }
 
+SurgeryVisit::SurgeryVisit(ifstream& inFile) : Visit(inFile)
+{
+	inFile.read((char *)&roomNumber, sizeof(roomNumber));
+	inFile.read((char *)&isFeasting, sizeof(isFeasting));
+}
+
+void SurgeryVisit::save(ofstream& outFile) const
+{
+	Visit::save(outFile);
+	outFile.write((const char *)&roomNumber, sizeof(roomNumber));
+	outFile.write((const char *)&isFeasting, sizeof(isFeasting));
+}
+
 void SurgeryVisit::show()
 {
 	this->Visit::show();

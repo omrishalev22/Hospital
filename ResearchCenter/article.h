@@ -1,12 +1,13 @@
 #ifndef __ARTICLE_H
 #define __ARTICLE_H
 
+#include "../entity.h"
 #include "../Shared/date.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
-class Article
+class Article : public Entity
 {
 private:
     std::string name;
@@ -15,6 +16,8 @@ private:
 
 public:
     Article(const string& name, const string& magazine, Date &releaseDate);
+	Article(ifstream& inFile);
+	void save(ofstream& outFile) const;
 
     // Getters
     const string& getName();

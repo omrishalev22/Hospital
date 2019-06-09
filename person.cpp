@@ -5,6 +5,17 @@ Person::Person(int id, string name) {
 	this->name = name;
 }
 
+Person::Person(ifstream& inFile) {
+	inFile.read((char *)&id, sizeof(id));
+	getline(inFile, name);
+}
+
+void Person::save(ofstream& outFile) const
+{
+	outFile.write((const char *)&id, sizeof(id));
+	outFile << name << endl;
+}
+
 int Person::getID() {
 	return this->id;
 }

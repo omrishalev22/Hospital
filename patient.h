@@ -1,5 +1,4 @@
 #include "Shared/date.h"
-#include "Staff/staff.h"
 #include "visit.h"
 #include "person.h"
 #include <vector>
@@ -14,9 +13,11 @@ public:
     {
         MALE, FEMALE
     };
-
+	
     Patient(const Patient& patient);
     Patient(int id, const string& name, int yearOfBirth, eSex sex);
+	Patient(ifstream& inFile);
+	void save(ofstream& outFile) const;
 
     // GETTERS
     void show();
@@ -32,7 +33,7 @@ private:
     int yearOfBirth;
     std::string departmentName;
     eSex sex;
-    vector<Visit*> visits;
+    vector<Entity *> visits;
 };
 
 #endif //__PATIENT_H

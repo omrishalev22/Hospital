@@ -2,6 +2,8 @@
 #define _DATE_H
 
 #include <iostream>
+#include <fstream>
+
 using namespace std;
 
 class Date {
@@ -19,6 +21,8 @@ public:
     int getDay();
     void show();
 	friend ostream& operator<<(ostream& os, const Date& dt);
+	static Date loadDate(ifstream& inFile);
+	void save(ofstream& outFile) const;
 };
 
 #endif //_DATE_H

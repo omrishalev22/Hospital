@@ -2,6 +2,8 @@
 #include <iostream>
 #include "patient.h"
 #include "visit.h"
+#include "surgery_visit.h"
+#include "entityGenerator.h"
 #include "Shared/consts.h"
 
 using namespace std;
@@ -19,6 +21,34 @@ Patient::Patient(int id, const string& name, int yearOfBirth, eSex sex) : Person
 {
 	this->yearOfBirth = yearOfBirth;
     this->sex = sex;
+}
+
+Patient::Patient(ifstream& inFile) : Person(inFile)
+{
+	inFile.read((char *)&yearOfBirth, sizeof(yearOfBirth));
+	inFile.read((char *)&sex, sizeof(sex));
+	getline(inFile, departmentName);
+	int amountOfVisits;
+	inFile.read((char *)&amountOfVisits, sizeof(amountOfVisits));
+	for (int i = 0; i < amountOfVisits; i++) {
+		visits.push_back(EntityGenerator::loadEntity(inFile));
+	}
+}
+
+void Patient::save(ofstream& outFile) const
+{
+	Person::save(outFile);
+	outFile.write((const char *)&yearOfBirth, sizeof(yearOfBirth));
+	outFile.write((const char *)&sex, sizeof(sex));
+	outFile << departmentName << endl;
+	int amountOfVisits = this->visits.size();
+	outFile.write((const char *)&amountOfVisits, sizeof(amountOfVisits));
+	EntityGenerator::EntityType type;
+	for (int i = 0; i < amountOfVisits; i++) {
+		type = EntityGenerator::getType(visits[i]);
+		outFile.write((const char *)&type, sizeof(type));
+		visits[i]->save(outFile);
+	}
 }
 
 /*

@@ -15,6 +15,17 @@ Researcher::Researcher(const Doctor & doctor): Person(doctor)
 	this->isDoctor = true;
 }
 
+Researcher::Researcher(ifstream& inFile) : Person(inFile)
+{
+	inFile.read((char *)&isDoctor, sizeof(isDoctor));
+}
+
+void Researcher::save(ofstream& outFile) const
+{
+	Person::save(outFile);
+	outFile.write((const char *)&isDoctor, sizeof(isDoctor));
+}
+
 Array<Article*> Researcher::getArticles()
 {
     return this->articles;
