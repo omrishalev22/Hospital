@@ -141,7 +141,7 @@ void Department::showStaff()
 		cout << "There are no staff members in the specific department." << endl;
 	}
 	else {
-		for (i = 0; i < members.size(); i++) {
+		for (i = 0; i < (int)members.size(); i++) {
 			members[i]->show();
 		}
 	}
@@ -155,7 +155,7 @@ bool Department::addNewStaffMember(Person * member)
 
 Person * Department::getStaffMemberByID(int id)
 {
-	for (int i = 0; i < members.size(); i++) {
+	for (int i = 0; i < (int)members.size(); i++) {
 		if (((Person *)members[i])->getID() == id) {
 			return (Person *)(members[i]);
 		}

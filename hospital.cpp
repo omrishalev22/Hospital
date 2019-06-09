@@ -1,3 +1,5 @@
+#pragma warning( disable : 4290 )
+
 #include <string>
 #include <iostream>
 #include <cstring>
@@ -43,7 +45,7 @@ void Hospital::loadFile()
 
 	// Populate numOfEmployees
 	int tempNumOfEmployees = 0;
-	for (i = 0; i < this->departments.size(); i++) {
+	for (i = 0; i < (int)this->departments.size(); i++) {
 		tempNumOfEmployees += this->departments[i]->getAmountOfStaffMembers();
 	}
 	Hospital::numOfEmployees = tempNumOfEmployees;

@@ -1,5 +1,6 @@
 #ifndef __HOSPITAL_H
 #define __HOSPITAL_H
+#pragma warning( disable : 4290 )
 
 #include "department.h"
 #include "ResearchCenter/researcher.h"
